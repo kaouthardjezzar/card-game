@@ -3,4 +3,4 @@ project(Card_Game)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Card_Game main.cpp)
+add_executable(Card_Game card-game/main.cpp)
