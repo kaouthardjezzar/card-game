@@ -3,4 +3,4 @@ project(Card_Game)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Card_Game card-game/main.cpp)
+add_executable(Card_Game main.cpp card-game/Card.cpp card-game/Card.h examples/Bataille.cpp examples/Bataille.h examples/GameTemplate.cpp examples/GameTemplate.h card-game/Suit.cpp card-game/Suit.h card-game/Player.cpp card-game/Player.h card-game/Deck.cpp card-game/Deck.h card-game/CardBuilder.cpp card-game/CardBuilder.h)
