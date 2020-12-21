@@ -2,7 +2,9 @@
 // Created by Ny Andrianina Mamy on 12/12/2020.
 //
 
+#include <iostream>
 #include "Bataille.h"
+#include "../card-game/Board.h"
 
 bool play_bataille() {
 
@@ -28,4 +30,21 @@ a:   Display game status
 
 
     return true; // When game is finished
+}
+
+void Bataille::who_wins_this_turn() {
+
+}
+
+void Bataille::next_turn() {
+
+}
+
+void Bataille::initialization() {
+    std::cout << "Launching Bataille " << std::endl;
+    board.build_deck();
+}
+
+bool Bataille::is_the_end() {
+    return true;
 }

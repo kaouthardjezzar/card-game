@@ -5,7 +5,10 @@
 #ifndef CARD_GAME_CARD_H
 #define CARD_GAME_CARD_H
 
+#include <iostream>
+#include "../lib/logger.h"
 #include "Suit.h"
+
 
 class Card {
 
@@ -15,7 +18,13 @@ private:
 
 public:
     Card(Suit _suit, int _value): suit(_suit), value(_value) {
+        LOG_INIT_COUT();
+        logd(LOG_DEBUG) << "Creating card : " << " suit " << " , " << value << "\n";
+    }
 
+    virtual ~Card() {
+        LOG_INIT_COUT();
+        logd(LOG_DEBUG) << "Deleting card \n";
     }
 };
 

@@ -6,39 +6,27 @@
 #define CARD_GAME_GAMETEMPLATE_H
 
 
-class GameTemplate { // Singleton
-
+class GameTemplate { // Abstract
+protected:
     // Players []
     // Scores []
     // Cards on Table []
 
-    void let_the_battle_begin() { // Get called by main function
-        // How to arrange function call
-        initialization();
-        while(!is_the_end()) {
-            next_turn();
-            who_wins_this_turn();
-        }
-    }
-
-    void initialization() {
-        // Create cards
+    virtual void initialization() = 0;
+    // Create cards
         // Create deck
         // Create players
-    }
 
-    void next_turn() { // Choices for Player(s)
+    virtual void next_turn() = 0; // Choices for Player(s)
 
-    }
-
-    void who_wins_this_turn() {
+    virtual void who_wins_this_turn() = 0;
         // Check current game status turn winner
-    }
 
-    bool is_the_end() {
-        return false; // return false till game ends
-    }
+    virtual bool is_the_end() = 0;
+        // return false till game end
 
+public:
+    void lets_play();
 };
 
 

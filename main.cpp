@@ -1,8 +1,18 @@
 #include <iostream>
+#include "examples/Bataille.h"
+#include "lib/logger.h"
 
-using namespace std;;
+using namespace std;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    LOG_INIT_CERR();
+    logd.set_log_level(LOG_DEBUG);
+
+    logd(LOG_DEBUG) << "Game is starting ";
+
+    cout << "Hello, World!" << endl;
+
+    Bataille bataille;
+    bataille.lets_play();
     return 0;
 }
