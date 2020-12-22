@@ -13,7 +13,7 @@
 class DeckBuilder {
 private:
     std::unique_ptr<Deck> deck;
-    std::vector<Suit> suits;
+    std::vector<std::string> suits;
 
 public:
     DeckBuilder() = default;
@@ -21,7 +21,7 @@ public:
 
     DeckBuilder* create();
     std::unique_ptr<Deck> build();
-    DeckBuilder* with_suits(std::vector<Suit>& suits);
+    DeckBuilder* with_suits(std::vector<std::string>& suits);
     DeckBuilder* with_range(const std::vector<int>& range);
 };
 

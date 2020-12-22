@@ -7,7 +7,6 @@
 
 #include <vector>
 #include <memory>
-#include "Suit.h"
 #include "Card.h"
 
 
@@ -24,7 +23,7 @@ public:
         logd(LOG_DEBUG) << "Deleting Deck containing" << " , Cards : " << cards.size() << "\n";
     }
 
-    void add_card(Suit suit, int value);
+    void add_card(std::string suit, int value);
     void shuffle();
     Card* pick_random(int);
 

@@ -51,8 +51,8 @@ void Bataille::initialization() {
     std::cout << "Launching Bataille " << std::endl;
 
     // Configuration des cartes
-    std::vector<Suit> suits{Suit::spade};
-    std::vector<int> range{1,2,3,4,5};
+    std::vector<std::string> suits{"spade", "club", "diamond", "heart"};
+    std::vector<int> range{0,1,2,3,4,5,6,7,8,9,10,11,12,13};
     DeckBuilder deck_builder;
     std::unique_ptr<Deck> deck = deck_builder.create()
                                     ->with_suits(suits)

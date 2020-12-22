@@ -7,19 +7,18 @@
 
 #include <iostream>
 #include "../lib/logger.h"
-#include "Suit.h"
 
 
 class Card {
 
 private:
-    Suit suit;
+    std::string suit;
     int value;
 
 public:
-    Card(Suit _suit, int _value): suit(_suit), value(_value) {
+    Card(std::string& _suit, int _value): suit(_suit), value(_value) {
         LOG_INIT_COUT();
-        logd(LOG_DEBUG) << "Creating card : " << " suit " << " , " << value << "\n";
+        logd(LOG_DEBUG) << "Creating card : " << suit << " , " << value << "\n";
     }
 
     virtual ~Card() {

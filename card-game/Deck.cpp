@@ -12,6 +12,6 @@ Card *Deck::pick_random(int) {
     return NULL;
 }
 
-void Deck::add_card(Suit suit, int value) {
+void Deck::add_card(std::string suit, int value) {
     cards.push_back(std::unique_ptr<Card>(new Card(suit, value)));
 }
