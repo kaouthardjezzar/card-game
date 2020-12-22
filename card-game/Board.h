@@ -8,8 +8,7 @@
 #include <vector>
 #include <memory>
 #include "DeckBuilder.h"
-
-class Player;
+#include "Player.h"
 
 class Board {
 private:
@@ -20,10 +19,10 @@ private:
 public:
     explicit Board() {
     }
+
     virtual ~Board() = default;
 
-    void build_deck();
-
+    void set_deck(std::unique_ptr<Deck> _deck);
 //    void addDeck(Deck* deck);
 
 //    void addPlayer(Player* player);

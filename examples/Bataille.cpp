@@ -4,8 +4,6 @@
 
 #include <iostream>
 #include "Bataille.h"
-#include "../card-game/Board.h"
-
 bool play_bataille() {
 
     /*
@@ -51,8 +49,17 @@ void Bataille::next_turn() {
 
 void Bataille::initialization() {
     std::cout << "Launching Bataille " << std::endl;
-    board.build_deck();
-    // board.build_deck()
+
+    // Configuration des cartes
+    std::vector<Suit> suits{Suit::spade};
+    std::vector<int> range{1,2,3,4,5};
+    DeckBuilder deck_builder;
+    std::unique_ptr<Deck> deck = deck_builder.create()
+                                    ->with_suits(suits)
+                                    ->with_range(range)
+                                    ->build();
+    board.set_deck(std::move(deck));
+
     // deck.shuffle()
     // board.add_player(Mamy)
     // board.add_player(Kaou)

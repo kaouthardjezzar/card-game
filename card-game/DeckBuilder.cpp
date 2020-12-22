@@ -15,13 +15,13 @@ std::unique_ptr<Deck> DeckBuilder::build() {
     return std::move(deck);
 }
 
-DeckBuilder* DeckBuilder::with_suits(std::vector<Suit> suits) {
-    deck->set_suits(std::move(suits));
+DeckBuilder* DeckBuilder::with_suits(std::vector<Suit>& _suits) {
+    suits = std::move(_suits);
     return this;
 }
 
 DeckBuilder* DeckBuilder::with_range(const std::vector<int>& range) {
-    for(Suit suit: deck->get_suits()) {
+    for(const Suit suit: suits) {
         for(int num: range) {
             deck->add_card(suit, num);
         }
