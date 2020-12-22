@@ -13,8 +13,9 @@ class Player;
 
 class Board {
 private:
-    std::unique_ptr<Deck> deck;
-    std::vector<Player*> players;
+    std::unique_ptr<Deck> deck; //52
+    std::vector<std::unique_ptr<Player>> players; // 2
+    std::unique_ptr<Deck> temporary; // T
 
 public:
     explicit Board() {

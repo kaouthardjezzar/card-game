@@ -4,8 +4,6 @@
 
 #include "Deck.h"
 
-#include <utility>
-
 void Deck::shuffle() {
 
 }
@@ -23,5 +21,5 @@ std::vector<Suit> Deck::get_suits() {
 }
 
 void Deck::add_card(Suit suit, int value) {
-    cards.emplace_back(new Card(suit, value));
+    cards.push_back(std::unique_ptr<Card>(new Card(suit, value)));
 }

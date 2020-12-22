@@ -13,7 +13,7 @@
 
 class Deck {
 private:
-    std::vector<Suit> suits;
+//    std::vector<Suit> suits;
     std::vector<std::shared_ptr<Card>> cards; // Or Shared ptr ?
 public:
     Deck() {
@@ -25,8 +25,8 @@ public:
         logd(LOG_DEBUG) << "Deleting Deck containing" << " Suits : " << suits.size() << " , Cards : " << cards.size() << "\n";
     }
 
-    void set_suits(std::vector<Suit> _suits);
-    std::vector<Suit> get_suits();
+//    void set_suits(std::vector<Suit> _suits);
+//    std::vector<Suit> get_suits();
     void add_card(Suit suit, int value);
     void shuffle();
     Card* pick_random(int);

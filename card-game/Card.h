@@ -26,6 +26,8 @@ public:
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Deleting card \n";
     }
+
+    int get_value() const;
 };
 
 

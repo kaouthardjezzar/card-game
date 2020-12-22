@@ -3,3 +3,7 @@
 //
 
 #include "Card.h"
+
+int Card::get_value() const {
+    return value;
+}

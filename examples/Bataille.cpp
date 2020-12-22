@@ -12,6 +12,7 @@ bool play_bataille() {
     // Shuffle deck
     // while (!end_game)
      // Turn begins here
+     // TEMP
 a:   Display game status
      Wait for draw
      Draw
@@ -33,18 +34,41 @@ a:   Display game status
 }
 
 void Bataille::who_wins_this_turn() {
-
+    // Last_card_of_Mamy = Mamy.deck.pick_front_card()
+    // Last_card_of_Kaou = Kaou.deck.pick_front_card()
+    // Apply Bataille Rules
+    // Display current turn winner
+    // Update scores
 }
 
 void Bataille::next_turn() {
+    // Wait for Mamy to draw a card
+    // Mamy.deck.add(Board.deck.pick_front_card()) // Transférer le pointeur d'une carte de Board vers Mamy
+    // Wait for Kaou to draw a card
+    // Kaou.deck.add(Board.deck.pick_front_card())
 
 }
 
 void Bataille::initialization() {
     std::cout << "Launching Bataille " << std::endl;
     board.build_deck();
+    // board.build_deck()
+    // deck.shuffle()
+    // board.add_player(Mamy)
+    // board.add_player(Kaou)
 }
 
 bool Bataille::is_the_end() {
+    // if Mamy.deck.size() == 0 or Kaou.deck.size() == 0 return true
     return true;
 }
+
+//void GameTemplate::lets_play() {
+//    // Get called by main function
+//    // How to arrange function call
+//    initialization();
+//    while(!is_the_end()) {
+//        next_turn();
+//        who_wins_this_turn();
+//    }
+//}

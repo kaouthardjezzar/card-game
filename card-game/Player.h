@@ -13,7 +13,7 @@ class Player {
 private:
     std::string name;
     Deck *deck;
-
+    int score;
 public:
     Player() {}
 };
