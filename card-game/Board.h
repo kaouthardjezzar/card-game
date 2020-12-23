@@ -23,9 +23,11 @@ public:
     virtual ~Board() = default;
 
     void set_deck(std::unique_ptr<Deck> _deck);
+
+    void shuffle_deck();
 //    void addDeck(Deck* deck);
 
-//    void addPlayer(Player* player);
+    void add_player(std::unique_ptr<Player>& player); // unique_ptr to transfer player ownership to board
 
 };
 

@@ -60,8 +60,15 @@ void Bataille::initialization() {
                                     ->build();
     board.set_deck(std::move(deck));
 
-    // deck.shuffle()
-    // board.add_player(Mamy)
+    // Shuffle deck
+    board.shuffle_deck();
+
+    // Players
+    std::unique_ptr<Player> john = std::unique_ptr<Player>(new Player("John"));
+    std::unique_ptr<Player> jane = std::unique_ptr<Player>(new Player("Jane"));
+
+     board.add_player(john);
+     board.add_player(jane);
     // board.add_player(Kaou)
 }
 

@@ -3,3 +3,7 @@
 //
 
 #include "Player.h"
+
+std::string Player::get_name() const {
+    return name;
+}
