@@ -9,24 +9,28 @@
 #include <memory>
 #include "Card.h"
 
+using namespace std;
 
 class Deck {
 private:
-    std::vector<std::unique_ptr<Card>> cards;
+    vector<unique_ptr<Card>> cards;
 public:
-    Deck() {
+   Deck() {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating Deck \n";
     }
+
     virtual ~Deck() {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Deleting Deck containing" << " , Cards : " << cards.size() << "\n";
     }
 
+    void sort(); // pour trier les cartes par ordres
     void add_card(std::string suit, int value);
     void shuffle();
-    Card* pick_random(int);
-
+    unique_ptr<Card> pick_random();
+    unique_ptr<Card> pick_card(int pos);
+    vector<unique_ptr<Deck>> split(int parts);
 };
 
 

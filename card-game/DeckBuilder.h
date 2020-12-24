@@ -18,7 +18,7 @@ private:
 public:
     DeckBuilder() = default;
     virtual ~DeckBuilder() = default;
-
+    
     DeckBuilder* create();
     std::unique_ptr<Deck> build();
     DeckBuilder* with_suits(std::vector<std::string>& suits);
