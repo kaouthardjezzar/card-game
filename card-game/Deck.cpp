@@ -52,7 +52,7 @@ vector<unique_ptr<Deck>> Deck::split(int parts) // déviser le paquet en (parts)
     for(int j=0; j<(cards.size()/parts);j++)
     {
         for (int k= 0; k< parts; k++) {
-            decks[k]->add_card(cards[a]->get_suit(),cards[j]->get_value());
+            decks[k]->add_card(cards[a]->get_suit(),cards[a]->get_value());
             a++;
         }
     }
