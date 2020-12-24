@@ -25,6 +25,12 @@ public:
         logd(LOG_DEBUG) << "Creating card : " << suit << " , " << value << "\n";
     }
 
+    /*Card(unique_ptr<Card>cd)
+    {
+        value=cd->value;
+        suit=cd->suit;
+    }*/
+
     Card(const Card& cd)//constructeur par copie
     {
         value=cd.value;

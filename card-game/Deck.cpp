@@ -58,3 +58,12 @@ vector<unique_ptr<Deck>> Deck::split(int parts) // déviser le paquet en (parts)
     }
     return decks;
 }
+
+Card& Deck::tirer() //pour tirer une carte de la main
+{
+    int indice = rand()%(cards.size()); //choisir un indice entre 0 et le nombre du carte
+    Card *cd = new Card(*cards[indice]);//en memoirise la carte a tirer
+    delete(&cards[indice]);
+    cards.erase(cards.begin()+indice);
+    return *cd;//retourner la carte choisie
+}
