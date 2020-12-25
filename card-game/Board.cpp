@@ -27,3 +27,8 @@ void Board::affect_cards_toplayer() {
         }
     }
 }
+
+std::vector<std::unique_ptr<Player>> Board::get_players() {
+    return players;
+}
+

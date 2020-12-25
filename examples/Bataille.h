@@ -8,7 +8,7 @@
 #include "GameTemplate.h"
 #include "../card-game/Board.h"
 
-class Bataille: public GameTemplate {
+class Bataille : public GameTemplate {
 private:
     Board board;
 
@@ -28,6 +28,7 @@ protected:
     virtual bool is_the_end();
     // return false till game end
 
+    virtual void end_of_game();
 
 public:
     Bataille() {}

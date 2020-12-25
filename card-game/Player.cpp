@@ -10,3 +10,12 @@ std::string Player::get_name() const {
 Deck Player::get_deck() {
     return *deck;
 }
+
+void Player::increment()// incrementer le score du joueur
+{
+    score=+2;
+}
+
+int Player::get_score() {
+    return score;
+}

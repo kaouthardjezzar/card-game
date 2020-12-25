@@ -9,6 +9,7 @@
 #include "../lib/logger.h"
 
 using namespace std;
+
 class Card {
 
 private:
@@ -48,7 +49,7 @@ public:
     void set_suit(string& _suit) ;
     int compare(Card &cd);// comparer les valeurs de 2 cartes
     void exchange(Card& cd); //echanger deux carte
-
+    friend ostream & operator << (ostream & out, Card & aCard);
 
 };
 

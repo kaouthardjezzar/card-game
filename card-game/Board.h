@@ -30,6 +30,8 @@ public:
     void add_player(std::unique_ptr<Player>& player); // unique_ptr to transfer player ownership to board
 
     void affect_cards_toplayer();
+    std::vector<std::unique_ptr<Player>> get_players();
+
 };
 
 #endif //CARD_GAME_BOARD_H

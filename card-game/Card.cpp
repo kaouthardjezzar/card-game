@@ -33,3 +33,24 @@ void Card::exchange(Card &cd) {
         suit=cd.suit;
         cd=temp;
 }
+
+
+ostream & operator << (ostream & out, Card & aCard)
+// afficher une carte
+{
+    // afficher la valeur
+    switch (aCard.value) {
+        case 1:  out << "Ace";   break;
+        case 11: out << "Jack";  break;
+        case 12: out << "Queen"; break;
+        case 13: out << "King";  break;
+        default:	// output number
+            out << aCard.value; break;
+    }
+    // afficher la famille
+        if ( aCard.suit == "diamond")  out << " of Diamonds";
+        if ( aCard.suit == "spade")  out << " of Spades";
+        if ( aCard.suit == "heart")  out << " of Hearts";
+        if ( aCard.suit == "club")  out << " of Clubs";
+    return out;
+}

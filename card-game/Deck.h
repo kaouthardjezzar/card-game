@@ -31,8 +31,9 @@ public:
     unique_ptr<Card> pick_random();
     unique_ptr<Card> pick_card(int pos);
     vector<unique_ptr<Deck>> split(int parts);
-    Card& tirer();
+    Card& draw();
     int get_nbcards();
+    bool isEmpty();
 };
 
 

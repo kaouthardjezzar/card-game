@@ -6,6 +6,8 @@
 #define CARD_GAME_GAMETEMPLATE_H
 
 
+#include "../card-game/Board.h"
+
 class GameTemplate { // Abstract
 protected:
     // Players []
@@ -23,8 +25,9 @@ protected:
         // Check current game status turn winner
 
     virtual bool is_the_end() = 0;
-        // return false till game end
+        // return false till game endvirtual
 
+    virtual void end_of_game() = 0;
 public:
     void lets_play();
 };

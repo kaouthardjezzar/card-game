@@ -30,6 +30,8 @@ public:
 
     std::string get_name() const;
     Deck get_deck();
+    void increment();
+    int get_score();
 };
 
 
