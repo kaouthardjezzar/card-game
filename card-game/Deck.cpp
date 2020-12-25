@@ -67,3 +67,7 @@ Card& Deck::tirer() //pour tirer une carte de la main
     cards.erase(cards.begin()+indice);
     return *cd;//retourner la carte choisie
 }
+
+int Deck::get_nbcards() { //nombre de cartes restant dans le paquet
+    return cards.size();
+}

@@ -25,13 +25,14 @@ public:
         logd(LOG_DEBUG) << "Deleting Deck containing" << " , Cards : " << cards.size() << "\n";
     }
 
-    void sort(); // pour trier les cartes par ordres
+    void sort();
     void add_card(std::string suit, int value);
     void shuffle();
     unique_ptr<Card> pick_random();
     unique_ptr<Card> pick_card(int pos);
     vector<unique_ptr<Deck>> split(int parts);
     Card& tirer();
+    int get_nbcards();
 };
 
 

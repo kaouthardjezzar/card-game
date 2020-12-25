@@ -7,3 +7,6 @@
 std::string Player::get_name() const {
     return name;
 }
+Deck Player::get_deck() {
+    return *deck;
+}

@@ -17,3 +17,13 @@ void Board::shuffle_deck() {
 void Board::add_player(std::unique_ptr<Player>& player) {
     players.push_back(std::move(player));
 }
+
+void Board::affect_cards_toplayer() {
+        int a = deck->get_nbcards();
+        for (int j = 0; j < (deck->get_nbcards()/ players.size()); j++) {
+            for (int k = 0; k < players.size(); k++) {
+                players[k]->get_deck().add_card(deck->pick_card(a)->get_suit(),deck->pick_card(a)->get_value());
+                a--;
+        }
+    }
+}
