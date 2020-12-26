@@ -7,8 +7,9 @@
 std::string Player::get_name() const {
     return name;
 }
-Deck Player::get_deck() {
-    return *deck;
+
+std::unique_ptr<Deck>& Player::get_deck() {
+    return deck;
 }
 
 void Player::increment()// incrementer le score du joueur

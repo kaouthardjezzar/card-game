@@ -22,13 +22,13 @@ void Board::affect_cards_toplayer() {
         int a = deck->get_nbcards();
         for (int j = 0; j < (deck->get_nbcards()/ players.size()); j++) {
             for (int k = 0; k < players.size(); k++) {
-                players[k]->get_deck().add_card(deck->pick_card(a)->get_suit(),deck->pick_card(a)->get_value());
+                players[k]->get_deck()->add_card(deck->pick_card(a)->get_suit(),deck->pick_card(a)->get_value());
                 a--;
         }
     }
 }
 
-std::vector<std::unique_ptr<Player>> Board::get_players() {
+std::vector<std::unique_ptr<Player>>& Board::get_players() {
     return players;
 }
 

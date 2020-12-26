@@ -29,7 +29,7 @@ public:
     }
 
     std::string get_name() const;
-    Deck get_deck();
+    std::unique_ptr<Deck>& get_deck();
     void increment();
     int get_score();
 };

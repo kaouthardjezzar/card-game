@@ -42,17 +42,17 @@ void Bataille::who_wins_this_turn() {
     vector<Card> cards;
     int nb_draw = 0;
     for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
-        cards.push_back(Player->get_deck().draw());
+        cards.push_back(Player->get_deck()->draw());
         nb_draw ++;
         cout << Player->get_name() << "a joué la carte" << cards[cards.size()] << endl;
     }
     int comp = cards[0].compare(cards[1]);
     while (comp == 0) {
         for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
-            cards.push_back(Player->get_deck().draw());
+            cards.push_back(Player->get_deck()->draw());
             nb_draw ++;
             cout << Player->get_name() << "a joué une carte" << endl;
-            cards.push_back(Player->get_deck().draw());
+            cards.push_back(Player->get_deck()->draw());
             nb_draw ++;
             cout << Player->get_name() << "a joué la carte" << cards[cards.size()] << endl;
         }
@@ -78,7 +78,7 @@ void Bataille::next_turn() {
 bool Bataille::is_the_end() {
     // if Mamy.deck.size() == 0 or Kaou.deck.size() == 0 return true
     for(int i = 0 ;i<board.get_players().size();i++) {
-        if (board.get_players()[i]->get_deck().isEmpty()) return true;
+        if (board.get_players()[i]->get_deck()->isEmpty()) return true;
     }
     return false;
 }
