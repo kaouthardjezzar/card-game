@@ -3,6 +3,9 @@
 //
 
 #include "Deck.h"
+#include <algorithm>
+#include <random>
+
 void Deck::add_card(std::string suit, int value) {
     cards.push_back(std::unique_ptr<Card>(new Card(suit, value)));
 }
@@ -21,14 +24,11 @@ void Deck::sort() { //trier un paquet
 }
 
 void Deck::shuffle(){ //mélanger un paquet
-    int indice;
-    int pos=cards.size();
-    for(int i=0;i<cards.size();i++)
-    {
-        indice = rand()%(pos); // choisir une carte au hasard
-        cards[indice]->exchange(reinterpret_cast<Card &>(cards[pos - 1])); // echanger la carte choisie avec la derière carte
-        pos--;
-    }
+    std::shuffle(
+            std::begin(cards),
+            std::end(cards),
+            std::default_random_engine{}
+            );
 }
 
 unique_ptr<Card> Deck::pick_random() { // prendre une carte du paquet au hasard
