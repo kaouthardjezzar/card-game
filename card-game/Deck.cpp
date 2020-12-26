@@ -27,7 +27,9 @@ void Deck::shuffle(){ //mélanger un paquet
     std::shuffle(
             std::begin(cards),
             std::end(cards),
-            std::default_random_engine{}
+            std::default_random_engine{
+                    std::random_device{}()
+            }
             );
 }
 
