@@ -16,11 +16,9 @@ private:
     std::unique_ptr<Deck> deck;
     int score;
 public:
-    explicit Player(std::string  _name): name(std::move(_name)), score(0) {
+    explicit Player(std::string  _name): name(std::move(_name)), deck{}, score(0) {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating player : " << name << "\n";
-        DeckBuilder deck_builder;
-        deck = deck_builder.create()->build();
     }
 
     virtual ~Player() {
@@ -30,8 +28,18 @@ public:
 
     std::string get_name() const;
     std::unique_ptr<Deck>& get_deck();
-    void increment();
+
+    void set_deck(std::unique_ptr<Deck>& _deck) {
+        deck = std::move(_deck);
+    }
+
+    void increment_score();
+
     int get_score();
+
+    void set_score(int n) {
+        score = n;
+    }
 };
 
 

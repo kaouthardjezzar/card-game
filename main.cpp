@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     LOG_INIT_CERR();
-    logd.set_log_level(LOG_DEBUG);
+    logd.set_log_level(LOG_INFO);
 
     logd(LOG_DEBUG) << "Game is starting ";
 

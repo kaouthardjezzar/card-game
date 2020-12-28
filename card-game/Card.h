@@ -26,12 +26,6 @@ public:
         logd(LOG_DEBUG) << "Creating card : " << suit << " , " << value << "\n";
     }
 
-    /*Card(unique_ptr<Card>cd)
-    {
-        value=cd->value;
-        suit=cd->suit;
-    }*/
-
     Card(const Card& cd)//constructeur par copie
     {
         value=cd.value;
@@ -47,10 +41,12 @@ public:
     string get_suit () const;
     void set_value (int& val) ;
     void set_suit(string& _suit) ;
-    int compare(Card &cd);// comparer les valeurs de 2 cartes
     void exchange(Card& cd); //echanger deux carte
-    friend ostream & operator << (ostream & out, Card & aCard);
 
+    // Operator overloading
+    bool operator>(const Card& c) const;
+    bool operator<(const Card& c) const;
+    friend ostream & operator << (ostream & out, Card & aCard);
 };
 
 

@@ -12,7 +12,7 @@ std::unique_ptr<Deck>& Player::get_deck() {
     return deck;
 }
 
-void Player::increment()// incrementer le score du joueur
+void Player::increment_score()// incrementer le score du joueur
 {
     score=+2;
 }

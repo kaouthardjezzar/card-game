@@ -5,8 +5,6 @@
 #include <iostream>
 #include "Bataille.h"
 
-
-
 void Bataille::initialization() {
     std::cout << "Launching Bataille " << std::endl;
 
@@ -30,41 +28,38 @@ void Bataille::initialization() {
 
     board.add_player(john);
     board.add_player(jane);
-    // board.add_player(Kaou)
 
-    board.affect_cards_toplayer();
+    // Build Deck
+    std::vector<std::unique_ptr<Deck>> decks;
+    std::unique_ptr<Deck> part1 = std::unique_ptr<Deck>(new Deck());
+    std::unique_ptr<Deck> part2 = std::unique_ptr<Deck>(new Deck());
 
+    decks.push_back(std::move(part1));
+    decks.push_back(std::move(part2));
 
+    // Split cards to players
+    board.get_deck().split(decks);
+    for(int i=0; i < board.get_players().size(); ++i) {
+        board.get_players()[i]->set_deck(decks[i]);
+    }
 }
 
 
 void Bataille::who_wins_this_turn() {
-    vector<Card> cards;
-    int nb_draw = 0;
-    for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
-        cards.push_back(Player->get_deck()->draw());
-        nb_draw ++;
-        cout << Player->get_name() << "a joué la carte" << cards[cards.size()] << endl;
+    // Draw cards and move to temp deck
+    for(auto &player: board.get_players()) {
+        board.get_temp_deck().add_card(player->get_deck()->take_front_card());
+        player->get_deck()->remove_front_card();
     }
-    int comp = cards[0].compare(cards[1]);
-    while (comp == 0) {
-        for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
-            cards.push_back(Player->get_deck()->draw());
-            nb_draw ++;
-            cout << Player->get_name() << "a joué une carte" << endl;
-            cards.push_back(Player->get_deck()->draw());
-            nb_draw ++;
-            cout << Player->get_name() << "a joué la carte" << cards[cards.size()] << endl;
-        }
-        comp =cards[cards.size()-1].compare(cards[cards.size()-2]);
-    }
-    if (comp == 1) {
-        for (int i = 0; i<nb_draw; i++)
-            board.get_players()[0]->increment();
-    }
-    else if (comp == 2){
-        for (int i = 0; i<nb_draw; i++)
-            board.get_players()[1]->increment();
+
+    // Player 1 wins
+    board.get_players()[0]->set_score(
+            board.get_players()[0]->get_score() + 1
+            );
+
+    // Add temp_deck cards to player 1 cards
+    for(auto &card: board.get_temp_deck()) {
+        board.get_players()[0]->get_deck()->add_card(card);
     }
 
 }
@@ -76,55 +71,21 @@ void Bataille::next_turn() {
 
 
 bool Bataille::is_the_end() {
-    // if Mamy.deck.size() == 0 or Kaou.deck.size() == 0 return true
-    for(int i = 0 ;i<board.get_players().size();i++) {
-        if (board.get_players()[i]->get_deck()->isEmpty()) return true;
+    for(const auto &player : board.get_players()) {
+        if (player->get_deck()->isEmpty()) {
+            return true;
+        }
     }
     return false;
 }
 
 void Bataille::end_of_game() {
-    vector <int> scors;
+    vector <int> scores;
     for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
-        scors.push_back(Player->get_score());
-        cout << Player->get_name() << "a eu le score : " << scors[scors.size()] << endl;
+        scores.push_back(Player->get_score());
+        cout << Player->get_name() << "a eu le score : " << Player->get_score() << endl;
     }
-    if (scors[0]>scors[1]) cout << board.get_players()[0]->get_name() << "est le gagnant" << endl;
-    else if (scors[0]<scors[1]) cout << board.get_players()[1]->get_name() << "est le gagnant" << endl;
+    if (scores[0] > scores[1]) cout << board.get_players()[0]->get_name() << " est le gagnant" << endl;
+    else if (scores[0] < scores[1]) cout << board.get_players()[1]->get_name() << " est le gagnant" << endl;
     else cout << "les deux joueurs ont eu le meme score" << endl;
 }
-
-
-bool play_bataille() {
-
-    /*
-  // Shuffle deck
-  // while (!end_game)
-   // Turn begins here
-   // TEMP
-a:   Display game status
-   Wait for draw
-   Draw
-   Check current turn winner // Should be on game start section
-       If A wins over B:
-          Add A.card and B.card to TEMP
-          Add TEMP to A.deck
-       Else if : same for B
-       Else if no winner :
-          // Add cards to TEMP
-          goto a:
-   Display final score
-  */
-    return true; // When game is finished
-}
-
-
-//void GameTemplate::lets_play() {
-//    // Get called by main function
-//    // How to arrange function call
-//    initialization();
-//    while(!is_the_end()) {
-//        next_turn();
-//        who_wins_this_turn();
-//    }
-//}

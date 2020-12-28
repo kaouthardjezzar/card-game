@@ -20,13 +20,6 @@ void Card::set_suit(string &_suit) {
     suit = _suit;
 }
 
-int Card::compare(Card& cd)
-{
-if(value > cd.value) return 1;//si la premier carte est superieur à la 2 eme
-else if(value < cd.value) return 2;//si la premier carte est inferieur a la 2 eme
-else return 0;// les cartes sont égales
-}
-
 void Card::exchange(Card &cd) {
         Card temp=*this;
         value=cd.value;
@@ -34,10 +27,17 @@ void Card::exchange(Card &cd) {
         cd=temp;
 }
 
+// Operator overloading
 
-ostream & operator << (ostream & out, Card & aCard)
-// afficher une carte
-{
+bool Card::operator>(const Card& c) const {
+    return value > c.get_value();
+}
+
+bool Card::operator<(const Card& c) const {
+    return value < c.get_value();
+}
+
+ostream & operator << (ostream & out, Card & aCard) {
     // afficher la valeur
     switch (aCard.value) {
         case 1:  out << "Ace";   break;

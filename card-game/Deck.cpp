@@ -11,16 +11,16 @@ void Deck::add_card(std::string suit, int value) {
 }
 
 void Deck::sort() { //trier un paquet
-    for(int i=0;i<cards.size();i++)
-    {
-        for(int j=i+1;j<cards.size()+1;j++)
-        {
-            if(cards[i]->compare(reinterpret_cast<Card &>(cards[j]))==1)
-            {
-                cards[i]->exchange(reinterpret_cast<Card &>(cards[j]));
-            }
-        }
-    }
+//    for(int i=0;i<cards.size();i++)
+//    {
+//        for(int j=i+1;j<cards.size()+1;j++)
+//        {
+//            if(cards[i]->compare(reinterpret_cast<Card &>(cards[j]))==1)
+//            {
+//                cards[i]->exchange(reinterpret_cast<Card &>(cards[j]));
+//            }
+//        }
+//    }
 }
 
 void Deck::shuffle(){ //mélanger un paquet
@@ -38,27 +38,8 @@ unique_ptr<Card> Deck::pick_random() { // prendre une carte du paquet au hasard
     return move(cards[indice]);
 }
 
-unique_ptr<Card> Deck::pick_card(int pos) { // prendre une carte d'une position précise
-    return move(cards[pos]);
-}
-
-vector<unique_ptr<Deck>> Deck::split(int parts) // déviser le paquet en (parts) paquets
-{
-    vector<unique_ptr<Deck>> decks;
-    LOG_INIT_COUT();
-    if (cards.size() % parts != 0) logd(LOG_DEBUG) << "Erreur, on peut pas déviser toutes les cartes !" << "\n";
-    for (int i= 0; i< parts; i++) {
-        decks.push_back(unique_ptr<Deck>(new Deck()));
-    }
-    int a = 0;
-    for(int j=0; j<(cards.size()/parts);j++)
-    {
-        for (int k= 0; k< parts; k++) {
-            decks[k]->add_card(cards[a]->get_suit(),cards[a]->get_value());
-            a++;
-        }
-    }
-    return decks;
+unique_ptr<Card>& Deck::pick_card(int pos) { // prendre une carte d'une position précise
+    return cards.at(pos);
 }
 
 Card& Deck::draw() //pour tirer une carte de la main
