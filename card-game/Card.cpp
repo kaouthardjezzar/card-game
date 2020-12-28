@@ -54,3 +54,7 @@ ostream & operator << (ostream & out, Card & aCard) {
         if ( aCard.suit == "club")  out << " of Clubs";
     return out;
 }
+
+bool Card::operator==(const Card &c) const {
+    return value == c.get_value();
+}

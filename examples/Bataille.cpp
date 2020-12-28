@@ -57,26 +57,55 @@ void Bataille::who_wins_this_turn() {
     player_two->get_deck()->remove_front_card();
 
     // Display game status
+    std::cout << "Tour no : " << board.get_round() << std::endl;
+
     std::cout << "Cartes jouées : " << std::endl;
     std::cout << player_one->get_name() << " : " <<  *card_one << std::endl;
     std::cout << player_two->get_name() << " : " <<  *card_two << std::endl;
 
+    // Compute winner
+    std::vector<bool> winner(2);
+    bool tie = *card_one == *card_two;
+    winner[0] = *card_one > *card_two;
+    winner[1] = *card_one < *card_two;
+
     board.get_temp_deck().add_card(card_one);
     board.get_temp_deck().add_card(card_two);
 
-    // Player 1 wins
-    board.get_players()[0]->set_score(
-            board.get_players()[0]->get_score() + 1
-            );
-
-    // Add temp_deck cards to player 1 cards
-    for(const auto &card: board.get_temp_deck()) {
-        board.get_players()[0]->get_deck()->add_card(
-                board.get_temp_deck().take_front_card()
-                );
-        board.get_temp_deck().remove_front_card();
+    if(tie) {
+        return; // Don't do anything
     }
 
+    // Player one wins
+    if (winner[0]) {
+        // Increase score
+        board.get_players()[0]->set_score(
+                board.get_players()[0]->get_score() + 1
+        );
+
+        // Add temp_deck cards to player 1 cards
+        for(const auto &card: board.get_temp_deck()) {
+            board.get_players()[0]->get_deck()->add_card(
+                    board.get_temp_deck().take_front_card()
+            );
+            board.get_temp_deck().remove_front_card();
+        }
+    }
+    // Player two wins
+    else if (winner[1]) {
+        // Increase score
+        board.get_players()[1]->set_score(
+                board.get_players()[1]->get_score() + 1
+        );
+
+        // Add temp_deck cards to player 2 cards
+        for(const auto &card: board.get_temp_deck()) {
+            board.get_players()[1]->get_deck()->add_card(
+                    board.get_temp_deck().take_front_card()
+            );
+            board.get_temp_deck().remove_front_card();
+        }
+    }
 }
 
 
@@ -86,6 +115,7 @@ void Bataille::next_turn() {
 
 
 bool Bataille::is_the_end() {
+    board.increase_round();
     for(const auto &player : board.get_players()) {
         if (player->get_deck()->isEmpty()) {
             return true;

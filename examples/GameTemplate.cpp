@@ -10,6 +10,7 @@ void GameTemplate::lets_play() {
         initialization();
         while(!is_the_end()) {
             who_wins_this_turn();
+
         }
         end_of_game();
 }

@@ -46,6 +46,7 @@ public:
     // Operator overloading
     bool operator>(const Card& c) const;
     bool operator<(const Card& c) const;
+    bool operator==(const Card& c) const;
     friend ostream & operator << (ostream & out, Card & aCard);
 };
 
