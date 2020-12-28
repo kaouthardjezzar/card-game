@@ -17,7 +17,7 @@ private:
     std::unique_ptr<Deck> temp_deck; // Used to hold temporary cards for score computation
 
 public:
-    explicit Board(): deck{}, players{}, temp_deck{new Deck()} {
+    explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()} {
     }
 
     virtual ~Board() = default;

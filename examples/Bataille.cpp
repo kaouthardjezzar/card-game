@@ -47,10 +47,22 @@ void Bataille::initialization() {
 
 void Bataille::who_wins_this_turn() {
     // Draw cards and move to temp deck
-    for(auto &player: board.get_players()) {
-        board.get_temp_deck().add_card(player->get_deck()->take_front_card());
-        player->get_deck()->remove_front_card();
-    }
+    auto &player_one = board.get_players()[0];
+    auto &player_two = board.get_players()[1];
+
+    std::unique_ptr<Card> card_one = std::move(player_one->get_deck()->take_front_card());
+    std::unique_ptr<Card> card_two = std::move(player_two->get_deck()->take_front_card());
+
+    player_one->get_deck()->remove_front_card();
+    player_two->get_deck()->remove_front_card();
+
+    // Display game status
+    std::cout << "Cartes jouées : " << std::endl;
+    std::cout << player_one->get_name() << " : " <<  *card_one << std::endl;
+    std::cout << player_two->get_name() << " : " <<  *card_two << std::endl;
+
+    board.get_temp_deck().add_card(card_one);
+    board.get_temp_deck().add_card(card_two);
 
     // Player 1 wins
     board.get_players()[0]->set_score(
@@ -58,8 +70,11 @@ void Bataille::who_wins_this_turn() {
             );
 
     // Add temp_deck cards to player 1 cards
-    for(auto &card: board.get_temp_deck()) {
-        board.get_players()[0]->get_deck()->add_card(card);
+    for(const auto &card: board.get_temp_deck()) {
+        board.get_players()[0]->get_deck()->add_card(
+                board.get_temp_deck().take_front_card()
+                );
+        board.get_temp_deck().remove_front_card();
     }
 
 }
@@ -83,7 +98,7 @@ void Bataille::end_of_game() {
     vector <int> scores;
     for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
         scores.push_back(Player->get_score());
-        cout << Player->get_name() << "a eu le score : " << Player->get_score() << endl;
+        cout << Player->get_name() << " a eu le score : " << Player->get_score() << endl;
     }
     if (scores[0] > scores[1]) cout << board.get_players()[0]->get_name() << " est le gagnant" << endl;
     else if (scores[0] < scores[1]) cout << board.get_players()[1]->get_name() << " est le gagnant" << endl;

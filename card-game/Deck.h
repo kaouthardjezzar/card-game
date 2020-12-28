@@ -64,11 +64,12 @@ public:
             std::cerr << "Only split to two parts" << std::endl;
             return;
         }
-        for(int i = 0 ; i < cards.size()/2; ++i) {
+        int parts = cards.size()/2;
+        for(int i = 0 ; i < parts; ++i) {
             decks[0]->add_card(this->take_front_card());
             this->remove_front_card();
         }
-        for(int i = cards.size()/2; i < cards.size(); ++i){
+        for(int i = 0; i < parts; ++i) {
             decks[1]->add_card(this->take_front_card());
             this->remove_front_card();
         }
@@ -76,7 +77,7 @@ public:
 
     unique_ptr<Card> pick_random();
     unique_ptr<Card>& pick_card(int pos);
-//    vector<unique_ptr<Deck>> split(int parts);
+
     Card& draw();
     int get_nbcards();
     bool isEmpty();
