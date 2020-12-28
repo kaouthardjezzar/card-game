@@ -44,7 +44,6 @@ void Bataille::initialization() {
     }
 }
 
-
 void Bataille::who_wins_this_turn() {
     // Draw cards and move to temp deck
     auto &player_one = board.get_players()[0];
@@ -63,7 +62,7 @@ void Bataille::who_wins_this_turn() {
     std::cout << player_one->get_name() << " : " <<  *card_one << std::endl;
     std::cout << player_two->get_name() << " : " <<  *card_two << std::endl;
 
-    // Compute winner
+    // Check round winner
     std::vector<bool> winner(2);
     bool tie = *card_one == *card_two;
     winner[0] = *card_one > *card_two;
@@ -78,33 +77,11 @@ void Bataille::who_wins_this_turn() {
 
     // Player one wins
     if (winner[0]) {
-        // Increase score
-        board.get_players()[0]->set_score(
-                board.get_players()[0]->get_score() + 1
-        );
-
-        // Add temp_deck cards to player 1 cards
-        for(const auto &card: board.get_temp_deck()) {
-            board.get_players()[0]->get_deck()->add_card(
-                    board.get_temp_deck().take_front_card()
-            );
-            board.get_temp_deck().remove_front_card();
-        }
+        this->compute_winner(*board.get_players()[0]);
     }
     // Player two wins
-    else if (winner[1]) {
-        // Increase score
-        board.get_players()[1]->set_score(
-                board.get_players()[1]->get_score() + 1
-        );
-
-        // Add temp_deck cards to player 2 cards
-        for(const auto &card: board.get_temp_deck()) {
-            board.get_players()[1]->get_deck()->add_card(
-                    board.get_temp_deck().take_front_card()
-            );
-            board.get_temp_deck().remove_front_card();
-        }
+    else if (winner[1]){
+        this->compute_winner(*board.get_players()[1]);
     }
 }
 
@@ -133,4 +110,19 @@ void Bataille::end_of_game() {
     if (scores[0] > scores[1]) cout << board.get_players()[0]->get_name() << " est le gagnant" << endl;
     else if (scores[0] < scores[1]) cout << board.get_players()[1]->get_name() << " est le gagnant" << endl;
     else cout << "les deux joueurs ont eu le meme score" << endl;
+}
+
+void Bataille::compute_winner(Player &player){
+    // Increase score
+    player.set_score(
+            board.get_players()[0]->get_score() + 1
+    );
+
+    // Add temp_deck cards to player cards
+    for(const auto &card: board.get_temp_deck()) {
+        board.get_players()[0]->get_deck()->add_card(
+                board.get_temp_deck().take_front_card()
+        );
+        board.get_temp_deck().remove_front_card();
+    }
 }

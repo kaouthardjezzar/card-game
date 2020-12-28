@@ -30,6 +30,8 @@ protected:
 
     virtual void end_of_game();
 
+    void compute_winner(Player &player);
+
 public:
     Bataille() {}
     virtual ~Bataille() {}
