@@ -42,6 +42,8 @@ void Bataille::next_turn() {
 
     // Stuff that needs to be done when someone wins
     compute_winner(winner);
+
+    board.increase_round();
 }
 
 
@@ -58,16 +60,17 @@ void Bataille::who_wins_this_turn(std::vector<bool>& winner) {
 
 
 bool Bataille::is_the_end() {
-    board.increase_round();
-    for(const auto &player : board.get_players()) {
-        if (player->get_deck()->isEmpty()) {
-            return true;
-        }
-    }
-    return false;
+    return std::any_of(
+            board.get_players().begin(),
+            board.get_players().end(),
+            [](const std::unique_ptr<Player>& player) {
+                return player->get_deck()->isEmpty();
+            });
 }
 
 void Bataille::end_of_game() {
+    std::cout << "Fin du jeu " << std::endl;
+
     std::vector<int> scores;
     for (const auto &player : board.get_players()) {
         scores.push_back(player->get_score());
@@ -82,8 +85,6 @@ void Bataille::end_of_game() {
     else {
         std::cout << "les deux joueurs ont eu le meme score" << std::endl;
     }
-
-    std::cout << "Fin du jeu " << std::endl;
 }
 
 void Bataille::compute_winner(std::vector<bool> winner) {
