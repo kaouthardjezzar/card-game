@@ -21,13 +21,11 @@ protected:
 
     virtual void next_turn() = 0; // Choices for Player(s)
 
-    virtual void who_wins_this_turn() = 0;
-        // Check current game status turn winner
-
     virtual bool is_the_end() = 0;
         // return false till game endvirtual
 
     virtual void end_of_game() = 0;
+
 public:
     void lets_play();
 };

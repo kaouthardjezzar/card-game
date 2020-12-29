@@ -9,8 +9,7 @@ void GameTemplate::lets_play() {
         // How to arrange function call
         initialization();
         while(!is_the_end()) {
-            who_wins_this_turn();
-
+            next_turn();
         }
         end_of_game();
 }

@@ -12,25 +12,22 @@ class Bataille : public GameTemplate {
 private:
     Board board;
 
-protected:
+    void display_game_status(std::vector<bool> winner);
 
+    void who_wins_this_turn(std::vector<bool>& winner);
+
+    void compute_winner(std::vector<bool> winner);
+
+    void a_player_wins(Player &player);
+
+protected:
     virtual void initialization();
-    // Create cards
-    // Create deck
-    // Create players
 
     virtual void next_turn();
-    // Choices for Player(s)
-
-    virtual void who_wins_this_turn();
-    // Check current game status turn winner
 
     virtual bool is_the_end();
-    // return false till game end
 
     virtual void end_of_game();
-
-    void compute_winner(Player &player);
 
 public:
     Bataille() {}

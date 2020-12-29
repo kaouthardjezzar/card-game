@@ -35,50 +35,28 @@ void Bataille::initialization() {
     board.affect_decks_toplayers(decks);
 }
 
-void Bataille::who_wins_this_turn() {
-    // Draw cards and move to temp deck
-    auto &player_one = board.get_players()[0];
-    auto &player_two = board.get_players()[1];
-
-    std::unique_ptr<Card> card_one = std::move(player_one->get_deck()->take_front_card());
-    std::unique_ptr<Card> card_two = std::move(player_two->get_deck()->take_front_card());
-
-    player_one->get_deck()->remove_front_card();
-    player_two->get_deck()->remove_front_card();
-
-    // Display game status
-    std::cout << "Tour no : " << board.get_round() << std::endl;
-
-    std::cout << "Cartes jouées : " << std::endl;
-    std::cout << player_one->get_name() << " : " <<  *card_one << std::endl;
-    std::cout << player_two->get_name() << " : " <<  *card_two << std::endl;
-
+void Bataille::next_turn() {
     // Check round winner
     std::vector<bool> winner(2);
-    bool tie = *card_one == *card_two;
-    winner[0] = *card_one > *card_two;
-    winner[1] = *card_one < *card_two;
+    who_wins_this_turn(winner);
 
-    board.get_temp_deck().add_card(card_one);
-    board.get_temp_deck().add_card(card_two);
+    // As the function said
+    display_game_status(winner);
 
-    if(tie) {
-        return; // Don't do anything
-    }
-
-    // Player one wins
-    if (winner[0]) {
-        this->compute_winner(*board.get_players()[0]);
-    }
-    // Player two wins
-    else if (winner[1]){
-        this->compute_winner(*board.get_players()[1]);
-    }
+    // Stuff that needs to be done when someone wins
+    compute_winner(winner);
 }
 
 
-void Bataille::next_turn() {
-    // i guess we dont need this method ....
+void Bataille::who_wins_this_turn(std::vector<bool>& winner) {
+    auto &player_one = board.get_players()[0];
+    auto &player_two = board.get_players()[1];
+
+    const Card card_one = player_one->get_deck()->watch_front_card();
+    const Card card_two = player_two->get_deck()->watch_front_card();
+
+    winner[0] = card_one > card_two;
+    winner[1] = card_one < card_two;
 }
 
 
@@ -93,27 +71,90 @@ bool Bataille::is_the_end() {
 }
 
 void Bataille::end_of_game() {
-    vector <int> scores;
-    for (auto &&Player : board.get_players()) { //chaque joueur tire une carte
-        scores.push_back(Player->get_score());
-        cout << Player->get_name() << " a eu le score : " << Player->get_score() << endl;
+    std::vector<int> scores;
+    for (const auto &player : board.get_players()) {
+        scores.push_back(player->get_score());
+        std::cout << player->get_name() << " a eu le score : " << player->get_score() << std::endl;
     }
-    if (scores[0] > scores[1]) cout << board.get_players()[0]->get_name() << " est le gagnant" << endl;
-    else if (scores[0] < scores[1]) cout << board.get_players()[1]->get_name() << " est le gagnant" << endl;
-    else cout << "les deux joueurs ont eu le meme score" << endl;
+    if (scores[0] > scores[1]) {
+        std::cout << board.get_players()[0]->get_name() << " a gagné" << std::endl;
+    }
+    else if (scores[0] < scores[1]) {
+        std::cout << board.get_players()[1]->get_name() << " a gagné" << std::endl;
+    }
+    else {
+        std::cout << "les deux joueurs ont eu le meme score" << std::endl;
+    }
+
+    std::cout << "Fin du jeu " << std::endl;
 }
 
-void Bataille::compute_winner(Player &player){
+void Bataille::compute_winner(std::vector<bool> winner) {
+    // Add cards to board's temporary deck
+    for(auto &player: board.get_players()) {
+        board.get_temp_deck().add_card(player->get_deck()->take_front_card());
+        player->get_deck()->remove_front_card();
+
+    }
+
+    // If it's a tie
+    if(std::all_of(winner.begin(), winner.end(), [](bool win) { return win; })) {
+        return; // Don't do anything
+    }
+
+    // Player one wins
+    if (winner[0]) {
+        this->a_player_wins(*board.get_players()[0]);
+    }
+
+    // Player two wins
+    else if (winner[1]){
+        this->a_player_wins(*board.get_players()[1]);
+    }
+}
+
+void Bataille::a_player_wins(Player &player){
     // Increase score
     player.set_score(
-            board.get_players()[0]->get_score() + 1
-    );
+            board.get_players()[0]
+                    ->get_score() + 1
+            );
 
     // Add temp_deck cards to player cards
     for(const auto &card: board.get_temp_deck()) {
-        board.get_players()[0]->get_deck()->add_card(
+
+        board.get_players()[0]
+            ->get_deck()
+            ->add_card(
                 board.get_temp_deck().take_front_card()
-        );
-        board.get_temp_deck().remove_front_card();
+                );
+        board.get_temp_deck()
+            .remove_front_card();
     }
+}
+
+void Bataille::display_game_status(std::vector<bool> winner) {
+    std::cout << "Tour no : " << board.get_round() << std::endl;
+
+    std::cout << "Cartes jouées : " << std::endl;
+    for(const auto &player: board.get_players()) {
+        std::cout << player->get_name() << " : " <<  player->get_deck()->watch_front_card() << std::endl;
+    }
+
+    assert(winner.size() == board.get_players().size());
+
+    // If it's a tie
+    if(std::all_of(winner.begin(), winner.end(), [](bool win) { return win; })) {
+        std::cout << "Égalité, tour suivant " << endl;
+    }
+
+    // Display who wins
+    for(int i=0 ; i < winner.size(); ++i){
+        if(winner[i]) {
+            std::cout << board.get_players()[i]->get_name() << " a gagné ce tour " << std::endl;
+        }
+    }
+
+    // Saut de ligne
+    std::cout << "\n" << std::endl;
 }

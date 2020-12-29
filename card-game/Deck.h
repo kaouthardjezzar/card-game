@@ -66,6 +66,10 @@ public:
        return cards.back();
     }
 
+    Card& watch_front_card() const {
+        return *cards.back();
+    }
+
     void remove_front_card() {
         cards.pop_back();
     }
