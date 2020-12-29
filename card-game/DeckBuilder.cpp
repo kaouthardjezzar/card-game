@@ -16,7 +16,7 @@ std::unique_ptr<Deck> DeckBuilder::build() {
 }
 
 DeckBuilder* DeckBuilder::with_suits(std::vector<std::string>& _suits) {
-    suits = std::move(_suits);
+    suits = _suits;
     return this;
 }
 
@@ -28,4 +28,12 @@ DeckBuilder* DeckBuilder::with_range(const std::vector<int>& range) {
     }
 
     return this;
+}
+
+DeckBuilder* DeckBuilder::with_range(int left, int right) {
+    std::vector<int> range;
+    for(int i = left; i < right + 1; ++i){
+        range.push_back(i);
+    }
+    return with_range(range);
 }

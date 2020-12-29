@@ -20,13 +20,6 @@ void Card::set_suit(string &_suit) {
     suit = _suit;
 }
 
-void Card::exchange(Card &cd) {
-        Card temp=*this;
-        value=cd.value;
-        suit=cd.suit;
-        cd=temp;
-}
-
 // Operator overloading
 
 bool Card::operator>(const Card& c) const {
@@ -38,6 +31,9 @@ bool Card::operator<(const Card& c) const {
 }
 
 ostream & operator << (ostream & out, Card & aCard) {
+    if(!aCard.label.empty()) {
+        out << aCard.label << " ";
+    }
     // afficher la valeur
     switch (aCard.value) {
         case 1:  out << "Ace";   break;
@@ -57,4 +53,12 @@ ostream & operator << (ostream & out, Card & aCard) {
 
 bool Card::operator==(const Card &c) const {
     return value == c.get_value();
+}
+
+std::string Card::get_label() const {
+    return label;
+}
+
+void Card::set_label(string &_label) {
+    label = _label;
 }

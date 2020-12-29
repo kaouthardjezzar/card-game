@@ -23,6 +23,7 @@ public:
     std::unique_ptr<Deck> build();
     DeckBuilder* with_suits(std::vector<std::string>& suits);
     DeckBuilder* with_range(const std::vector<int>& range);
+    DeckBuilder* with_range(int left, int right);
 };
 
 #endif //CARD_GAME_DECKBUILDER_H

@@ -58,6 +58,7 @@ public:
 
     void sort();
     void add_card(std::string suit, int value);
+    void add_card(std::string label, std::string suit, int value);
     void add_card(std::unique_ptr<Card>& card) {
         cards.push_back(std::move(card)); // transfer card ownership to board deck
     }

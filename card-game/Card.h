@@ -14,6 +14,7 @@ class Card {
 
 private:
     string suit;
+    string label;
     int value;
 
 public:
@@ -21,9 +22,13 @@ public:
         value = 0;
         suit = "";
     }
-    Card(string _suit, int _value): suit(_suit), value(_value) {
+    Card(string _suit, int _value): suit(_suit), label(""), value(_value) {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating card : " << suit << " , " << value << "\n";
+    }
+    Card(string _label, string _suit, int _value): suit(_suit), label(_label), value(_value) {
+        LOG_INIT_COUT();
+        logd(LOG_DEBUG) << "Creating card : " << label << " , " << suit << " , " << value << "\n";
     }
 
     Card(const Card& cd)//constructeur par copie
@@ -38,10 +43,11 @@ public:
     }
 
     int get_value() const;
-    string get_suit () const;
-    void set_value (int& val) ;
-    void set_suit(string& _suit) ;
-    void exchange(Card& cd); //echanger deux carte
+    std::string get_suit() const;
+    std::string get_label() const;
+    void set_value (int& val);
+    void set_suit(std::string& _suit);
+    void set_label(std::string& _label);
 
     // Operator overloading
     bool operator>(const Card& c) const;

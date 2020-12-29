@@ -63,3 +63,7 @@ void Deck::split_half(vector<std::unique_ptr<Deck>> &decks) {
     decks.push_back(std::unique_ptr<Deck>(new Deck()));
     split(decks, 2);
 }
+
+void Deck::add_card(std::string label, std::string suit, int value) {
+    cards.push_back(std::unique_ptr<Card>(new Card(label, suit, value)));
+}
