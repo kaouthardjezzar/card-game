@@ -18,13 +18,9 @@ void Board::add_player(std::unique_ptr<Player>& player) {
     players.push_back(std::move(player));
 }
 
-void Board::affect_cards_toplayer() {
-        int a = deck->get_nbcards();
-        for (int j = 0; j < (deck->get_nbcards()/ players.size()); j++) {
-            for (int k = 0; k < players.size(); k++) {
-                players[k]->get_deck()->add_card(deck->pick_card(a)->get_suit(),deck->pick_card(a)->get_value());
-                a--;
-        }
+void Board::affect_decks_toplayers(std::vector<std::unique_ptr<Deck>>& decks) {
+    for(int i=0; i < get_players().size(); ++i) {
+        get_players()[i]->set_deck(decks[i]);
     }
 }
 

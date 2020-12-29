@@ -16,6 +16,22 @@ using namespace std;
 class Deck {
 private:
     vector<unique_ptr<Card>> cards;
+
+    void split(std::vector<std::unique_ptr<Deck>>& decks, int parts) {
+        if(parts != 2) {
+            std::cerr << "Only split to two parts" << std::endl;
+            return;
+        }
+        int half = (int) cards.size() / parts;
+        for(int i = 0 ; i < half; ++i) {
+            decks[0]->add_card(this->take_front_card());
+            this->remove_front_card();
+        }
+        for(int i = 0; i < half; ++i) {
+            decks[1]->add_card(this->take_front_card());
+            this->remove_front_card();
+        }
+    }
 public:
    Deck(): cards{} {
         LOG_INIT_COUT();
@@ -59,21 +75,7 @@ public:
         cards.erase(cards.begin());
     }
 
-    void split(std::vector<std::unique_ptr<Deck>>& decks) {
-        if(decks.size() != 2) {
-            std::cerr << "Only split to two parts" << std::endl;
-            return;
-        }
-        int parts = cards.size()/2;
-        for(int i = 0 ; i < parts; ++i) {
-            decks[0]->add_card(this->take_front_card());
-            this->remove_front_card();
-        }
-        for(int i = 0; i < parts; ++i) {
-            decks[1]->add_card(this->take_front_card());
-            this->remove_front_card();
-        }
-    }
+    void split_half(std::vector<std::unique_ptr<Deck>>& decks);
 
     unique_ptr<Card> pick_random();
     unique_ptr<Card>& pick_card(int pos);

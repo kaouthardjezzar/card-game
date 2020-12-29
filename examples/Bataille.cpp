@@ -29,19 +29,10 @@ void Bataille::initialization() {
     board.add_player(john);
     board.add_player(jane);
 
-    // Build Deck
-    std::vector<std::unique_ptr<Deck>> decks;
-    std::unique_ptr<Deck> part1 = std::unique_ptr<Deck>(new Deck());
-    std::unique_ptr<Deck> part2 = std::unique_ptr<Deck>(new Deck());
-
-    decks.push_back(std::move(part1));
-    decks.push_back(std::move(part2));
-
     // Split cards to players
-    board.get_deck().split(decks);
-    for(int i=0; i < board.get_players().size(); ++i) {
-        board.get_players()[i]->set_deck(decks[i]);
-    }
+    std::vector<std::unique_ptr<Deck>> decks;
+    board.get_deck().split_half(decks);
+    board.affect_decks_toplayers(decks);
 }
 
 void Bataille::who_wins_this_turn() {

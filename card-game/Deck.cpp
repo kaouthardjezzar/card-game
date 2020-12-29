@@ -57,3 +57,9 @@ int Deck::get_nbcards() { //nombre de cartes restant dans le paquet
 bool Deck::isEmpty() {
     return this->get_nbcards()==0;
 }
+
+void Deck::split_half(vector<std::unique_ptr<Deck>> &decks) {
+    decks.push_back(std::unique_ptr<Deck>(new Deck()));
+    decks.push_back(std::unique_ptr<Deck>(new Deck()));
+    split(decks, 2);
+}

@@ -13,7 +13,7 @@ TEST(Deck, CreateBasicDeck) {
     ASSERT_TRUE(true);
 }
 
-TEST(Deck, SplitDeck) {
+TEST(Deck, SplitHalfDeck) {
     Deck deck;
 
     int parts = 20;
@@ -27,10 +27,7 @@ TEST(Deck, SplitDeck) {
 
     std::vector<std::unique_ptr<Deck>> decks;
 
-    decks.push_back(std::unique_ptr<Deck>(new Deck()));
-    decks.push_back(std::unique_ptr<Deck>(new Deck()));
-
-    deck.split(decks);
+    deck.split_half(decks);
 
     ASSERT_TRUE(deck.get_nbcards() == 0);
     ASSERT_TRUE(decks[0]->get_nbcards() == parts/2);
