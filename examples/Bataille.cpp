@@ -23,11 +23,8 @@ void Bataille::initialization() {
     board.shuffle_deck();
 
     // Players
-    std::unique_ptr<Player> john = std::unique_ptr<Player>(new Player("John"));
-    std::unique_ptr<Player> jane = std::unique_ptr<Player>(new Player("Jane"));
-
-    board.add_player(john);
-    board.add_player(jane);
+    std::vector<string> players = {"John", "Jane"};
+    board.create_players(players);
 
     // Split cards to players
     std::vector<std::unique_ptr<Deck>> decks;

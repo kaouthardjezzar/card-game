@@ -28,3 +28,10 @@ std::vector<std::unique_ptr<Player>>& Board::get_players() {
     return players;
 }
 
+void Board::create_players(std::vector<string>& _players) {
+    for(const string& name: _players) {
+        std::unique_ptr<Player> player = std::unique_ptr<Player>(new Player(name));
+        add_player(player);
+    }
+}
+
