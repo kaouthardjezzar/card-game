@@ -42,9 +42,22 @@ void Uno::initialization() {
     }
 
     assert(deck->get_nbcards() == 108);
+
+    board.set_deck(std::move(deck));
+
+    // Creating players = default 3 Players
+    std::vector<std::string> players = {"John", "Jane", "Doe"};
+    board.create_players(players);
+
+    // Affects decks to each players
+    std::vector<std::unique_ptr<Deck>> decks;
+    board.get_deck().distribute(players.size(), 7, decks);
+    board.affect_decks_toplayers(decks);
+
 }
 
 void Uno::next_turn() {
+    //
 
 }
 

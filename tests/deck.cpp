@@ -58,3 +58,27 @@ TEST(Deck, RemoveFrontCard) {
     std::unique_ptr<Card> took_card1 = std::move(deck.take_front_card());
     ASSERT_TRUE(took_card1->get_value() == 1);
 }
+
+TEST(Deck, SplitLimitedParts) {
+
+    Deck deck;
+
+    int parts = 28;
+
+    for(int i = 0; i < parts; ++i){
+        std::unique_ptr<Card> card = std::unique_ptr<Card>(new Card("spade", i));
+        deck.add_card(card);
+    }
+
+    ASSERT_TRUE(deck.get_nbcards() == parts);
+
+    std::vector<std::unique_ptr<Deck>> decks;
+
+    deck.distribute(3, 7, decks);
+
+    ASSERT_TRUE(deck.get_nbcards() == 7);
+    ASSERT_TRUE(decks[0]->get_nbcards() == 7);
+    ASSERT_TRUE(decks[1]->get_nbcards() == 7);
+    ASSERT_TRUE(decks[2]->get_nbcards() == 7);
+
+}
