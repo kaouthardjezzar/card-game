@@ -67,3 +67,16 @@ void Deck::split_half(vector<std::unique_ptr<Deck>> &decks) {
 void Deck::add_card(std::string label, std::string suit, int value) {
     cards.push_back(std::unique_ptr<Card>(new Card(label, suit, value)));
 }
+
+void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::unique_ptr<Deck>> &decks) {
+    assert(cards.size() >= (nb_players * nb_cards_per_player));
+
+    for (int i = 0; i < nb_players; ++i) {
+        std::unique_ptr<Deck> deck = std::unique_ptr<Deck>(new Deck());
+        for (int j = 0; j < nb_cards_per_player; ++j) {
+            deck->add_card(this->take_front_card());
+            this->remove_front_card();
+        }
+        decks.push_back(std::move(deck));
+    }
+}

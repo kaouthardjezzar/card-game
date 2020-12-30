@@ -88,6 +88,8 @@ public:
     Card& draw();
     int get_nbcards();
     bool isEmpty();
+
+    void distribute(int nb_players, int nb_cards_per_player, std::vector<std::unique_ptr<Deck>> &decks);
 };
 
 
