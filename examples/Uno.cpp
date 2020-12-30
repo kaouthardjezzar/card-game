@@ -4,12 +4,13 @@
 
 #include <iostream>
 #include "Uno.h"
+#include "UnoCards.h"
 
 void Uno::initialization() {
     std::cout << "Launching Uno " << std::endl;
 
     // Configuring cards
-    std::vector<std::string> suits = {"bleu", "rouge", "jaune", "verte"};
+    std::vector<std::string> suits = {BLUE, RED, YELLOW, GREEN};
     std::vector<int> range{0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
     DeckBuilder deck_builder;
 
@@ -23,22 +24,22 @@ void Uno::initialization() {
     // 8 * 3 * 4 couleurs tous en double
     for(std::string& suit: suits) {
         // 8 cartes « +2 », (2 pour chaque couleur)
-        deck->add_card("+2", suit, 2);
-        deck->add_card("+2", suit, 2);
+        deck->add_card(PLUS_TWO, suit, 2);
+        deck->add_card(PLUS_TWO, suit, 2);
 
         // 8 cartes « Inversement de sens », (2 pour chaque couleur)
-        deck->add_card("Inversement de sens", suit, 2);
-        deck->add_card("Inversement de sens", suit, 2);
+        deck->add_card(REVERSE, suit, 2);
+        deck->add_card(REVERSE, suit, 2);
 
         // 8 cartes « Passe ton tour », (2 pour chaque couleur)
-        deck->add_card("Passe ton tour", suit, 2);
-        deck->add_card("Passe ton tour", suit, 2);
+        deck->add_card(SKIP, suit, 2);
+        deck->add_card(SKIP, suit, 2);
 
         // 4 cartes « Joker »
-        deck->add_card("Joker", suit, 0);
+        deck->add_card(JOKER, suit, 0);
 
         // 4 cartes « +4 »
-        deck->add_card("+4", suit, 4);
+        deck->add_card(PLUS_FOUR, suit, 4);
     }
 
     assert(deck->get_nbcards() == 108);
