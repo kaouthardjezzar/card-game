@@ -21,17 +21,17 @@ private:
     void a_player_wins(Player &player);
 
 protected:
-    virtual void initialization();
+    void initialization() override;
 
-    virtual void next_turn();
+    void next_turn() override;
 
-    virtual bool is_the_end();
+    bool is_the_end() override;
 
-    virtual void end_of_game();
+    void end_of_game() override;
 
 public:
-    Uno() {}
-    virtual ~Uno() {}
+    Uno() = default;
+    virtual ~Uno() = default;
 
 };
 
