@@ -40,6 +40,8 @@ public:
     void set_score(int n) {
         score = n;
     }
+
+    friend ostream & operator << (ostream & out,const Player &player);
 };
 
 

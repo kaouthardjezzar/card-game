@@ -20,3 +20,8 @@ void Player::increment_score()// incrementer le score du joueur
 int Player::get_score() {
     return score;
 }
+
+ostream & operator << (ostream & out, const Player& player) {
+    out << player.get_name();
+    return out;
+}
