@@ -16,9 +16,10 @@ private:
     std::vector<std::unique_ptr<Player>> players; // 2
     std::unique_ptr<Deck> temp_deck; // Used to hold temporary cards for score computation
     int round;
+    int turn;
 
 public:
-    explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()}, round{0} {
+    explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()}, round{0}, turn{0} {
     }
 
     virtual ~Board() = default;
@@ -39,6 +40,14 @@ public:
 
     int get_round() const {
         return round;
+    }
+
+    int get_turn() const {
+        return turn;
+    }
+
+    void set_turn(int _turn) {
+        turn = _turn;
     }
 
     void shuffle_deck();

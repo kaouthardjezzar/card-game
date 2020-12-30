@@ -57,24 +57,69 @@ void Uno::initialization() {
 }
 
 void Uno::next_turn() {
-    //
+    auto& players = board.get_players();
+    int current_player_id = (int) board.get_round() % players.size();
+    auto& current_player = players[current_player_id];
 
+    board.set_turn(current_player_id);
+
+    auto& draw = board.get_deck().watch_front_card();
+    std::cout << "Carte de la table pioché : " << draw << std::endl;
+
+    std::cout << "Tour no: " << board.get_round() << std::endl;
+
+    // Pour commencer, le joueur ayant distribué retourne la première carte de la pioche et
+    // le joueur situé à gauche commence la partie.
+
+    std::cout << "À " << *current_player << " de jouer !. " << std::endl;
+    std::cout << "Vos cartes :" << std::endl;
+    int i = 1;
+    for(auto& card: *current_player->get_deck()) {
+        std::cout << i++ << ". " << *card << std::endl;
+    }
+
+    int choice = ask_player<int>("Votre choix :") - 1;
+    std::vector<bool> winner(players.size());
+    who_wins_this_turn(winner, choice);
 }
 
-void Uno::who_wins_this_turn(std::vector<bool>& winner) {
+void Uno::who_wins_this_turn(std::vector<bool>& winner,int choice) {
+    auto &player = board.get_players()[board.get_turn()];
+
+    auto& card = player->get_deck()->watch_card_at(choice);
+
+    std::cout << "Vous avez choisi : " << card << std::endl;
+
+    // Il doit recouvrir la carte de la pioche par une carte d’une même couleur,
+    // du même chiffre ou du même symbole.
+
+    // Si le joueur ne peut pas jouer,
+    // il a la possibilité de poser une carte « joker » ou « +4 ».
+
+    // Dans le cas ou le joueur ne possède aucune de ces cartes,
+    // il doit en piocher une.
+    // Si cette carte peut être jouée,
+    // il peut directement la poser,
+    // sinon il devra la conserver dans son jeu.
 
 }
 
 
 bool Uno::is_the_end() {
-    return true;
+    // Lorsque qu’un joueur n’a plus qu’une carte en sa possession,
+    // il doit crier « Uno » pour avertir tous les autres joueurs.
+    // S’il oublie de le faire et qu’un joueur s’en aperçoit,
+    // il devra piocher 2 cartes en pénalité.
+
+    board.increase_round();
+    return false;
 }
 
 void Uno::end_of_game() {
 
 }
 
-void Uno::compute_winner(std::vector<bool> winner) {
+void Uno::compute_winner(std::vector<bool>& winner) {
 
 }
 

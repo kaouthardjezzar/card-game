@@ -14,9 +14,9 @@ private:
 
     void display_game_status(std::vector<bool> winner);
 
-    void who_wins_this_turn(std::vector<bool>& winner);
+    void who_wins_this_turn(std::vector<bool>& winner, int choice);
 
-    void compute_winner(std::vector<bool> winner);
+    void compute_winner(std::vector<bool>& winner);
 
     void a_player_wins(Player &player);
 

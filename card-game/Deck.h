@@ -71,6 +71,11 @@ public:
         return *cards.back();
     }
 
+    Card& watch_card_at(int pos) const {
+        assert(pos >=0 && pos < cards.size());
+        return *cards.at(pos);
+    }
+
     void remove_front_card() {
         cards.pop_back();
     }
