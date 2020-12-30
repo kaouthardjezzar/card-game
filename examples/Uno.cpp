@@ -10,7 +10,7 @@ void Uno::initialization() {
 
     // Configuring cards
     std::vector<std::string> suits = {"bleu", "rouge", "jaune", "verte"};
-    std::vector<int> range{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
+    std::vector<int> range{0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
     DeckBuilder deck_builder;
 
     // Total 108
