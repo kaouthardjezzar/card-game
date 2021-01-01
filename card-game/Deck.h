@@ -9,8 +9,6 @@
 #include <memory>
 #include "Card.h"
 
-#define VECTOR_IT __wrap_iter<vector<unique_ptr<Card, default_delete<Card>>, allocator<unique_ptr<Card, default_delete<Card>>>>::pointer>
-
 using namespace std;
 
 class Deck {
@@ -48,11 +46,11 @@ public:
     typedef Card * iterator;
     typedef const Card * const_iterator;
 
-    VECTOR_IT begin() {
+    std::vector<std::unique_ptr<Card>>::iterator begin() {
         return cards.begin();
     }
 
-    VECTOR_IT end() {
+    std::vector<std::unique_ptr<Card>>::iterator end() {
         return cards.end();
     }
 
