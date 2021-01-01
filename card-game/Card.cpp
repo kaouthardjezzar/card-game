@@ -46,11 +46,7 @@ ostream & operator << (ostream & out, Card & aCard) {
 //        default:	// output number
 //            out << aCard.value; break;
 //    }
-//    // afficher la famille
-//        if ( aCard.suit == "diamond")  out << " of Diamonds";
-//        if ( aCard.suit == "spade")  out << " of Spades";
-//        if ( aCard.suit == "heart")  out << " of Hearts";
-//        if ( aCard.suit == "club")  out << " of Clubs";
+
     return out;
 }
 

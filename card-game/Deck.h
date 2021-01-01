@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include "Card.h"
+#include <cassert>
 
 using namespace std;
 
