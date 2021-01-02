@@ -6,8 +6,31 @@
 
 #include <utility>
 
+Deck& Board::get_deck() {
+    return *deck;
+}
 void Board::set_deck(std::unique_ptr<Deck> _deck) {
     deck = std::move(_deck);
+}
+
+Deck& Board::get_temp_deck() {
+    return *temp_deck;
+}
+
+void Board::increase_round() {
+    round++;
+}
+
+int Board::get_round() const {
+    return round;
+}
+
+int Board::get_turn() const {
+    return turn;
+}
+
+void Board::set_turn(int _turn) {
+    turn = _turn;
 }
 
 void Board::shuffle_deck() {

@@ -6,9 +6,40 @@
 #include <algorithm>
 #include <random>
 
+
+
+void Deck::split(std::vector<std::unique_ptr<Deck>>& decks, int parts) {
+    if(parts != 2) {
+        std::cerr << "Only split to two parts" << std::endl;
+        return;
+    }
+    int half = (int) cards.size() / parts;
+    for(int i = 0 ; i < half; ++i) {
+        decks[0]->add_card(this->take_front_card());
+        this->remove_front_card();
+    }
+    for(int i = 0; i < half; ++i) {
+        decks[1]->add_card(this->take_front_card());
+        this->remove_front_card();
+    }
+}
+
 void Deck::add_card(std::string suit, int value) {
     cards.push_back(std::unique_ptr<Card>(new Card(suit, value)));
 }
+
+void Deck::add_card(std::unique_ptr<Card>& card) {
+    cards.push_back(std::move(card)); // transfer card ownership to board deck
+}
+
+std::vector<std::unique_ptr<Card>>::iterator Deck::begin() {
+    return cards.begin();
+}
+
+std::vector<std::unique_ptr<Card>>::iterator Deck::end() {
+    return cards.end();
+}
+
 
 void Deck::sort() { //trier un paquet
 //    for(int i=0;i<cards.size();i++)
@@ -31,6 +62,28 @@ void Deck::shuffle(){ //mélanger un paquet
                     std::random_device{}()
             }
             );
+}
+
+unique_ptr<Card>& Deck::take_front_card() {
+    return cards.back();
+}
+
+Card& Deck::watch_front_card() const {
+    return *cards.back();
+}
+
+Card& Deck::watch_card_at(int pos) const {
+    assert(pos >=0 && pos < cards.size());
+    return *cards.at(pos);
+}
+
+void Deck::remove_front_card() {
+    cards.pop_back();
+}
+
+void Deck::pop_front() {
+    assert(!cards.empty());
+    cards.erase(cards.begin());
 }
 
 unique_ptr<Card> Deck::pick_random() { // prendre une carte du paquet au hasard
