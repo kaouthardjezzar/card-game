@@ -9,6 +9,7 @@
 #include "../card-game/Board.h"
 
 class GameTemplate { // Abstract
+
 protected:
     // Players []
     // Scores []

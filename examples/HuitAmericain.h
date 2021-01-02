@@ -11,6 +11,9 @@
 class HuitAmericain : public GameTemplate {
 private:
     Board board;
+    std::vector<string> special_cards = {"8", "joker", "11", "1", "2"};
+
+    void first_turn();
 
 protected:
     void initialization() override;
