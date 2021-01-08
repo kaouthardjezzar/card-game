@@ -15,11 +15,14 @@ private:
     std::unique_ptr<Deck> deck; //52
     std::vector<std::unique_ptr<Player>> players; // 2
     std::unique_ptr<Deck> temp_deck; // Used to hold temporary cards for score computation
-    int round;
-    int turn;
+    int round; // 0 to inf
+    int turn; // current player index
+    int direction; // +1 or -1
+
+    int compute_next_turn() const;
 
 public:
-    explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()}, round{0}, turn{0} {
+    explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()}, round{0}, turn{0}, direction(1) {
     }
     virtual ~Board() = default;
 
@@ -29,7 +32,7 @@ public:
 
     Deck& get_temp_deck();
 
-    void increase_round();
+    void next_round();
 
     int get_round() const;
 
@@ -46,6 +49,12 @@ public:
     void affect_decks_toplayers(std::vector<std::unique_ptr<Deck>>& decks);
 
     std::vector<std::unique_ptr<Player>>& get_players();
+
+    Player& get_current_player();
+
+    Player& get_next_player();
+
+    void reverse_direction();
 
 };
 
