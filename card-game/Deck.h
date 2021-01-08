@@ -40,17 +40,15 @@ public:
 
     void add_card(std::string suit, int value);
     void add_card(std::string label, std::string suit, int value);
-    void add_card(std::unique_ptr<Card>& card);
+    void add_card(std::unique_ptr<Card> card);
     void shuffle();
-    unique_ptr<Card>& take_front_card();
+    unique_ptr<Card> take_front_card();
+
+    unique_ptr<Card> take_card_at(int pos); // pos from 0 -> cards size
 
     Card& watch_front_card() const;
 
     Card& watch_card_at(int pos) const;
-
-    void remove_front_card();
-
-    void pop_front();
 
     void split_half(std::vector<std::unique_ptr<Deck>>& decks);
 
