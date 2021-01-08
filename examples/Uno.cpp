@@ -64,7 +64,8 @@ bool is_special_card(const Card& card) {
             label == PLUS_FOUR ||
             label == REVERSE ||
             label == SKIP ||
-            label == JOKER;
+            label == JOKER ||
+            label == NO_UNO;
 }
 
 void compute_special_card(const Card& card, Board& board) {
@@ -100,6 +101,14 @@ void compute_special_card(const Card& card, Board& board) {
         board.next_round();
     } else if (label == JOKER) {
         std::cout << current_player << " choisi une couleur " << std::endl;
+    } else if(label == NO_UNO) {
+        std::cout << current_player << " n'a pas crié Uno et doit piocher deux(2) cartes " << std::endl;
+        for(int i =0; i < 2; i++){
+            current_player.get_deck()->add_card(
+                    board.get_deck().take_front_card()
+            );
+        }
+        std::cout << "Vos cartes ont été piochées automatiquement " << std::endl;
     }
     current_player.increase_score_by(card.get_value());
     board.next_round();
@@ -144,19 +153,35 @@ void display_valid_move(Player& current_player, const Card& card_on_board) {
     if(no_correct_move) {
         std::cout << "0. Vous devez piocher " << std::endl;
     }
+
+    // Si le joueur n'a pas crié Uno
+    if(current_player.get_deck()->get_nbcards() == 1) {
+        std::cout << "99. Pas de Uno " << std::endl;
+    }
 }
 
 std::unique_ptr<Card> Uno::choose_card(Player& current_player, Card& card_on_board){
-    std::cout << "Vos cartes : " << std::endl;
+    std::cout << "Vous avez " << current_player.get_deck()->get_nbcards() << " carte(s)" << std::endl;
+    std::cout << "Vous pouvez choisir : " << std::endl;
     display_valid_move(current_player, card_on_board);
     int choice = 0;
-    choice = ask_player<int>("Votre choix : ") -1; // Normally gets card position
+    choice = ask_player<int>("Votre choix : "); // Normally gets card position
 
     std::unique_ptr<Card> card;
-    if(choice == -1) { // Player can't move and needs to draw a card
+
+    // Si le joueur n'a plus qu'une seule carte
+    // Et n'a pas crié Uno
+    if(choice == 99) {
+        if(get_nb_valid_move(card_on_board, current_player) == 1) {
+            card = std::unique_ptr<Card>(new Card(NO_UNO, BLUE, -2));
+        } else {
+            std::cout << "Pourquoi tricher ? " << std::endl;
+            current_player.set_score(-999);
+        }
+    } else if(choice == 0) { // Player can't move and needs to draw a card
         card = std::move(board.get_deck().take_front_card());
     } else { // Pick chosen card
-        card = std::move (current_player.get_deck()->take_card_at(choice));
+        card = std::move (current_player.get_deck()->take_card_at(choice-1));
     }
 
     return std::move(card);
@@ -220,4 +245,23 @@ void Uno::display_game_status() {
     SKIPLINE
     std::cout << "[TABLE] Carte sur la table : " << card_on_board << std::endl;
     std::cout << "[TOUR] Au tour de " << current_player << std::endl;
+}
+
+bool Uno::is_the_end() {
+    return std::any_of(
+            board.get_players().begin(),
+            board.get_players().end(),
+            [](const std::unique_ptr<Player>& player) {
+                return player->get_deck()->isEmpty();
+            });
+}
+
+int Uno::get_nb_valid_move(const Card& card_on_board, Player &player) {
+    int i = 0;
+    for(auto &card: *player.get_deck()) {
+        if(is_correct_move(card_on_board, *card)) {
+            i++;
+        }
+    }
+    return i;
 }

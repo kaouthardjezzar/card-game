@@ -18,4 +18,6 @@
 #define JOKER "Joker"
 #define PLUS_FOUR "+4"
 
+#define NO_UNO "Pas de Uno"
+
 #endif //CARD_GAME_UNOCARDS_H

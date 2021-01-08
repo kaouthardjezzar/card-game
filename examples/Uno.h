@@ -15,6 +15,8 @@ class Uno  {
 private:
     Board board;
 
+    int get_nb_valid_move(const Card& card, Player& player);
+
 protected:
     void initialization() ;
 
@@ -43,6 +45,8 @@ protected:
     }
 
     void display_game_status();
+
+    bool is_the_end();
 
 public:
     Uno() = default;
