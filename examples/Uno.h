@@ -7,6 +7,7 @@
 
 #include "GameTemplate.h"
 #include "../card-game/Board.h"
+#include <iostream>
 
 class Uno : public GameTemplate {
 private:
