@@ -1,6 +1,6 @@
 
 card-game: main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o
-	g++ main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o -o card-game
+	g++ main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o HuitAmericain.o -o card-game
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -28,6 +28,10 @@ Bataille.o: examples/Bataille.cpp examples/Bataille.h
 
 Uno.o: examples/Uno.cpp examples/Uno.h
 	g++ -c examples/Uno.cpp
+
+HuitAmericain.o: examples/HuitAmericain.cpp examples/HuitAmericain.h
+	g++ -c examples/HuitAmericain.cpp
+
 
 clean: 
 	rm *.o card-game.exe

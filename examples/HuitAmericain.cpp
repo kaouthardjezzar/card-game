@@ -83,7 +83,7 @@ void HuitAmericain::excute_round() {
             }
             board.get_temp_deck().add_card(std::move(card));
         }
-        bool ok = chooseCard(reinterpret_cast<Player &>(board.get_players()[board.get_turn()]));
+        bool ok = chooseCard();
         if(!ok){
             if (validCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
@@ -137,19 +137,16 @@ void HuitAmericain::specialProcess() {
                     }
                 board.set_turn(board.get_turn()+1);
             }
-            case 8: {
-
-            }
         }
     }
 
 }
 
-bool HuitAmericain::chooseCard(Player &player) {
-    for (int i= 0; i< player.get_deck()->get_nbcards();i++)
+bool HuitAmericain::chooseCard() {
+    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
     {
-        if (validCard(player.get_deck()->watch_card_at(i))){
-            board.get_temp_deck().add_card(player.get_deck()->take_card_at(i));
+        if (validCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
+            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
             if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
             board.next_round();
             return true;
@@ -171,7 +168,7 @@ bool HuitAmericain::is_the_end() {
 void HuitAmericain::end_of_game() {
     std::cout << "Fin du jeu " << std::endl;
     for (int i=0; i<board.get_players().size();i++){
-        if (board.get_players()[i]->get_deck()->get_nbcards()==0) {
+        if (board.get_players()[i]->get_deck()->isEmpty()) {
             std::cout << board.get_players()[i]->get_name() << " a gagné" << endl;
         }
     }

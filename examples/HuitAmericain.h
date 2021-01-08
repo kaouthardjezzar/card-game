@@ -18,7 +18,7 @@ private:
 
     void excute_round();
 
-    bool chooseCard(Player &player);
+    bool chooseCard();
 
     bool validCard (Card &card);
 
