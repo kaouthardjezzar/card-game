@@ -38,7 +38,6 @@ public:
 
     std::vector<std::unique_ptr<Card>>::iterator end();
 
-    void sort();
     void add_card(std::string suit, int value);
     void add_card(std::string label, std::string suit, int value);
     void add_card(std::unique_ptr<Card>& card);

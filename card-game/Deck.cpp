@@ -41,19 +41,6 @@ std::vector<std::unique_ptr<Card>>::iterator Deck::end() {
 }
 
 
-void Deck::sort() { //trier un paquet
-//    for(int i=0;i<cards.size();i++)
-//    {
-//        for(int j=i+1;j<cards.size()+1;j++)
-//        {
-//            if(cards[i]->compare(reinterpret_cast<Card &>(cards[j]))==1)
-//            {
-//                cards[i]->exchange(reinterpret_cast<Card &>(cards[j]));
-//            }
-//        }
-//    }
-}
-
 void Deck::shuffle(){ //mélanger un paquet
     std::shuffle(
             std::begin(cards),

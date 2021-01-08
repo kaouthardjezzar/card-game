@@ -14,7 +14,13 @@ private:
     std::vector<string> special_cards = {"8", "joker", "11", "1", "2"};
 
     void first_turn();
+    bool isSpecialCard(const Card card);
 
+    void display_game_status(std::vector<bool> winner);
+
+    void who_wins_this_turn();
+
+    void compute_winner(std::vector<bool> winner);
 protected:
     void initialization() override;
 
