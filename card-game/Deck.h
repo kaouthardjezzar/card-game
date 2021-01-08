@@ -10,11 +10,10 @@
 #include "Card.h"
 #include <cassert>
 
-using namespace std;
 
 class Deck {
 private:
-    vector<unique_ptr<Card>> cards;
+    std::vector<std::unique_ptr<Card>> cards;
 
     void split(std::vector<std::unique_ptr<Deck>>& decks, int parts);
 
@@ -42,27 +41,25 @@ public:
     void add_card(std::string label, std::string suit, int value);
     void add_card(std::unique_ptr<Card>& card);
     void shuffle();
-    unique_ptr<Card>& take_front_card();
+    std::unique_ptr<Card>& take_front_card();
+    std::unique_ptr<Card> &take_card_at(int pos);
 
     Card& watch_front_card() const;
 
     Card& watch_card_at(int pos) const;
 
     void remove_front_card();
+    void remove_card_at(int pos);
 
     void pop_front();
 
     void split_half(std::vector<std::unique_ptr<Deck>>& decks);
 
-    unique_ptr<Card> pick_random();
-
-    unique_ptr<Card>& pick_card(int pos);
-
-    Card& draw();
     int get_nbcards();
     bool isEmpty();
 
     void distribute(int nb_players, int nb_cards_per_player, std::vector<std::unique_ptr<Deck>> &decks);
+    friend ostream & operator << (ostream & out, Deck & aDeck);
 };
 
 
