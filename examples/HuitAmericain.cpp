@@ -13,9 +13,9 @@ void HuitAmericain::initialization() {
     std::vector<int> range{0,1,2,3,4,5,6,7,8,9,10,11,12,13};
     DeckBuilder deck_builder;
     std::unique_ptr<Deck> deck = deck_builder.create()
-            ->with_suits(suits)
-            ->with_range(range)
-            ->build();
+            .with_suits(suits)
+            .with_range(range)
+            .build();
 
     deck->add_card("joker", "", 0);
     deck->add_card("joker", "", 0);
