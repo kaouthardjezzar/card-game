@@ -21,34 +21,21 @@ private:
 public:
     explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()}, round{0}, turn{0} {
     }
-
     virtual ~Board() = default;
 
     void set_deck(std::unique_ptr<Deck> _deck);
 
-    Deck& get_deck() {
-        return *deck;
-    }
+    Deck& get_deck();
 
-    Deck& get_temp_deck() {
-        return *temp_deck;
-    }
+    Deck& get_temp_deck();
 
-    void increase_round() {
-        round++;
-    }
+    void increase_round();
 
-    int get_round() const {
-        return round;
-    }
+    int get_round() const;
 
-    int get_turn() const {
-        return turn;
-    }
+    int get_turn() const;
 
-    void set_turn(int _turn) {
-        turn = _turn;
-    }
+    void set_turn(int _turn);
 
     void shuffle_deck();
 

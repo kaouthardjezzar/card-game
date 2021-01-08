@@ -29,17 +29,11 @@ public:
     std::string get_name() const;
     std::unique_ptr<Deck>& get_deck();
 
-    void set_deck(std::unique_ptr<Deck>& _deck) {
-        deck = std::move(_deck);
-    }
-
-    void increment_score();
+    void set_deck(std::unique_ptr<Deck>& _deck);
 
     int get_score();
 
-    void set_score(int n) {
-        score = n;
-    }
+    void set_score(int n);
 
     friend ostream & operator << (ostream & out,const Player &player);
 };

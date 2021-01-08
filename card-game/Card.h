@@ -49,6 +49,7 @@ public:
     void set_suit(std::string& _suit);
     void set_label(std::string& _label);
 
+    bool isSameCol (const Card&c);
     // Operator overloading
     bool operator>(const Card& c) const;
     bool operator<(const Card& c) const;

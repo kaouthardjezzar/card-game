@@ -12,13 +12,16 @@ std::unique_ptr<Deck>& Player::get_deck() {
     return deck;
 }
 
-void Player::increment_score()// incrementer le score du joueur
-{
-    score=+2;
+void Player::set_deck(std::unique_ptr<Deck>& _deck) {
+    deck = std::move(_deck);
 }
 
 int Player::get_score() {
     return score;
+}
+
+void Player::set_score(int n) {
+    score = n;
 }
 
 ostream & operator << (ostream & out, const Player& player) {
