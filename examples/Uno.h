@@ -20,6 +20,8 @@ protected:
 
     void first_turn() ;
 
+    std::unique_ptr<Card> choose_card(Player&, Card&);
+
     // Utils
     template<typename T>
     T ask_player(const std::string& title)

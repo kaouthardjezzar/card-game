@@ -144,16 +144,7 @@ void display_valid_move(Player& current_player, const Card& card_on_board) {
     }
 }
 
-
-void Uno::next_turn() {
-    std::cout << std::endl;
-
-    Player& current_player = board.get_current_player();
-    Card &card_on_board = board.get_temp_deck().watch_front_card();
-
-    std::cout << "Au tour de " << current_player << std::endl;
-    std::cout << " Carte sur la table " << card_on_board << std::endl;
-
+std::unique_ptr<Card> Uno::choose_card(Player& current_player, Card& card_on_board){
     display_valid_move(current_player, card_on_board);
     int choice = 0;
     choice = ask_player<int>("Votre choix : ") -1; // Normally gets card position
@@ -164,6 +155,21 @@ void Uno::next_turn() {
     } else { // Pick chosen card
         card = std::move (current_player.get_deck()->take_card_at(choice));
     }
+
+    return std::move(card);
+}
+
+
+void Uno::next_turn() {
+    std::cout << std::endl;
+
+    Player& current_player = board.get_current_player();
+    Card &card_on_board = board.get_temp_deck().watch_front_card();
+
+    std::cout << "Au tour de " << current_player << std::endl;
+    std::cout << "Carte sur la table " << card_on_board << std::endl;
+
+    std::unique_ptr<Card> card = choose_card(current_player, card_on_board);
 
     if(is_special_card(*card)) {
         compute_special_card(*card,  board);
@@ -185,21 +191,13 @@ void Uno::first_turn() {
     Card &card_on_board = board.get_temp_deck().watch_front_card();
 
     std::cout << "Premier tour" << std::endl;
-    std::cout << " Carte sur la table " << card_on_board << std::endl;
+    std::cout << "Carte sur la table " << card_on_board << std::endl;
+
     if(is_special_card(card_on_board)) {
         compute_special_card(card_on_board,  board);
     } else {
         // Ask player what he wants to do
-        display_valid_move(current_player, card_on_board);
-        int choice = 0;
-        choice = ask_player<int>("Votre choix : ") -1; // Normally gets card position
-
-        std::unique_ptr<Card> card;
-        if(choice == -1) { // Player can't move and needs to draw a card
-            card = std::move(board.get_deck().take_front_card());
-        } else { // Pick chosen card
-            card = std::move (current_player.get_deck()->take_card_at(choice));
-        }
+        std::unique_ptr<Card> card = choose_card(current_player, card_on_board);
         compute_normal_card(*card, board);
     }
 }
