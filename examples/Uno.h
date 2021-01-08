@@ -7,31 +7,49 @@
 
 #include "GameTemplate.h"
 #include "../card-game/Board.h"
+#include <iostream>
 
-class Uno : public GameTemplate {
+class Uno  {
 private:
     Board board;
 
-    void display_game_status(std::vector<bool> winner);
-
-    void who_wins_this_turn(std::vector<bool>& winner, int choice);
-
-    void compute_winner(std::vector<bool>& winner);
-
-    void a_player_wins(Player &player);
-
 protected:
-    void initialization() override;
+    void initialization() ;
 
-    void next_turn() override;
+    void next_turn() ;
 
-    bool is_the_end() override;
+    void first_turn() ;
 
-    void end_of_game() override;
+    // Utils
+    template<typename T>
+    T ask_player(const std::string& title)
+    {
+        T x = 0;
+        std::cout << title;
+        while (!( std::cin >> x))
+        {
+            std::cin.clear();
+            std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Veuillez entrer un nombre/mot correct: " << endl;
+            std::cout << title;
+        }
+        std::cin.clear();
+        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return (x);
+    }
 
 public:
     Uno() = default;
     virtual ~Uno() = default;
+
+    void lets_play() {
+        initialization();
+        first_turn();
+        int i = 0;
+        while(i++ < 4) {
+            next_turn();
+        }
+    }
 
 };
 

@@ -11,7 +11,7 @@
 #define GREEN "vert"
 #define YELLOW "jaune"
 
-// Cards
+// Special Cards
 #define PLUS_TWO "+2"
 #define REVERSE "Inversement de sens"
 #define SKIP "Passe ton tour"

@@ -16,11 +16,9 @@ void Deck::split(std::vector<std::unique_ptr<Deck>>& decks, int parts) {
     int half = (int) cards.size() / parts;
     for(int i = 0 ; i < half; ++i) {
         decks[0]->add_card(this->take_front_card());
-        this->remove_front_card();
     }
     for(int i = 0; i < half; ++i) {
         decks[1]->add_card(this->take_front_card());
-        this->remove_front_card();
     }
 }
 
@@ -28,7 +26,7 @@ void Deck::add_card(std::string suit, int value) {
     cards.push_back(std::unique_ptr<Card>(new Card(suit, value)));
 }
 
-void Deck::add_card(std::unique_ptr<Card>& card) {
+void Deck::add_card(std::unique_ptr<Card> card) {
     cards.push_back(std::move(card)); // transfer card ownership to board deck
 }
 
@@ -51,15 +49,27 @@ void Deck::shuffle(){ //mélanger un paquet
             );
 }
 
-unique_ptr<Card>& Deck::take_card_at(int pos) {
-    return cards[pos];
+
+/*unique_ptr<Card>& Deck::take_front_card() {
+    return cards.back();
+}*/
+
+unique_ptr<Card> Deck::take_front_card() {
+    assert(cards.size() >= 1);
+    return take_card_at(cards.size() -1);
 }
 
-unique_ptr<Card>& Deck::take_front_card() {
-    return cards.back();
+unique_ptr<Card> Deck::take_card_at(int pos) {
+    assert(pos >= 0 && pos < cards.size());
+    unique_ptr<Card> card = std::move(cards.at(pos));
+    cards.erase(cards.begin() + pos);
+
+    return std::move(card);
 }
+
 
 Card& Deck::watch_front_card() const {
+    assert(cards.size() >= 1);
     return *cards.back();
 }
 
@@ -68,13 +78,6 @@ Card& Deck::watch_card_at(int pos) const {
     return *cards.at(pos);
 }
 
-void Deck::remove_front_card() {
-    cards.pop_back();
-}
-
-void Deck::remove_card_at(int pos) {
-    cards.erase(cards.begin()+pos);
-}
 
 void Deck::pop_front() {
     assert(!cards.empty());
@@ -106,7 +109,6 @@ void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::uniqu
         std::unique_ptr<Deck> deck = std::unique_ptr<Deck>(new Deck());
         for (int j = 0; j < nb_cards_per_player; ++j) {
             deck->add_card(this->take_front_card());
-            this->remove_front_card();
         }
         decks.push_back(std::move(deck));
     }

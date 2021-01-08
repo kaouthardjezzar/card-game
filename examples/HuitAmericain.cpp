@@ -13,10 +13,11 @@ void HuitAmericain::initialization() {
     std::vector<int> range{0,1,2,3,4,5,6,7,8,9,10,11,12,13};
     DeckBuilder deck_builder;
     std::unique_ptr<Deck> deck = deck_builder.create()
-            ->with_suits(suits)
-            ->with_range(range)
-            ->build();
+            .with_suits(suits)
+            .with_range(range)
+            .build();
     // ajouter deux cartes des joker
+
     deck->add_card("joker", "", 0);
     deck->add_card("joker", "", 0);
 
@@ -51,7 +52,6 @@ void HuitAmericain::first_turn(){
         card = board.get_deck().watch_front_card();
     }
     board.get_temp_deck().add_card(board.get_deck().take_front_card());
-    board.get_deck().remove_front_card();
 
 };
 
@@ -62,7 +62,6 @@ void HuitAmericain::next_turn() {
     display_game_status();
 
 
-    board.increase_round();
 }
 
 void HuitAmericain::display_game_status() {
@@ -74,7 +73,6 @@ void HuitAmericain::excute_round() {
         if(!chooseCard(reinterpret_cast<Player &>(board.get_players()[pos_player]))){
             if (validCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
-                board.get_deck().remove_front_card();
                 // si la dernière carté joué par le joueur précédent était spécial (traitement spécial)
                 if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
                 if (pos_player++ == board.get_players().size()) pos_player = 0 ;
@@ -82,7 +80,6 @@ void HuitAmericain::excute_round() {
             }
             else {
                 board.get_players()[pos_player]->get_deck()->add_card(board.get_deck().take_front_card());
-                board.get_deck().remove_front_card();
                 if (pos_player++ == board.get_players().size()) pos_player = 0 ;
                 else pos_player++;
             }
@@ -94,7 +91,6 @@ void HuitAmericain::specialProcess() {
         pos_player ++;
         for (int i =0; i<4 ; i++){
             board.get_players()[pos_player]->get_deck()->add_card(board.get_deck().take_front_card());
-            board.get_deck().remove_front_card();
         }
         pos_player --;
     }
@@ -110,7 +106,6 @@ void HuitAmericain::specialProcess() {
                     pos_player++;
                     for (int i = 0; i < 4; i++) {
                         board.get_players()[pos_player]->get_deck()->add_card(board.get_deck().take_front_card());
-                        board.get_deck().remove_front_card();
                     }
                     pos_player--;
             }
@@ -127,7 +122,6 @@ bool HuitAmericain::chooseCard(Player &player) {
     {
         if (validCard(player.get_deck()->watch_card_at(i))){
             board.get_temp_deck().add_card(player.get_deck()->take_card_at(i));
-            player.get_deck()->remove_card_at(i);
             if (pos_player++ == board.get_players().size()) pos_player = 0 ;
             else pos_player++;
             return true;

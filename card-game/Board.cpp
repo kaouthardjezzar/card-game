@@ -17,8 +17,9 @@ Deck& Board::get_temp_deck() {
     return *temp_deck;
 }
 
-void Board::increase_round() {
+void Board::next_round() {
     round++;
+    turn = compute_next_turn();
 }
 
 int Board::get_round() const {
@@ -58,3 +59,26 @@ void Board::create_players(std::vector<string>& _players) {
     }
 }
 
+int Board::compute_next_turn() const {
+    int next = turn+direction;
+    if(next < 0) {
+        return players.size()-1;
+    }
+    return next;
+}
+
+Player& Board::get_current_player() {
+    int current_player_id = get_turn() % (int)players.size();
+    auto& current_player = players[current_player_id];
+    return *current_player;
+}
+
+Player& Board::get_next_player() {
+    int next_player_id = compute_next_turn() % (int) players.size();
+    auto& next_player = players[next_player_id];
+    return *next_player;
+}
+
+void Board::reverse_direction() {
+    direction = -direction;
+}
