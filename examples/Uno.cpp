@@ -6,6 +6,26 @@
 #include "Uno.h"
 #include "UnoCards.h"
 
+bool is_correct_move(const Card& board_card, const Card& player_move) {
+    // Il doit recouvrir la carte de la pioche par une carte d’une même couleur,
+    // du même chiffre ou du même symbole. 
+    
+    if(board_card.get_suit() == player_move.get_suit()
+        || board_card.get_label() == player_move.get_label()
+        || board_card.get_value() == player_move.get_value()) {
+        return true;
+    }
+
+    // Si le joueur ne peut pas jouer,
+    // il a la possibilité de poser une carte « joker » ou « +4 ».
+    
+    if(player_move.get_label() == JOKER || board_card.get_label() == PLUS_FOUR ) {
+        return true;
+    }
+
+    return false;
+}
+
 void Uno::initialization() {
     std::cout << "Launching Uno " << std::endl;
 
@@ -17,9 +37,9 @@ void Uno::initialization() {
     // Total 108
     // 19 * 4 couleurs numérotées de 0 à 9, tous en double sauf le 0 = 76
     std::unique_ptr<Deck> deck = deck_builder.create()
-            ->with_suits(suits)
-            ->with_range(range)
-            ->build();
+            .with_suits(suits)
+            .with_range(range)
+            .build();
 
     // 8 * 3 * 4 couleurs tous en double
     for(std::string& suit: suits) {
@@ -79,9 +99,15 @@ void Uno::next_turn() {
         std::cout << i++ << ". " << *card << std::endl;
     }
 
-    int choice = ask_player<int>("Votre choix :") - 1;
+    int choice = 0;
+//    do {
+        choice = ask_player<int>("Votre choix :") - 1;
+        // Choosen card
+//    } while(!is_correct_move(draw,));
+
     std::vector<bool> winner(players.size());
-    who_wins_this_turn(winner, choice);
+
+//    who_wins_this_turn(winner, choice);
 }
 
 void Uno::who_wins_this_turn(std::vector<bool>& winner,int choice) {
@@ -90,12 +116,6 @@ void Uno::who_wins_this_turn(std::vector<bool>& winner,int choice) {
     auto& card = player->get_deck()->watch_card_at(choice);
 
     std::cout << "Vous avez choisi : " << card << std::endl;
-
-    // Il doit recouvrir la carte de la pioche par une carte d’une même couleur,
-    // du même chiffre ou du même symbole.
-
-    // Si le joueur ne peut pas jouer,
-    // il a la possibilité de poser une carte « joker » ou « +4 ».
 
     // Dans le cas ou le joueur ne possède aucune de ces cartes,
     // il doit en piocher une.
@@ -131,5 +151,7 @@ void Uno::a_player_wins(Player &player){
 void Uno::display_game_status(std::vector<bool> winner) {
 
 }
+
+
 
 

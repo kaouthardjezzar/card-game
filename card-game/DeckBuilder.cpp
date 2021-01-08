@@ -6,31 +6,31 @@
 
 #include <utility>
 
-DeckBuilder* DeckBuilder::create() {
+DeckBuilder& DeckBuilder::create() {
     deck = std::unique_ptr<Deck>(new Deck());
-    return this;
+    return *this;
 }
 
 std::unique_ptr<Deck> DeckBuilder::build() {
     return std::move(deck);
 }
 
-DeckBuilder* DeckBuilder::with_suits(std::vector<std::string>& _suits) {
+DeckBuilder& DeckBuilder::with_suits(std::vector<std::string>& _suits) {
     suits = _suits;
-    return this;
+    return *this;
 }
 
-DeckBuilder* DeckBuilder::with_range(const std::vector<int>& range) {
+DeckBuilder& DeckBuilder::with_range(const std::vector<int>& range) {
     for(const std::string suit: suits) {
         for(int num: range) {
             deck->add_card(suit, num);
         }
     }
 
-    return this;
+    return *this;
 }
 
-DeckBuilder* DeckBuilder::with_range(int left, int right) {
+DeckBuilder& DeckBuilder::with_range(int left, int right) {
     std::vector<int> range;
     for(int i = left; i < right + 1; ++i){
         range.push_back(i);
