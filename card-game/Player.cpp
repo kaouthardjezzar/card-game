@@ -28,3 +28,7 @@ ostream & operator << (ostream & out, const Player& player) {
     out << player.get_name();
     return out;
 }
+
+void Player::increase_score_by(int n) {
+    set_score(score + n);
+}

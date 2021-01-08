@@ -35,6 +35,8 @@ public:
 
     void set_score(int n);
 
+    void increase_score_by(int n);
+
     friend ostream & operator << (ostream & out,const Player &player);
 };
 
