@@ -71,6 +71,7 @@ void compute_special_card(const Card& card, Board& board) {
     std::string label = card.get_label();
     Player& next_player = board.get_next_player();
     Player& current_player = board.get_current_player();
+    std::cout << "[INFO] " ;
     if(label == PLUS_TWO) {
         std::cout << next_player << " doit piocher deux(2) cartes " << std::endl;
         for(int i =0; i < 2; i++){
@@ -145,6 +146,7 @@ void display_valid_move(Player& current_player, const Card& card_on_board) {
 }
 
 std::unique_ptr<Card> Uno::choose_card(Player& current_player, Card& card_on_board){
+    std::cout << "Vos cartes : " << std::endl;
     display_valid_move(current_player, card_on_board);
     int choice = 0;
     choice = ask_player<int>("Votre choix : ") -1; // Normally gets card position
@@ -166,8 +168,7 @@ void Uno::next_turn() {
     Player& current_player = board.get_current_player();
     Card &card_on_board = board.get_temp_deck().watch_front_card();
 
-    std::cout << "Au tour de " << current_player << std::endl;
-    std::cout << "Carte sur la table " << card_on_board << std::endl;
+    display_game_status();
 
     std::unique_ptr<Card> card = choose_card(current_player, card_on_board);
 
@@ -190,8 +191,7 @@ void Uno::first_turn() {
     Player& current_player = board.get_current_player();
     Card &card_on_board = board.get_temp_deck().watch_front_card();
 
-    std::cout << "Premier tour" << std::endl;
-    std::cout << "Carte sur la table " << card_on_board << std::endl;
+    display_game_status();
 
     if(is_special_card(card_on_board)) {
         compute_special_card(card_on_board,  board);
@@ -200,4 +200,27 @@ void Uno::first_turn() {
         std::unique_ptr<Card> card = choose_card(current_player, card_on_board);
         compute_normal_card(*card, board);
     }
+}
+
+void Uno::display_game_status() {
+    Player& current_player = board.get_current_player();
+    Card &card_on_board = board.get_temp_deck().watch_front_card();
+
+    if(board.get_round() == 1) {
+        std::cout << "Premier tour " << std::endl;
+    }
+
+
+    SKIPLINE
+
+    std::cout << "Scores actuels : " << std::endl;
+
+    for(auto &player: board.get_players()) {
+        std::cout << *player << " est à " << player->get_score() << " point(s) " << std::endl;
+    }
+
+    SKIPLINE
+
+    std::cout << "[TABLE] Carte sur la table : " << card_on_board << std::endl;
+    std::cout << "[TOUR] Au tour de " << current_player << std::endl;
 }

@@ -9,6 +9,8 @@
 #include "../card-game/Board.h"
 #include <iostream>
 
+#define SKIPLINE std::cout<<std::endl;
+
 class Uno  {
 private:
     Board board;
@@ -39,6 +41,8 @@ protected:
         std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return (x);
     }
+
+    void display_game_status();
 
 public:
     Uno() = default;
