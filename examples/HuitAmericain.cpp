@@ -4,13 +4,15 @@
 
 #include <iostream>
 #include "HuitAmericain.h"
-static int pos_player = 0;
+
+
+static string suit = "";
 void HuitAmericain::initialization() {
     std::cout << "Launching HuitAmericain " << std::endl;
-
+    board.set_turn(0);
     // Configuration des cartes
     std::vector<std::string> suits{"spade", "club", "diamond", "heart"};
-    std::vector<int> range{0,1,2,3,4,5,6,7,8,9,10,11,12,13};
+    std::vector<int> range{1,2,3,4,5,6,7,8,9,10,11,12,13};
     DeckBuilder deck_builder;
     std::unique_ptr<Deck> deck = deck_builder.create()
             .with_suits(suits)
@@ -42,9 +44,13 @@ void HuitAmericain::initialization() {
 
 bool HuitAmericain::isSpecialCard(const Card card) {
     for(int i = 0; i < special_cards.size(); i++){
-        return (special_cards[i] == card.get_value()) ;
+        if (special_cards[i] == card.get_value()) {
+            return true;
+        }
     }
+    return false;
 }
+
 void HuitAmericain::first_turn(){
     Card card = board.get_deck().watch_front_card();
     while (isSpecialCard(card)){
@@ -56,58 +62,62 @@ void HuitAmericain::first_turn(){
 };
 
 void HuitAmericain::next_turn() {
+    if (board.get_round()==0) {
+        first_turn();
+    }
   //  std::vector<bool> winner(board.get_players().size());
     excute_round();
     // As the function said
-    display_game_status();
-
 
 }
 
-void HuitAmericain::display_game_status() {
 
-}
 
 void HuitAmericain::excute_round() {
-        displayPlayerStat(pos_player);
-        if(!chooseCard(reinterpret_cast<Player &>(board.get_players()[pos_player]))){
+        displayPlayerStat(board.get_turn());
+        if (board.get_deck().isEmpty()) {
+            std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
+            for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
+                board.get_deck().add_card(board.get_temp_deck().take_front_card());
+            }
+            board.get_temp_deck().add_card(std::move(card));
+        }
+        if(!chooseCard(reinterpret_cast<Player &>(board.get_players()[board.get_turn()]))){
             if (validCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
                 // si la dernière carté joué par le joueur précédent était spécial (traitement spécial)
                 if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
-                if (pos_player++ == board.get_players().size()) pos_player = 0 ;
-                else pos_player++;
+                board.next_round();
             }
             else {
-                board.get_players()[pos_player]->get_deck()->add_card(board.get_deck().take_front_card());
-                if (pos_player++ == board.get_players().size()) pos_player = 0 ;
-                else pos_player++;
+                board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                board.next_round();
             }
         }
 }
 
 void HuitAmericain::specialProcess() {
     if (board.get_temp_deck().watch_front_card().get_label()=="joker") { // piocher +4 cartes
-        pos_player ++;
+        board.set_turn(board.get_turn()+1);
         for (int i =0; i<4 ; i++){
-            board.get_players()[pos_player]->get_deck()->add_card(board.get_deck().take_front_card());
+            board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
         }
-        pos_player --;
+        board.set_turn(board.get_turn()-1);
     }
     else {
         switch (board.get_temp_deck().watch_front_card().get_value()) {
             case 1: {
-
+                board.reverse_direction();
             }
             case 11: {
-                pos_player++;
+                board.set_turn(board.get_turn()+1);
             }
             case 2: {
-                    pos_player++;
-                    for (int i = 0; i < 4; i++) {
-                        board.get_players()[pos_player]->get_deck()->add_card(board.get_deck().take_front_card());
+                board.set_turn(board.get_turn()+1);
+                for (int i = 0; i < 4; i++) {
+                        board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
                     }
-                    pos_player--;
+                board.set_turn(board.get_turn()+1);
             }
             case 8: {
 
@@ -122,8 +132,8 @@ bool HuitAmericain::chooseCard(Player &player) {
     {
         if (validCard(player.get_deck()->watch_card_at(i))){
             board.get_temp_deck().add_card(player.get_deck()->take_card_at(i));
-            if (pos_player++ == board.get_players().size()) pos_player = 0 ;
-            else pos_player++;
+            if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
+            board.next_round();
             return true;
         }
     }
@@ -141,12 +151,14 @@ bool HuitAmericain::is_the_end() {
 }
 
 void HuitAmericain::end_of_game() {
-
+    std::cout << "Fin du jeu " << std::endl;
+    for (int i=0; i<board.get_players().size();i++){
+        if (board.get_players()[i]->get_deck()->get_nbcards()==0) {
+            std::cout << board.get_players()[i]->get_name() << " a gagné" << endl;
+        }
+    }
 }
 
-void HuitAmericain::compute_winner(std::vector<bool> winner) {
-
-}
 
 bool HuitAmericain::validCard(Card &card) {
     return (card.get_value() ==
@@ -155,6 +167,7 @@ bool HuitAmericain::validCard(Card &card) {
 }
 
 void HuitAmericain::displayPlayerStat(int pos) {
+        std::cout << "tour numero : "<<board.get_round() << endl;
         std::cout << "c'est le tour de joueur" << pos +1 << std::endl;
         std::cout << "le joueur" << board.get_players()[pos]->get_name() << " a comme cartes " << std::endl;
         std::cout << board.get_players()[pos]->affdeck();

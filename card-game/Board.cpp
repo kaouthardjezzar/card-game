@@ -64,6 +64,9 @@ int Board::compute_next_turn() const {
     if(next < 0) {
         return players.size()-1;
     }
+    if (next==players.size()) {
+        return 0;
+    }
     return next;
 }
 

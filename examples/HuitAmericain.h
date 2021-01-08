@@ -16,11 +16,7 @@ private:
     void first_turn();
     bool isSpecialCard(const Card card);
 
-    void display_game_status();
-
     void excute_round();
-
-    void compute_winner(std::vector<bool> winner);
 
     bool chooseCard(Player &player);
 
