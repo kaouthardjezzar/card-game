@@ -101,11 +101,12 @@ void compute_special_card(const Card& card, Board& board) {
     } else if (label == JOKER) {
         std::cout << current_player << " choisi une couleur " << std::endl;
     }
+    current_player.increase_score_by(card.get_value());
     board.next_round();
 }
 
 void compute_normal_card(const Card& card, Board& board){
-
+    board.get_current_player().increase_score_by(card.get_value());
 }
 
 bool is_correct_move(const Card& board_card, const Card& player_move) {
@@ -163,8 +164,6 @@ std::unique_ptr<Card> Uno::choose_card(Player& current_player, Card& card_on_boa
 
 
 void Uno::next_turn() {
-    std::cout << std::endl;
-
     Player& current_player = board.get_current_player();
     Card &card_on_board = board.get_temp_deck().watch_front_card();
 
@@ -210,17 +209,15 @@ void Uno::display_game_status() {
         std::cout << "Premier tour " << std::endl;
     }
 
-
     SKIPLINE
 
-    std::cout << "Scores actuels : " << std::endl;
+    std::cout << "[SCORE] Scores actuels : " << std::endl;
 
     for(auto &player: board.get_players()) {
         std::cout << *player << " est à " << player->get_score() << " point(s) " << std::endl;
     }
 
     SKIPLINE
-
     std::cout << "[TABLE] Carte sur la table : " << card_on_board << std::endl;
     std::cout << "[TOUR] Au tour de " << current_player << std::endl;
 }
