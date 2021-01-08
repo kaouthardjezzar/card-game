@@ -43,7 +43,7 @@ void Bataille::next_turn() {
     // Stuff that needs to be done when someone wins
     compute_winner(winner);
 
-    board.increase_round();
+    board.next_round();
 }
 
 
@@ -91,7 +91,6 @@ void Bataille::compute_winner(std::vector<bool> winner) {
     // Add cards to board's temporary deck
     for(auto &player: board.get_players()) {
         board.get_temp_deck().add_card(player->get_deck()->take_front_card());
-        player->get_deck()->remove_front_card();
 
     }
 
@@ -126,8 +125,6 @@ void Bataille::a_player_wins(Player &player){
             ->add_card(
                 board.get_temp_deck().take_front_card()
                 );
-        board.get_temp_deck()
-            .remove_front_card();
     }
 }
 

@@ -20,7 +20,7 @@ TEST(Deck, SplitHalfDeck) {
 
     for(int i = 0; i < parts; ++i){
         std::unique_ptr<Card> card = std::unique_ptr<Card>(new Card("spade", i));
-        deck.add_card(card);
+        deck.add_card(std::move(card));
     }
 
     ASSERT_TRUE(deck.get_nbcards() == parts);
@@ -39,9 +39,20 @@ TEST(Deck, TakeFrontCard) {
     std::unique_ptr<Card> card1 = std::unique_ptr<Card>(new Card("spade", 1));
     std::unique_ptr<Card> card2 = std::unique_ptr<Card>(new Card("spade", 2));
 
-    deck.add_card(card1);
-    deck.add_card(card2);
+    deck.add_card(std::move(card1));
+    deck.add_card(std::move(card2));
     std::unique_ptr<Card> took_card2 = std::move(deck.take_front_card());
+    ASSERT_TRUE(took_card2->get_value() == 2);
+}
+
+TEST(Deck, TakeCardAt) {
+    Deck deck;
+    std::unique_ptr<Card> card1 = std::unique_ptr<Card>(new Card("spade", 1));
+    std::unique_ptr<Card> card2 = std::unique_ptr<Card>(new Card("spade", 2));
+
+    deck.add_card(std::move(card1));
+    deck.add_card(std::move(card2));
+    std::unique_ptr<Card> took_card2 = std::move(deck.take_card_at(1));
     ASSERT_TRUE(took_card2->get_value() == 2);
 }
 
@@ -50,10 +61,8 @@ TEST(Deck, RemoveFrontCard) {
     std::unique_ptr<Card> card1 = std::unique_ptr<Card>(new Card("spade", 1));
     std::unique_ptr<Card> card2 = std::unique_ptr<Card>(new Card("spade", 2));
 
-    deck.add_card(card1);
-    deck.add_card(card2);
-
-    deck.remove_front_card();
+    deck.add_card(std::move(card1));
+    deck.add_card(std::move(card2));
 
     std::unique_ptr<Card> took_card1 = std::move(deck.take_front_card());
     ASSERT_TRUE(took_card1->get_value() == 1);
@@ -67,7 +76,7 @@ TEST(Deck, SplitLimitedParts) {
 
     for(int i = 0; i < parts; ++i){
         std::unique_ptr<Card> card = std::unique_ptr<Card>(new Card("spade", i));
-        deck.add_card(card);
+        deck.add_card(std::move(card));
     }
 
     ASSERT_TRUE(deck.get_nbcards() == parts);
