@@ -58,7 +58,7 @@ void HuitAmericain::first_turn(){
         card = board.get_deck().watch_front_card();
     }
     board.get_temp_deck().add_card(board.get_deck().take_front_card());
-
+    board.set_round(1);
 };
 
 void HuitAmericain::next_turn() {
@@ -79,10 +79,12 @@ void HuitAmericain::excute_round() {
             std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
             for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
                 board.get_deck().add_card(board.get_temp_deck().take_front_card());
+                board.shuffle_deck();
             }
             board.get_temp_deck().add_card(std::move(card));
         }
-        if(!chooseCard(reinterpret_cast<Player &>(board.get_players()[board.get_turn()]))){
+        bool ok = chooseCard(reinterpret_cast<Player &>(board.get_players()[board.get_turn()]));
+        if(!ok){
             if (validCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
                 // si la dernière carté joué par le joueur précédent était spécial (traitement spécial)
@@ -100,6 +102,14 @@ void HuitAmericain::specialProcess() {
     if (board.get_temp_deck().watch_front_card().get_label()=="joker") { // piocher +4 cartes
         board.set_turn(board.get_turn()+1);
         for (int i =0; i<4 ; i++){
+            if (board.get_deck().isEmpty()) {
+                std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
+                for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
+                    board.get_deck().add_card(board.get_temp_deck().take_front_card());
+                    board.shuffle_deck();
+                }
+                board.get_temp_deck().add_card(std::move(card));
+            }
             board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
         }
         board.set_turn(board.get_turn()-1);
@@ -114,8 +124,16 @@ void HuitAmericain::specialProcess() {
             }
             case 2: {
                 board.set_turn(board.get_turn()+1);
-                for (int i = 0; i < 4; i++) {
-                        board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                for (int i = 0; i < 2; i++) {
+                    if (board.get_deck().isEmpty()) {
+                        std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
+                        for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
+                            board.get_deck().add_card(board.get_temp_deck().take_front_card());
+                            board.shuffle_deck();
+                        }
+                        board.get_temp_deck().add_card(std::move(card));
+                    }
+                    board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
                     }
                 board.set_turn(board.get_turn()+1);
             }

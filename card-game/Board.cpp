@@ -34,6 +34,10 @@ void Board::set_turn(int _turn) {
     turn = _turn;
 }
 
+void Board::set_round(int _round){
+    round = _round;
+}
+
 void Board::shuffle_deck() {
     deck->shuffle();
 }
