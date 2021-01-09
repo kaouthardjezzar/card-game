@@ -29,6 +29,7 @@ void HuitAmericain::initialization() {
 
     // Shuffle deck
     board.shuffle_deck();
+
     // Players
     std::vector<string> players = {"John", "Jane", "Mike"};
     board.create_players(players);
@@ -101,9 +102,11 @@ void HuitAmericain::specialProcess() {
         switch (board.get_temp_deck().watch_front_card().get_value()) {
             case 1: {
                 board.reverse_direction();
+                break;
             }
             case 11: {
                 board.set_turn(board.get_turn()+1);
+                break;
             }
             case 2: {
                 board.set_turn(board.get_turn()+1);
@@ -119,6 +122,7 @@ void HuitAmericain::specialProcess() {
                     board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
                     }
                 board.set_turn(board.get_turn()+1);
+                break;
             }
             case 0: {
                 board.set_turn(board.get_turn()+1);
@@ -134,6 +138,7 @@ void HuitAmericain::specialProcess() {
                     board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
                 }
                 board.set_turn(board.get_turn()-1);
+                break;
             }
         }
 }
@@ -145,6 +150,7 @@ bool HuitAmericain::chooseCard() {
             board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
             if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
             board.next_round();
+            cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
             return true;
         }
     }
