@@ -49,6 +49,11 @@ void Deck::shuffle(){ //mélanger un paquet
             );
 }
 
+
+/*unique_ptr<Card>& Deck::take_front_card() {
+    return cards.back();
+}*/
+
 unique_ptr<Card> Deck::take_front_card() {
     assert(cards.size() >= 1);
     return take_card_at(cards.size() -1);
@@ -57,10 +62,11 @@ unique_ptr<Card> Deck::take_front_card() {
 unique_ptr<Card> Deck::take_card_at(int pos) {
     assert(pos >= 0 && pos < cards.size());
     unique_ptr<Card> card = std::move(cards.at(pos));
-    cards.erase(cards.begin()+pos);
+    cards.erase(cards.begin() + pos);
 
     return std::move(card);
 }
+
 
 Card& Deck::watch_front_card() const {
     assert(cards.size() >= 1);
@@ -73,21 +79,9 @@ Card& Deck::watch_card_at(int pos) const {
 }
 
 
-unique_ptr<Card> Deck::pick_random() { // prendre une carte du paquet au hasard
-    int indice = rand()%(cards.size());
-    return move(cards[indice]);
-}
-
-unique_ptr<Card>& Deck::pick_card(int pos) { // prendre une carte d'une position précise
-    return cards.at(pos);
-}
-
-Card& Deck::draw() //pour tirer une carte de la main
-{
-    Card *cd = new Card(*this->pick_card(cards.size()-1));//en memoirise la carte a tirer
-    delete(&cards[cards.size()-1]);
-    cards.erase(cards.begin()+cards.size()-1);
-    return *cd;//retourner la carte choisie
+void Deck::pop_front() {
+    assert(!cards.empty());
+    cards.erase(cards.begin());
 }
 
 int Deck::get_nbcards() { //nombre de cartes restant dans le paquet
@@ -118,4 +112,13 @@ void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::uniqu
         }
         decks.push_back(std::move(deck));
     }
+}
+
+ostream & operator << (ostream & out, Deck & aDeck) {
+    cout << "[" ;
+    for (int i=0;i<aDeck.get_nbcards();i++){
+        cout << aDeck.watch_card_at(i) << "," ;
+    }
+    cout << "]" << endl;
+    return out;
 }

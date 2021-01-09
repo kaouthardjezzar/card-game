@@ -40,6 +40,8 @@ public:
 
     void set_turn(int _turn);
 
+    void set_round(int _round);
+
     void shuffle_deck();
 
     void create_players(std::vector<string>& _players);

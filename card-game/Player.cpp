@@ -12,6 +12,10 @@ std::unique_ptr<Deck>& Player::get_deck() {
     return deck;
 }
 
+Deck& Player::affdeck() {
+    return *deck;
+}
+
 void Player::set_deck(std::unique_ptr<Deck>& _deck) {
     deck = std::move(_deck);
 }

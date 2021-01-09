@@ -28,7 +28,7 @@ public:
 
     std::string get_name() const;
     std::unique_ptr<Deck>& get_deck();
-
+    Deck& affdeck();
     void set_deck(std::unique_ptr<Deck>& _deck);
 
     int get_score();

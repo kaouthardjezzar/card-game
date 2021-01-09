@@ -11,16 +11,21 @@
 class HuitAmericain : public GameTemplate {
 private:
     Board board;
-    std::vector<string> special_cards = {"8", "joker", "11", "1", "2"};
+    std::vector<int> special_cards = {8 , 0, 1, 11,2};
 
     void first_turn();
     bool isSpecialCard(const Card card);
 
-    void display_game_status(std::vector<bool> winner);
+    void excute_round();
 
-    void who_wins_this_turn();
+    bool chooseCard();
 
-    void compute_winner(std::vector<bool> winner);
+    bool validCard (Card &card);
+
+    void displayPlayerStat(int pos);
+
+    void specialProcess();
+
 protected:
     void initialization() override;
 

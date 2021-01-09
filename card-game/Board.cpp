@@ -34,6 +34,10 @@ void Board::set_turn(int _turn) {
     turn = _turn;
 }
 
+void Board::set_round(int _round){
+    round = _round;
+}
+
 void Board::shuffle_deck() {
     deck->shuffle();
 }
@@ -63,6 +67,9 @@ int Board::compute_next_turn() const {
     int next = turn+direction;
     if(next < 0) {
         return players.size()-1;
+    }
+    if (next==players.size()) {
+        return 0;
     }
     return next;
 }
