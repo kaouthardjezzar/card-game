@@ -10,7 +10,7 @@ void Scopa::initialization() {
 
     // Configuring cards
     std::vector<std::string> suits = {COUPE, BATON, DENIER, EPEE};
-    std::vector<int> range{1,2,3,4,5,6,KNIGHT,QUEEN,KING};
+    std::vector<int> range{1,2,3,4,5,6,7,KNIGHT,QUEEN,KING};
     DeckBuilder deck_builder;
 
     // Total 40
@@ -38,6 +38,31 @@ void Scopa::initialization() {
 
 }
 
+void Scopa::first_turn() {
+
+    display_game_status();
+
+}
+
 void Scopa::next_turn() {
 
 }
+
+void Scopa::display_game_status() {
+    std::cout << "[TABLE] Cartes sur la table" << std::endl;
+
+    for(auto &card: board.get_temp_deck()){
+        std::cout << *card << std::endl;
+    }
+
+}
+
+void Scopa::end_of_game() {
+
+}
+
+bool Scopa::is_the_end() {
+    return false;
+}
+
+

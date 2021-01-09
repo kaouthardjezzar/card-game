@@ -6,6 +6,7 @@
 #define CARD_GAME_SCOPA_H
 
 #include "../card-game/Board.h"
+#include <iostream>
 
 class Scopa {
 private:
@@ -21,6 +22,7 @@ private:
 
     void end_of_game();
 
+    void display_game_status();
 
 public:
     Scopa() = default;
