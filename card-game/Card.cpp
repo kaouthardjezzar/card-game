@@ -3,7 +3,6 @@
 //
 
 #include "Card.h"
-#include "../examples/TarotCard.h"
 
 
 int Card::get_value() const {
@@ -39,16 +38,6 @@ ostream & operator << (ostream & out, Card & aCard) {
 
     out << aCard.suit << " ";
     out << aCard.value << " ";
-//    // afficher la valeur
-//    switch (aCard.value) {
-//        case 1:  out << "Ace";   break;
-//        case 11: out << "Jack";  break;
-//        case 12: out << "Queen"; break;
-//        case 13: out << "King";  break;
-//        default:	// output number
-//            out << aCard.value; break;
-//    }
-
     return out;
 }
 
