@@ -90,12 +90,17 @@ void Board::reverse_direction() {
     direction = -direction;
 }
 
-void Board::safe_draw_cards_from_deck(Player &player, Deck &deck, int how_many) {
+void Board::safe_draw_cards_from_deck(Deck &dest, Deck &source, int how_many) {
     assert(how_many > 0);
     for(int i=0; i < how_many; ++i){
-        std::unique_ptr<Card> card = deck.take_front_card();
+        std::unique_ptr<Card> card = source.take_front_card();
         if(card != nullptr) {
-            player.get_deck()->add_card(std::move(card));
+            dest.add_card(std::move(card));
         }
     }
 }
+
+void Board::safe_draw_cards_from_deck(Player &player, Deck &deck, int how_many) {
+    Board::safe_draw_cards_from_deck(*player.get_deck(), deck, how_many)
+}
+
