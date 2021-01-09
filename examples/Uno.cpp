@@ -11,14 +11,14 @@ void Uno::initialization() {
 
     // Configuring cards
     std::vector<std::string> suits = {BLUE, RED, YELLOW, GREEN};
-//    std::vector<int> range{0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
+    std::vector<int> range{0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
     DeckBuilder deck_builder;
 
     // Total 108
     // 19 * 4 couleurs numérotées de 0 à 9, tous en double sauf le 0 = 76
     std::unique_ptr<Deck> deck = deck_builder.create()
-//            .with_suits(suits)
-//            .with_range(range)
+            .with_suits(suits)
+            .with_range(range)
             .build();
 
     // 8 * 3 * 4 couleurs tous en double
@@ -42,7 +42,9 @@ void Uno::initialization() {
         deck->add_card(PLUS_FOUR, suit, 50);
     }
 
-//    assert(deck->get_nbcards() == 108);
+    assert(deck->get_nbcards() == 108);
+
+    deck->shuffle();
 
     board.set_deck(std::move(deck));
 
@@ -174,6 +176,8 @@ void Uno::first_turn() {
             board.get_deck().take_front_card()
     );
     Card &card_on_board = board.get_temp_deck().watch_front_card();
+
+    display_game_status();
 
     if(is_special_card(card_on_board)) {
         compute_special_card(card_on_board,  board);
