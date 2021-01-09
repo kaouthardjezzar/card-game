@@ -27,6 +27,9 @@ void Deck::add_card(std::string suit, int value) {
 }
 
 void Deck::add_card(std::unique_ptr<Card> card) {
+    if(card == nullptr) {
+        return;
+    }
     cards.push_back(std::move(card)); // transfer card ownership to board deck
 }
 
@@ -49,27 +52,27 @@ void Deck::shuffle(){ //mélanger un paquet
             );
 }
 
-
-/*unique_ptr<Card>& Deck::take_front_card() {
-    return cards.back();
-}*/
-
 unique_ptr<Card> Deck::take_front_card() {
-    assert(cards.size() >= 1);
-    return take_card_at(cards.size() -1);
+    if(cards.empty()) {
+        return nullptr;
+    }
+    assert(!cards.empty());
+    return take_card_at((int) cards.size() -1);
 }
 
 unique_ptr<Card> Deck::take_card_at(int pos) {
     assert(pos >= 0 && pos < cards.size());
-    unique_ptr<Card> card = std::move(cards.at(pos));
-    cards.erase(cards.begin() + pos);
-
-    return std::move(card);
+    if(cards.at(pos)) {
+        unique_ptr<Card> card = std::move(cards.at(pos));
+        cards.erase(cards.begin() + pos);
+        return std::move(card);
+    }
+    return nullptr;
 }
 
 
 Card& Deck::watch_front_card() const {
-    assert(cards.size() >= 1);
+    assert(!cards.empty());
     return *cards.back();
 }
 
@@ -77,7 +80,6 @@ Card& Deck::watch_card_at(int pos) const {
     assert(pos >=0 && pos < cards.size());
     return *cards.at(pos);
 }
-
 
 void Deck::pop_front() {
     assert(!cards.empty());
