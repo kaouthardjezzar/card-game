@@ -68,7 +68,7 @@ bool Briscola::is_the_end() {
 
 void Briscola::end_of_game() {
     std::cout << "Fin du jeu  : " << std::endl;
-    for (int i = 0; board.get_players().size(); i++) {
+    for (int i = 0; i< board.get_players().size(); i++) {
         std::cout << board.get_players()[i]->get_name() << " a ganée  : " << points[i] << "manches " <<std::endl;
     }
 
@@ -124,7 +124,7 @@ void Briscola::who_wins_this_turn(vector<bool> &winner) {
 
     std::vector<Card> cards(winner.size());
     for (int i = 0; i < winner.size(); i++) {
-        cards[board.get_turn()-1] = chooseCard();
+        cards[board.get_turn()] = chooseCard();
     }
     for (int j= 0; j < winner.size();j++) {
         bool ok = true;
