@@ -40,9 +40,12 @@ protected:
 
     void end_of_game() override;
 
+
 public:
     Briscola() = default;
     virtual ~Briscola() = default;
+    void lets_play();
+
 };
 
 

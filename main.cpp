@@ -1,6 +1,8 @@
 #include <iostream>
 #include "examples/Bataille.h"
 #include "examples/HuitAmericain.h"
+#include "examples/Briscola.h"
+
 
 #include "lib/logger.h"
 
@@ -15,7 +17,9 @@ int main() {
     cout << "Hello, World!" << endl;
     HuitAmericain huitam;
     Bataille bataille;
-    huitam.lets_play();
-    bataille.lets_play();
+    Briscola briscola;
+    //huitam.lets_play();
+    //bataille.lets_play();
+    briscola.lets_play();
     return 0;
 }

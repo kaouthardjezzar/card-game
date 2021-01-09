@@ -32,7 +32,7 @@ void Briscola::initialization() {
     std::vector<std::unique_ptr<Deck>> decks;
     board.get_deck().distribute(board.get_players().size(),3,decks);
     board.affect_decks_toplayers(decks);
-    for (int i =0;i<board.get_players().size()){
+    for (int i =0;i<board.get_players().size(); i++){
         points.push_back(0);
     }
 }
@@ -68,6 +68,20 @@ bool Briscola::is_the_end() {
 
 void Briscola::end_of_game() {
     std::cout << "Fin du jeu  : " << std::endl;
+    for (int i = 0; board.get_players().size(); i++) {
+        std::cout << board.get_players()[i]->get_name() << " a ganée  : " << points[i] << "manches " <<std::endl;
+    }
+
+    for (int j= 0; j < board.get_players().size();j++) {
+        int cpt = 0;
+        for (int i = 0; board.get_players().size(); i++) {
+            if ( points [j] < points [i]) break;
+            else cpt ++;
+        }
+        if (cpt == board.get_players().size()){
+            std::cout << board.get_players()[j]->get_name() << " a gagné " << std::endl;
+            break;}
+    }
 
 }
 
@@ -200,3 +214,15 @@ bool Briscola::validCard(Card &card) {
     }
     return  yes;
 }
+
+void Briscola::lets_play (){
+
+        initialization();
+        for (int i = 0; i <3; i++) { // jouer 3 manches
+            while (!is_the_end()) {
+                next_turn();
+            }
+            end_of_manche();
+        }
+        end_of_game();
+};
