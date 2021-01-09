@@ -101,6 +101,6 @@ void Board::safe_draw_cards_from_deck(Deck &dest, Deck &source, int how_many) {
 }
 
 void Board::safe_draw_cards_from_deck(Player &player, Deck &deck, int how_many) {
-    Board::safe_draw_cards_from_deck(*player.get_deck(), deck, how_many)
+    Board::safe_draw_cards_from_deck(*player.get_deck(), deck, how_many);
 }
 
