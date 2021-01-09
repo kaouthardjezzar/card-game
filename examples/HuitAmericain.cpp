@@ -9,7 +9,7 @@
 static string suit = "";
 void HuitAmericain::initialization() {
     std::cout << "Launching HuitAmericain " << std::endl;
-    board.set_turn(0);
+
     // Configuration des cartes
     std::vector<std::string> suits{"spade", "club", "diamond", "heart"};
     std::vector<int> range{1,2,3,4,5,6,7,8,9,10,11,12,13};
@@ -29,7 +29,6 @@ void HuitAmericain::initialization() {
 
     // Shuffle deck
     board.shuffle_deck();
-
     // Players
     std::vector<string> players = {"John", "Jane", "Mike"};
     board.create_players(players);
@@ -59,7 +58,7 @@ void HuitAmericain::first_turn(){
     }
     board.get_temp_deck().add_card(board.get_deck().take_front_card());
     board.set_round(1);
-};
+}
 
 void HuitAmericain::next_turn() {
     if (board.get_round()==0) {
@@ -99,22 +98,6 @@ void HuitAmericain::excute_round() {
 }
 
 void HuitAmericain::specialProcess() {
-    if (board.get_temp_deck().watch_front_card().get_label()=="joker") { // piocher +4 cartes
-        board.set_turn(board.get_turn()+1);
-        for (int i =0; i<4 ; i++){
-            if (board.get_deck().isEmpty()) {
-                std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
-                for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
-                    board.get_deck().add_card(board.get_temp_deck().take_front_card());
-                    board.shuffle_deck();
-                }
-                board.get_temp_deck().add_card(std::move(card));
-            }
-            board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
-        }
-        board.set_turn(board.get_turn()-1);
-    }
-    else {
         switch (board.get_temp_deck().watch_front_card().get_value()) {
             case 1: {
                 board.reverse_direction();
@@ -137,9 +120,22 @@ void HuitAmericain::specialProcess() {
                     }
                 board.set_turn(board.get_turn()+1);
             }
+            case 0: {
+                board.set_turn(board.get_turn()+1);
+                for (int i =0; i<4 ; i++){
+                    if (board.get_deck().isEmpty()) {
+                        std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
+                        for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
+                            board.get_deck().add_card(board.get_temp_deck().take_front_card());
+                            board.shuffle_deck();
+                        }
+                        board.get_temp_deck().add_card(std::move(card));
+                    }
+                    board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                }
+                board.set_turn(board.get_turn()-1);
+            }
         }
-    }
-
 }
 
 bool HuitAmericain::chooseCard() {
@@ -176,9 +172,11 @@ void HuitAmericain::end_of_game() {
 
 
 bool HuitAmericain::validCard(Card &card) {
-    return (card.get_value() ==
-    board.get_temp_deck().watch_front_card().get_value() or
-    card.isSameCol(board.get_temp_deck().watch_front_card()) or isSpecialCard(card));
+    if (card.get_value() ==board.get_temp_deck().watch_front_card().get_value() ||
+    card.isSameCol(board.get_temp_deck().watch_front_card()) || isSpecialCard(card)) {
+        return true;
+    }
+    else {return false;}
 }
 
 void HuitAmericain::displayPlayerStat(int pos) {

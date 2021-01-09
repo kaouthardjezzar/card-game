@@ -65,7 +65,7 @@ void Card::set_label(string &_label) {
 
 bool Card::isSameCol(const Card &c) {
     if(suit == c.get_suit()) return true;
-    else { if ((c.get_suit() == "heart" and suit =="diamond" ) or (c.get_suit() == "diamond" and suit =="heart")) return true;
-    else {if ((c.get_suit() == "club" and suit =="spade" ) or (c.get_suit() == "spade" and suit =="club")) return true;
+    else { if ((c.get_suit() == "heart" and suit =="diamond" ) || (c.get_suit() == "diamond" and suit =="heart")) return true;
+    else {if ((c.get_suit() == "club" and suit =="spade" ) || (c.get_suit() == "spade" and suit =="club")) return true;
     else {return false;} }}
 }
