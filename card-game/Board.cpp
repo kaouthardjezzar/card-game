@@ -104,3 +104,7 @@ void Board::safe_draw_cards_from_deck(Player &player, Deck &deck, int how_many) 
     Board::safe_draw_cards_from_deck(*player.get_deck(), deck, how_many);
 }
 
+int Board::get_direction() const {
+    return direction;
+}
+

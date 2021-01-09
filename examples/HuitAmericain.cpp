@@ -28,7 +28,12 @@ void HuitAmericain::initialization() {
     board.set_deck(std::move(deck));
 
     // Shuffle deck
-    board.shuffle_deck();
+
+    int i = rand() % 100;
+    for (int j = 0;j < 2 ; j ++ ){
+        board.shuffle_deck();
+    }
+
     // Players
     std::vector<string> players = {"John", "Jane", "Mike"};
     board.create_players(players);
@@ -36,9 +41,8 @@ void HuitAmericain::initialization() {
     // Split cards to players
     std::vector<std::unique_ptr<Deck>> decks;
     board.get_deck().distribute(board.get_players().size(),7,decks);
-    for (int i=0; i < board.get_players().size(); i++){
-        board.get_players()[i]->set_deck(decks[i]);
-    }
+    board.affect_decks_toplayers(decks);
+
 }
 
 bool HuitAmericain::isSpecialCard(const Card card) {
@@ -84,8 +88,9 @@ void HuitAmericain::excute_round() {
         }
         bool ok = chooseCard();
         if(!ok){
-            if (validCard(board.get_deck().watch_front_card())){
+            if (validCard(board.get_deck().watch_front_card()) || isSpecialCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
+                cout << "carte piochéé est jouée : " << board.get_temp_deck().watch_front_card() << endl ;  
                 // si la dernière carté joué par le joueur précédent était spécial (traitement spécial)
                 if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
                 board.next_round();
@@ -104,11 +109,10 @@ void HuitAmericain::specialProcess() {
                 break;
             }
             case 11: {
-                board.set_turn(board.get_turn()+1);
+                board.set_turn(board.get_turn()+board.get_direction());
                 break;
             }
             case 2: {
-                board.set_turn(board.get_turn()+1);
                 for (int i = 0; i < 2; i++) {
                     if (board.get_deck().isEmpty()) {
                         std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
@@ -118,13 +122,11 @@ void HuitAmericain::specialProcess() {
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck()->add_card(board.get_deck().take_front_card());
                     }
-                board.set_turn(board.get_turn()+1);
                 break;
             }
             case 0 : {
-                board.set_turn(board.get_turn()+1);
                 for (int i =0; i<4 ; i++){
                     if (board.get_deck().isEmpty()) {
                         std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
@@ -134,9 +136,8 @@ void HuitAmericain::specialProcess() {
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck()->add_card(board.get_deck().take_front_card());
                 }
-                board.set_turn(board.get_turn()-1);
                 break;
             }
         }
@@ -145,9 +146,18 @@ void HuitAmericain::specialProcess() {
 bool HuitAmericain::chooseCard() {
     for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
     {
+        if (isSpecialCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
+            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
+            specialProcess ();
+            board.next_round();
+            cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
+            return true;
+        }
+    }
+    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
+    {
         if (validCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
             board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
-            if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
             board.next_round();
             cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
             return true;
@@ -178,7 +188,7 @@ void HuitAmericain::end_of_game() {
 
 bool HuitAmericain::validCard(Card &card) {
     if (card.get_value() ==board.get_temp_deck().watch_front_card().get_value() ||
-    card.isSameCol(board.get_temp_deck().watch_front_card()) || isSpecialCard(card)) {
+    card.isSameCol(board.get_temp_deck().watch_front_card())) {
         return true;
     }
     else {return false;}
