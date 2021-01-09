@@ -29,7 +29,6 @@ void HuitAmericain::initialization() {
 
     // Shuffle deck
 
-    int i = rand() % 100;
     for (int j = 0;j < 2 ; j ++ ){
         board.shuffle_deck();
     }

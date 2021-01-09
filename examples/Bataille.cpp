@@ -22,6 +22,7 @@ void Bataille::initialization() {
     // Shuffle deck
     board.shuffle_deck();
 
+
     // Players
     std::vector<string> players = {"John", "Jane"};
     board.create_players(players);
