@@ -18,6 +18,9 @@
 #define JOKER "Joker"
 #define PLUS_FOUR "+4"
 
-#define NO_UNO "Pas de Uno"
+// Choices
+#define NO_UNO 99
+#define DRAW 98
+
 
 #endif //CARD_GAME_UNOCARDS_H
