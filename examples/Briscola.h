@@ -13,6 +13,16 @@ private:
     Board board;
     void first_turn();
 
+    void display_game_status(std::vector<bool> winner);
+
+    void who_wins_this_turn(std::vector<bool>& winner);
+
+    void compute_winner(std::vector<bool> winner);
+
+    Card& chooseCard ();
+
+    bool validCard (Card &card);
+
 protected:
     void initialization() override;
 

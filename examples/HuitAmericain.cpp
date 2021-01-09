@@ -29,7 +29,6 @@ void HuitAmericain::initialization() {
 
     // Shuffle deck
     board.shuffle_deck();
-
     // Players
     std::vector<string> players = {"John", "Jane", "Mike"};
     board.create_players(players);
@@ -124,7 +123,7 @@ void HuitAmericain::specialProcess() {
                 board.set_turn(board.get_turn()+1);
                 break;
             }
-            case 0: {
+            case 0 : {
                 board.set_turn(board.get_turn()+1);
                 for (int i =0; i<4 ; i++){
                     if (board.get_deck().isEmpty()) {
