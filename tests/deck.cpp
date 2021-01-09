@@ -41,7 +41,7 @@ TEST(Deck, TakeFrontCard) {
 
     deck.add_card(std::move(card1));
     deck.add_card(std::move(card2));
-    std::unique_ptr<Card> took_card2 = std::move(deck.take_front_card());
+    std::unique_ptr<Card> took_card2 = deck.take_front_card();
     ASSERT_TRUE(took_card2->get_value() == 2);
 }
 

@@ -132,6 +132,7 @@ bool is_correct_move(const Card& board_card, const Card& player_move) {
 void Uno::display_valid_move(Player& current_player, const Card& card_on_board) {
     int i = 1;
     bool no_correct_move = true;
+    std::cout << "Vous pouvez choisir :" << std::endl;
     for(auto &card: *current_player.get_deck()) {
         if(is_correct_move(card_on_board, *card)) {
             no_correct_move = false;
@@ -165,15 +166,14 @@ void Uno::next_turn() {
 
 void Uno::first_turn() {
     // Piocher une carte et mettre sur la table
-    std::cout << board.get_current_player() << " a pioché une carte" << std::endl;
+    std::cout << "Premier tour " << std::endl;
+
+    Player& player = board.get_current_player();
+    std::cout << player << " a pioché une carte" << std::endl;
     board.get_temp_deck().add_card(
             board.get_deck().take_front_card()
     );
-
-    Player& current_player = board.get_current_player();
     Card &card_on_board = board.get_temp_deck().watch_front_card();
-
-    display_game_status();
 
     if(is_special_card(card_on_board)) {
         compute_special_card(card_on_board,  board);
@@ -187,21 +187,18 @@ void Uno::display_game_status() {
     Player& current_player = board.get_current_player();
     Card &card_on_board = board.get_temp_deck().watch_front_card();
 
-    if(board.get_round() == 1) {
-        std::cout << "Premier tour " << std::endl;
-    }
-
     SKIPLINE
-
     std::cout << "[SCORE] Scores actuels : " << std::endl;
-
     for(auto &player: board.get_players()) {
         std::cout << *player << " est à " << player->get_score() << " point(s) " << std::endl;
     }
+
     SKIPLINE
     std::cout << "[TABLE] Il reste : " << board.get_deck().get_nbcards() << " carte(s) dans la pioche " << std::endl;
     std::cout << "[JEU] Carte en jeu : " << card_on_board << std::endl;
     std::cout << "[TOUR] Au tour de " << current_player << std::endl;
+
+    SKIPLINE
 }
 
 bool Uno::is_the_end() {
@@ -219,7 +216,7 @@ void Uno::end_of_game() {
 
 void Uno::compute_winner() {
     int i = 0;
-    int index_max = -999;
+    int index_max = 0;
     int score_max = -999;
     for(auto &player: board.get_players()) {
         if(player->get_score() > score_max) {
@@ -233,4 +230,36 @@ void Uno::compute_winner() {
         i++;
     }
     std::cout << *board.get_players()[index_max] << " a gagné la partie " << std::endl;
+}
+
+int Uno::make_a_choice() {
+    Player& current_player = board.get_current_player();
+    Card &card_on_board = board.get_temp_deck().watch_front_card();
+
+    display_valid_move(current_player, card_on_board);
+    int choice = -1;
+    choice = ask_player<int>("Votre choix : ");
+
+    return choice;
+};
+
+void Uno::compute_choice(int choice) {
+    Player &current_player = board.get_current_player();
+    if (choice == DRAW) { // Player can't move and needs to draw a card
+        Board::safe_draw_cards_from_deck(current_player, board.get_deck(), 1);
+    } else if (choice == NO_UNO) { // Player didn't say UNO so he must draw two cards
+        std::cout << current_player << " n'a pas crié Uno et doit piocher deux(2) cartes " << std::endl;
+        Board::safe_draw_cards_from_deck(current_player, board.get_deck(), 2);
+        std::cout << "Vos cartes ont été piochées automatiquement " << std::endl;
+    } else { // Pick chosen card
+        std::unique_ptr<Card> card = current_player.get_deck()->take_card_at(choice - 1);
+        if (card == nullptr) { return; }
+
+        if (is_special_card(*card)) {
+            compute_special_card(*card, board);
+        } else {
+            compute_normal_card(*card, board);
+        }
+        board.get_temp_deck().add_card(std::move(card));
+    }
 }
