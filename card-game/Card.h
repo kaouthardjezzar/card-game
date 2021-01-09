@@ -50,7 +50,9 @@ public:
     void set_label(std::string& _label);
 
     bool isSameCol (const Card&c);
-    // Operator overloading
+    bool isSameCol(std::unique_ptr<Card> &c);
+
+        // Operator overloading
     virtual bool operator>(const Card& c) const;
     virtual bool operator<(const Card& c) const;
     virtual bool operator==(const Card& c) const;

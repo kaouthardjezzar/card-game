@@ -32,13 +32,29 @@ bool Card::operator<(const Card& c) const {
 }
 
 ostream & operator << (ostream & out, Card & aCard) {
-    if(!aCard.label.empty()) {
+    if (!aCard.label.empty()) {
         out << aCard.label << " ";
     }
 
     out << aCard.suit << " ";
-    out << aCard.value << " ";
-    return out;
+    switch (aCard.value) {
+        case 1:
+            out << "Ace";
+            break;
+        case 11:
+            out << "Jack";
+            break;
+        case 12:
+            out << "Queen";
+            break;
+        case 13:
+            out << "King";
+            break;
+        default:    // output number
+            out << aCard.value;
+            break;
+            return out;
+    }
 }
 
 bool Card::operator==(const Card &c) const {
@@ -55,7 +71,14 @@ void Card::set_label(string &_label) {
 
 bool Card::isSameCol(const Card &c) {
     if(suit == c.get_suit()) return true;
-    else { if ((c.get_suit() == "heart" and suit =="diamond" ) or (c.get_suit() == "diamond" and suit =="heart")) return true;
-    else {if ((c.get_suit() == "club" and suit =="spade" ) or (c.get_suit() == "spade" and suit =="club")) return true;
+    else { if ((c.get_suit() == "heart" and suit =="diamond" ) || (c.get_suit() == "diamond" and suit =="heart")) return true;
+    else {if ((c.get_suit() == "club" and suit =="spade" ) || (c.get_suit() == "spade" and suit =="club")) return true;
     else {return false;} }}
+}
+
+bool Card::isSameCol(std::unique_ptr<Card> &c) {
+    if(suit == c->get_suit()) return true;
+    else { if ((c->get_suit() == "heart" and suit =="diamond" ) || (c->get_suit() == "diamond" and suit =="heart")) return true;
+        else {if ((c->get_suit() == "club" and suit =="spade" ) || (c->get_suit() == "spade" and suit =="club")) return true;
+            else {return false;} }}
 }

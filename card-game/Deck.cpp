@@ -112,6 +112,12 @@ void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::uniqu
     }
 }
 
+void Deck::clean_deck() {
+    for(int i=0 ; i < this->get_nbcards();i++){
+        unique_ptr<Card> card = this->take_front_card();
+    }
+}
+
 ostream & operator << (ostream & out, Deck & aDeck) {
     cout << "[" ;
     for (int i=0;i<aDeck.get_nbcards();i++){

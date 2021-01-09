@@ -22,6 +22,7 @@ void Bataille::initialization() {
     // Shuffle deck
     board.shuffle_deck();
 
+
     // Players
     std::vector<string> players = {"John", "Jane"};
     board.create_players(players);
@@ -30,6 +31,10 @@ void Bataille::initialization() {
     std::vector<std::unique_ptr<Deck>> decks;
     board.get_deck().split_half(decks);
     board.affect_decks_toplayers(decks);
+
+    for (int i = 0; i<board.get_players().size(); i++){
+        board.get_players()[i]->set_score(0);
+    }
 }
 
 void Bataille::next_turn() {
@@ -113,19 +118,18 @@ void Bataille::compute_winner(std::vector<bool> winner) {
 void Bataille::a_player_wins(Player &player){
     // Increase score
     player.set_score(
-            board.get_players()[0]
-                    ->get_score() + 1
+            player.get_score()+ 2
             );
 
     // Add temp_deck cards to player cards
-    for(const auto &card: board.get_temp_deck()) {
+   /* for(const auto &card: board.get_temp_deck()) {
 
         board.get_players()[0]
             ->get_deck()
             ->add_card(
                 board.get_temp_deck().take_front_card()
                 );
-    }
+    }*/
 }
 
 void Bataille::display_game_status(std::vector<bool> winner) {

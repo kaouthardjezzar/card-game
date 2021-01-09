@@ -42,6 +42,8 @@ public:
 
     int get_turn() const;
 
+    int get_direction() const;
+
     void set_turn(int _turn);
 
     void set_round(int _round);
