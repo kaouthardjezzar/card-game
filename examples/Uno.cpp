@@ -76,21 +76,13 @@ void Uno::compute_special_card(const Card& card, Board& board) {
     std::cout << "[INFO] " ;
     if(label == PLUS_TWO) {
         std::cout << next_player << " doit piocher deux(2) cartes " << std::endl;
-        for(int i =0; i < 2; i++){
-            next_player.get_deck()->add_card(
-                    board.get_deck().take_front_card()
-                    );
-        }
+        Board::safe_draw_cards_from_deck(next_player, board.get_deck(), 4);
         std::cout << "Vos cartes ont été piochées automatiquement " << std::endl;
         std::cout << next_player << " passe son tour" << std::endl;
         board.next_round();
     } else if (label == PLUS_FOUR ) {
         std::cout << next_player << " doit piocher quatres(4) cartes " << std::endl;
-        for(int i =0; i < 4; i++){
-            next_player.get_deck()->add_card(
-                    board.get_deck().take_front_card()
-            );
-        }
+        Board::safe_draw_cards_from_deck(next_player, board.get_deck(), 4);
         std::cout << "Vos cartes ont été piochées automatiquement " << std::endl;
         std::cout << next_player << " passe son tour" << std::endl;
         board.next_round();
