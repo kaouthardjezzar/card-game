@@ -81,13 +81,9 @@ Card& Deck::watch_card_at(int pos) const {
     return *cards.at(pos);
 }
 
-void Deck::pop_front() {
-    assert(!cards.empty());
-    cards.erase(cards.begin());
-}
 
 int Deck::get_nbcards() { //nombre de cartes restant dans le paquet
-    return cards.size();
+    return (int)cards.size();
 }
 
 bool Deck::isEmpty() {

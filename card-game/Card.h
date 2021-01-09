@@ -12,7 +12,7 @@ using namespace std;
 
 class Card {
 
-private:
+protected:
     string suit;
     string label;
     int value;
@@ -51,9 +51,9 @@ public:
 
     bool isSameCol (const Card&c);
     // Operator overloading
-    bool operator>(const Card& c) const;
-    bool operator<(const Card& c) const;
-    bool operator==(const Card& c) const;
+    virtual bool operator>(const Card& c) const;
+    virtual bool operator<(const Card& c) const;
+    virtual bool operator==(const Card& c) const;
     friend ostream & operator << (ostream & out, Card & aCard);
 };
 

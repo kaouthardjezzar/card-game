@@ -3,6 +3,8 @@
 //
 
 #include "Card.h"
+#include "../examples/TarotCard.h"
+
 
 int Card::get_value() const {
     return value;

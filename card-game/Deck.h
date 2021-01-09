@@ -51,10 +51,6 @@ public:
 
     Card& watch_card_at(int pos) const;
 
-    void pop_front();
-
-
-
     void split_half(std::vector<std::unique_ptr<Deck>>& decks);
 
     int get_nbcards();
