@@ -22,6 +22,9 @@ private:
     int compute_next_turn() const;
 
 public:
+
+    static void safe_draw_cards_from_deck(Player& player, Deck& deck, int how_many = 1); // Handle nullptr if deck is empty
+
     explicit Board(): deck{new Deck()}, players{}, temp_deck{new Deck()}, round{0}, turn{0}, direction(1) {
     }
     virtual ~Board() = default;
