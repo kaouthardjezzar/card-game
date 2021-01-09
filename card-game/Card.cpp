@@ -75,3 +75,10 @@ bool Card::isSameCol(const Card &c) {
     else {if ((c.get_suit() == "club" and suit =="spade" ) || (c.get_suit() == "spade" and suit =="club")) return true;
     else {return false;} }}
 }
+
+bool Card::isSameCol(std::unique_ptr<Card> &c) {
+    if(suit == c->get_suit()) return true;
+    else { if ((c->get_suit() == "heart" and suit =="diamond" ) || (c->get_suit() == "diamond" and suit =="heart")) return true;
+        else {if ((c->get_suit() == "club" and suit =="spade" ) || (c->get_suit() == "spade" and suit =="club")) return true;
+            else {return false;} }}
+}

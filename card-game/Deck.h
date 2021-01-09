@@ -42,6 +42,8 @@ public:
     void add_card(std::unique_ptr<Card> card);
     void shuffle();
 
+    void clean_deck();
+
     unique_ptr<Card> take_front_card();
 
     unique_ptr<Card> take_card_at(int pos); // pos from 0 -> cards size

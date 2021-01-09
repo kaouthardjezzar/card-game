@@ -11,6 +11,11 @@
 class Briscola : public GameTemplate {
 private:
     Board board;
+
+    unique_ptr<Card> atout;
+
+    std::vector<int> points ;
+
     void first_turn();
 
     void display_game_status(std::vector<bool> winner);
@@ -22,6 +27,9 @@ private:
     Card& chooseCard ();
 
     bool validCard (Card &card);
+
+    void end_of_manche();
+
 
 protected:
     void initialization() override;
