@@ -91,3 +91,21 @@ TEST(Deck, SplitLimitedParts) {
     ASSERT_TRUE(decks[2]->get_nbcards() == 7);
 
 }
+
+TEST(Deck, Shuffle) {
+    Deck deck;
+    for(int i =0; i < 10; i++) {
+       deck.add_card("TEST", i);
+    }
+    deck.shuffle();
+
+    bool isSorted = true;
+    int last = deck.watch_card_at(0).get_value(), next = 0;
+    for(int i = 1; i < 10; i++) {
+        if(deck.watch_card_at(i).get_value() < last) {
+            isSorted = false;
+        }
+    }
+
+    ASSERT_FALSE(isSorted);
+}

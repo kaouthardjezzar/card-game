@@ -14,4 +14,6 @@
 #define QUEEN 9
 #define KING 10
 
+#define NOCHOICE -1
+
 #endif //CARD_GAME_SCOPACARDS_H
