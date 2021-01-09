@@ -114,18 +114,18 @@ void Bataille::a_player_wins(Player &player){
     // Increase score
     player.set_score(
             board.get_players()[0]
-                    ->get_score() + 1
+                    ->get_score() + 2
             );
 
     // Add temp_deck cards to player cards
-    for(const auto &card: board.get_temp_deck()) {
+   /* for(const auto &card: board.get_temp_deck()) {
 
         board.get_players()[0]
             ->get_deck()
             ->add_card(
                 board.get_temp_deck().take_front_card()
                 );
-    }
+    }*/
 }
 
 void Bataille::display_game_status(std::vector<bool> winner) {

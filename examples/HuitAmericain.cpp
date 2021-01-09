@@ -90,7 +90,7 @@ void HuitAmericain::excute_round() {
         if(!ok){
             if (validCard(board.get_deck().watch_front_card()) || isSpecialCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
-                cout << "carte piochéé est jouée : " << board.get_temp_deck().watch_front_card() << endl ;  
+                cout << "carte piochéé est jouée : " << board.get_temp_deck().watch_front_card() << endl ;
                 // si la dernière carté joué par le joueur précédent était spécial (traitement spécial)
                 if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
                 board.next_round();
