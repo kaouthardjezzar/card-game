@@ -7,7 +7,8 @@ A game framework made for an easy card game integration
 +-- card-game # The framework source code
 +-- examples  # Game implementation
 +-- lib
-+-- docs
++-- Documents # Le rapport
++-- Diagramme-UML 
 +-- tests
 ```
 
