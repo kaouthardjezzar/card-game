@@ -18,8 +18,8 @@ int main() {
     HuitAmericain huitam;
     Bataille bataille;
     Briscola briscola;
-    //huitam.lets_play();
+    huitam.lets_play();
     //bataille.lets_play();
-    briscola.lets_play();
+    //briscola.lets_play();
     return 0;
 }

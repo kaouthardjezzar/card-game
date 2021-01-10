@@ -53,8 +53,8 @@ ostream & operator << (ostream & out, Card & aCard) {
         default:    // output number
             out << aCard.value;
             break;
-            return out;
     }
+    return out;
 }
 
 bool Card::operator==(const Card &c) const {
@@ -70,6 +70,8 @@ void Card::set_label(string &_label) {
 }
 
 bool Card::isSameCol(const Card &c) {
+    // les diamonds et les coeurs sont du meme couleur : rouge
+    // club and spade sont du meme couleur : noir
     if(suit == c.get_suit()) return true;
     else { if ((c.get_suit() == "heart" and suit =="diamond" ) || (c.get_suit() == "diamond" and suit =="heart")) return true;
     else {if ((c.get_suit() == "club" and suit =="spade" ) || (c.get_suit() == "spade" and suit =="club")) return true;
