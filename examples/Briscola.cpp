@@ -225,7 +225,7 @@ bool Briscola::validCard(Card &card) {
     return  yes;
 }
 
-void Briscola::lets_playy (){
+void Briscola::lets_play (){
         for (int i = 0; i <3; i++) {  // jouer 3 manches
             initialization();
             while (!is_the_end()) {
