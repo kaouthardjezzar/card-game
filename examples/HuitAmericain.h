@@ -25,7 +25,6 @@ private:
 
     void specialProcess();
 
-protected:
     void initialization() override;
 
     void next_turn() override;
