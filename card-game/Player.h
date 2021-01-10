@@ -27,17 +27,18 @@ public:
     }
 
     std::string get_name() const;
-    std::unique_ptr<Deck>& get_deck();
-    Deck& affdeck();
+
+    Deck& get_deck();
+
     void set_deck(std::unique_ptr<Deck>& _deck);
 
-    int get_score();
+    int get_score() const;
 
     void set_score(int n);
 
     void increase_score_by(int n);
 
-    friend ostream & operator << (ostream & out,const Player &player);
+    friend std::ostream & operator << (std::ostream & out,const Player &player);
 };
 
 

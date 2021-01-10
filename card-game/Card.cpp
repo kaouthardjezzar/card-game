@@ -31,7 +31,7 @@ bool Card::operator<(const Card& c) const {
     return value < c.get_value();
 }
 
-ostream & operator << (ostream & out, Card & aCard) {
+std::ostream & operator << (std::ostream & out,const Card & aCard) {
     if (!aCard.label.empty()) {
         out << "Label : " << aCard.label << " ";
     }
@@ -74,15 +74,20 @@ void Card::set_label(string &_label) {
 bool Card::isSameCol(const Card &c) {
     // les diamonds et les coeurs sont du meme couleur : rouge
     // club and spade sont du meme couleur : noir
-    if(suit == c.get_suit()) return true;
-    else { if ((c.get_suit() == "heart" and suit =="diamond" ) || (c.get_suit() == "diamond" and suit =="heart")) return true;
-    else {if ((c.get_suit() == "club" and suit =="spade" ) || (c.get_suit() == "spade" and suit =="club")) return true;
-    else {return false;} }}
+    if(suit == c.get_suit())
+        return true;
+    else {
+        if ((c.get_suit() == "heart" and suit =="diamond" ) || (c.get_suit() == "diamond" and suit =="heart"))
+            return true;
+        else {
+            if ((c.get_suit() == "club" and suit =="spade" ) || (c.get_suit() == "spade" and suit =="club"))
+                return true;
+            else
+                return false;
+        }
+    }
 }
 
 bool Card::isSameCol(std::unique_ptr<Card> &c) {
-    if(suit == c->get_suit()) return true;
-    else { if ((c->get_suit() == "heart" and suit =="diamond" ) || (c->get_suit() == "diamond" and suit =="heart")) return true;
-        else {if ((c->get_suit() == "club" and suit =="spade" ) || (c->get_suit() == "spade" and suit =="club")) return true;
-            else {return false;} }}
+    return isSameCol(*c);
 }

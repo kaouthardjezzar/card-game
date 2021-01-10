@@ -205,7 +205,7 @@ void HuitAmericain::displayPlayerStat(int pos) {
         std::cout << "tour numero : "<<board.get_round() << endl;
         std::cout << "c'est le tour de joueur" << pos +1 << std::endl;
         std::cout << "le joueur" << board.get_players()[pos]->get_name() << " a comme cartes " << std::endl;
-        std::cout << board.get_players()[pos]->affdeck();
+        std::cout << board.get_players()[pos]->get_deck();
         std::cout << std::endl;
         std::cout << "la carte à recouvrir est : " << board.get_temp_deck().watch_front_card() << std::endl;
 }
