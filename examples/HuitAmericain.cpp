@@ -34,7 +34,7 @@ void HuitAmericain::initialization() {
     }
 
     // Players
-    std::vector<string> players = {"John", "Jane", "Mike"};
+    std::vector<string> players = {"John", "Jane"};
     board.create_players(players);
 
     // Split cards to players
