@@ -68,12 +68,12 @@ public:
     /*
      * Prend la première carte en haut
      */
-    unique_ptr<Card> take_front_card();
+    std::unique_ptr<Card> take_front_card();
 
     /*
      * Prend une carte à une certaine position
      */
-    unique_ptr<Card> take_card_at(int pos);
+    std::unique_ptr<Card> take_card_at(int pos);
 
     /*
      * Permet de regarder la carte en haut sans l'enlever du paquet

@@ -10,7 +10,7 @@
 
 class Briscola : public GameTemplate {
 private:
-    unique_ptr<Card> atout;
+    std::unique_ptr<Card> atout;
 
     std::vector<int> points {0,0,0,0};
 

@@ -127,7 +127,7 @@ void Uno::display_valid_move(Player& current_player, const Card& card_on_board) 
     int i = 1;
     bool no_correct_move = true;
     std::cout << "Vous pouvez choisir :" << std::endl;
-    for(auto &card: *current_player.get_deck()) {
+    for(auto &card: current_player.get_deck()) {
         if(is_correct_move(card_on_board, *card)) {
             no_correct_move = false;
             std::cout << i << ". " << *card << std::endl;
@@ -141,7 +141,7 @@ void Uno::display_valid_move(Player& current_player, const Card& card_on_board) 
     }
 
     // Si le joueur n'a pas crié Uno
-    if(current_player.get_deck()->get_nbcards() == 1) {
+    if(current_player.get_deck().get_nbcards() == 1) {
         std::cout << NO_UNO << ". Pas de Uno " << std::endl;
     }
 }
@@ -199,7 +199,7 @@ bool Uno::is_the_end() {
             board.get_players().begin(),
             board.get_players().end(),
             [](const std::unique_ptr<Player>& player) {
-                return player->get_deck()->isEmpty() || player->get_score() >= 500;
+                return player->get_deck().isEmpty() || player->get_score() >= 500;
             });
 }
 
@@ -216,7 +216,7 @@ void Uno::compute_winner() {
             index_max = i;
             score_max = player->get_score();
         }
-        if(player->get_deck()->isEmpty()) {
+        if(player->get_deck().isEmpty()) {
             index_max = i;
             break;
         }
@@ -245,7 +245,7 @@ void Uno::compute_choice(int choice) {
         Board::safe_draw_cards_from_deck(current_player, board.get_deck(), 2);
         std::cout << "Vos cartes ont été piochées automatiquement " << std::endl;
     } else { // Pick chosen card
-        std::unique_ptr<Card> card = current_player.get_deck()->take_card_at(choice - 1);
+        std::unique_ptr<Card> card = current_player.get_deck().take_card_at(choice - 1);
         if (card == nullptr) { return; }
 
         if (is_special_card(*card)) {

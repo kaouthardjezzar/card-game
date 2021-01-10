@@ -20,7 +20,7 @@ public:
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating card : " << suit << " , " << value << "\n";
     }
-    Card(std::string& _label, string& _suit, int _value): suit(_suit), label(_label), value(_value) {
+    Card(std::string& _label, std::string& _suit, int _value): suit(_suit), label(_label), value(_value) {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating card : " << label << " , " << suit << " , " << value << "\n";
     }
@@ -28,6 +28,9 @@ public:
     {
         value=cd.value;
         suit=cd.suit;
+    }
+    Card(): value(0) {
+
     }
 
     virtual ~Card() {

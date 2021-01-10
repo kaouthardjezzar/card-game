@@ -90,7 +90,7 @@ public:
 
     void set_round(int _round);
 
-    void create_players(std::vector<string>& _players);
+    void create_players(std::vector<std::string>& _players);
 
     void add_player(std::unique_ptr<Player>& player);
 

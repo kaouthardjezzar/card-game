@@ -100,7 +100,7 @@ void HuitAmericain::excute_round() {
                 board.next_round();
             }
             else {// sinon il garde la carte dans la main et passe son tour
-                board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                board.get_players()[board.get_turn()]->get_deck().add_card(board.get_deck().take_front_card());
                 board.next_round();
             }
         }
@@ -126,7 +126,7 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck().add_card(board.get_deck().take_front_card());
                     }
                 break;
             }
@@ -140,7 +140,7 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck().add_card(board.get_deck().take_front_card());
                 }
                 break;
             }
@@ -149,20 +149,20 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
 
 bool HuitAmericain::chooseCard() {
     // pour choisir une carte a jouer
-    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
+    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck().get_nbcards();i++)
     {// chercher d'abord s'il ya une carte special ( priviligiée )
-        if (isSpecialCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
-            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
+        if (isSpecialCard(board.get_players()[board.get_turn()]->get_deck().watch_card_at(i))){
+            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck().take_card_at(i));
             specialProcess ();
             board.next_round();
             cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
             return true;
         }
     }
-    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
+    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck().get_nbcards();i++)
     { // si non chercher une carte de meme couleur ou de meme valeur
-        if (validCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
-            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
+        if (validCard(board.get_players()[board.get_turn()]->get_deck().watch_card_at(i))){
+            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck().take_card_at(i));
             board.next_round();
             cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
             return true;
@@ -178,14 +178,14 @@ bool HuitAmericain::is_the_end() {
             board.get_players().begin(),
             board.get_players().end(),
             [](const std::unique_ptr<Player>& player) {
-                return player->get_deck()->isEmpty();
+                return player->get_deck().isEmpty();
             });
 }
 
 void HuitAmericain::end_of_game() { // afficher le gagnant
     std::cout << "Fin du jeu " << std::endl;
     for (int i=0; i<(int)board.get_players().size();i++){
-        if (board.get_players()[i]->get_deck()->isEmpty()) {
+        if (board.get_players()[i]->get_deck().isEmpty()) {
             std::cout << board.get_players()[i]->get_name() << " a gagné" << endl;
         }
     }

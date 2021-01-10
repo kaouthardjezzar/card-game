@@ -56,8 +56,8 @@ std::vector<std::unique_ptr<Player>>& Board::get_players() {
     return players;
 }
 
-void Board::create_players(std::vector<string>& _players) {
-    for(const string& name: _players) {
+void Board::create_players(std::vector<std::string>& _players) {
+    for(const std::string& name: _players) {
         std::unique_ptr<Player> player = std::unique_ptr<Player>(new Player(name));
         add_player(player);
     }
@@ -101,7 +101,7 @@ void Board::safe_draw_cards_from_deck(Deck &dest, Deck &source, int how_many) {
 }
 
 void Board::safe_draw_cards_from_deck(Player &player, Deck &deck, int how_many) {
-    Board::safe_draw_cards_from_deck(*player.get_deck(), deck, how_many);
+    Board::safe_draw_cards_from_deck(player.get_deck(), deck, how_many);
 }
 
 int Board::get_direction() const {

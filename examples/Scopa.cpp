@@ -48,7 +48,7 @@ void Scopa::first_turn() {
 void Scopa::next_turn() {
     // If all players have no cards
     if(std::all_of(board.get_players().begin(), board.get_players().end(), [](std::unique_ptr<Player>& player) {
-        return player->get_deck()->get_nbcards() == 0;
+        return player->get_deck().get_nbcards() == 0;
     })){
         std::cout << "Carte vide pour tous" << std::endl;
         std::cout << "Trois (3) nouveaux cartes ont été ajoutés à vos mains " << std::endl;
@@ -81,7 +81,7 @@ void Scopa::end_of_game() {
             index_max = i;
             score_max = player->get_score();
         }
-        if(player->get_deck()->isEmpty()) {
+        if(player->get_deck().isEmpty()) {
             index_max = i;
             break;
         }
@@ -97,7 +97,7 @@ bool Scopa::is_the_end() {
 int Scopa::make_a_choice() {
     Player& current_player = board.get_current_player();
 
-    if(current_player.get_deck()->get_nbcards() == 0) {
+    if(current_player.get_deck().get_nbcards() == 0) {
         std::cout << "Vous n'avez plus de cartes, vous passez votre tour " << std::endl;
         return NOCHOICE;
     }
@@ -112,7 +112,7 @@ void Scopa::display_valid_move(Player& current_player) {
     int i = 1;
     bool no_correct_move = true;
     std::cout << "Vous pouvez choisir :" << std::endl;
-    for(auto &card: *current_player.get_deck()) {
+    for(auto &card: current_player.get_deck()) {
         if(is_correct_move(board.get_temp_deck(), *card)) {
             no_correct_move = false;
             std::cout << i << ". " << *card << std::endl;
@@ -125,7 +125,7 @@ void Scopa::display_valid_move(Player& current_player) {
         std::cout << "Vous devez choisir une carte au hasard " << std::endl;
 
         i = 1;
-        for (auto &card: *current_player.get_deck()) {
+        for (auto &card: current_player.get_deck()) {
             std::cout << i++ << ". " << *card << std::endl;
         }
     }
@@ -169,7 +169,7 @@ void Scopa::display_game_status() {
 
 void Scopa::compute_choice(int choice) {
     Player& current_player = board.get_current_player();
-    std::unique_ptr<Card> card = current_player.get_deck()->take_card_at(choice);
+    std::unique_ptr<Card> card = current_player.get_deck().take_card_at(choice);
     assert(card != nullptr);
 
     // Coup normal

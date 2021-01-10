@@ -22,9 +22,8 @@ void Bataille::initialization() {
     // Shuffle deck
     board.shuffle_deck();
 
-
     // Players
-    std::vector<string> players = {"John", "Jane"};
+    std::vector<std::string> players = {"John", "Jane"};
     board.create_players(players);
 
     // Split cards to players
@@ -52,8 +51,8 @@ void Bataille::who_wins_this_turn(std::vector<bool>& winner) {
     auto &player_one = board.get_players()[0];
     auto &player_two = board.get_players()[1];
 
-    const Card card_one = player_one->get_deck()->watch_front_card();
-    const Card card_two = player_two->get_deck()->watch_front_card();
+    const Card& card_one = player_one->get_deck().watch_front_card();
+    const Card& card_two = player_two->get_deck().watch_front_card();
 
     winner[0] = card_one > card_two;
     winner[1] = card_one < card_two;
@@ -65,7 +64,7 @@ bool Bataille::is_the_end() {
             board.get_players().begin(),
             board.get_players().end(),
             [](const std::unique_ptr<Player>& player) {
-                return player->get_deck()->isEmpty();
+                return player->get_deck().isEmpty();
             });
 }
 
@@ -91,7 +90,7 @@ void Bataille::end_of_game() {
 void Bataille::compute_winner(std::vector<bool> winner) {
     // Add cards to board's temporary deck
     for(auto &player: board.get_players()) {
-        board.get_temp_deck().add_card(player->get_deck()->take_front_card());
+        board.get_temp_deck().add_card(player->get_deck().take_front_card());
 
     }
 
@@ -123,14 +122,14 @@ void Bataille::display_game_status(std::vector<bool> winner) {
 
     std::cout << "Cartes jouées : " << std::endl;
     for(const auto &player: board.get_players()) {
-        std::cout << player->get_name() << " : " <<  player->get_deck()->watch_front_card() << std::endl;
+        std::cout << player->get_name() << " : " <<  player->get_deck().watch_front_card() << std::endl;
     }
 
     assert(winner.size() == board.get_players().size());
 
     // If it's a tie
     if(std::all_of(winner.begin(), winner.end(), [](bool win) { return win; })) {
-        std::cout << "Égalité, tour suivant " << endl;
+        std::cout << "Égalité, tour suivant " << std::endl;
     }
 
     // Display who wins

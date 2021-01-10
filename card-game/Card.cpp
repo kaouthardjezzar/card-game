@@ -9,7 +9,7 @@ int Card::get_value() const {
     return value;
 }
 
-string Card::get_suit() const {
+std::string Card::get_suit() const {
     return suit;
 }
 
@@ -17,11 +17,9 @@ void Card::set_value(int &val) {
     value = val;
 }
 
-void Card::set_suit(string &_suit) {
+void Card::set_suit(std::string &_suit) {
     suit = _suit;
 }
-
-// Operator overloading
 
 bool Card::operator>(const Card& c) const {
     return value > c.get_value();
@@ -67,7 +65,7 @@ std::string Card::get_label() const {
     return label;
 }
 
-void Card::set_label(string &_label) {
+void Card::set_label(std::string &_label) {
     label = _label;
 }
 
