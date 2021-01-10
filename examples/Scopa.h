@@ -9,8 +9,6 @@
 #include "GameTemplate.h"
 #include <iostream>
 
-#define SKIPLINE std::cout<<std::endl;
-
 class Scopa: public GameTemplate {
 private:
     Board board;

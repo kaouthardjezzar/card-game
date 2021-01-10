@@ -8,6 +8,8 @@
 
 #include "../card-game/Board.h"
 
+#define SKIPLINE std::cout<<std::endl;
+
 class GameTemplate { // Abstract
 
 protected:

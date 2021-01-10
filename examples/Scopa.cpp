@@ -51,11 +51,24 @@ void Scopa::next_turn() {
         return player->get_deck()->get_nbcards() == 0;
     })){
         std::cout << "Carte vide pour tous" << std::endl;
+        std::cout << "Trois (3) nouveaux cartes ont été ajoutés à vos mains " << std::endl;
+
+        for(auto &player: board.get_players()) {
+            Board::safe_draw_cards_from_deck(*player, board.get_deck(), 3);
+        }
+    }
+
+    // If the board have no cards
+    if(board.get_temp_deck().get_nbcards() == 0) {
+        Board::safe_draw_cards_from_deck(board.get_temp_deck(), board.get_deck(), 4);
     }
 
     display_game_status();
-    int choice = make_a_choice();
-    compute_choice(choice-1);
+    int choice = 0;
+    choice = make_a_choice();
+    if(choice != NOCHOICE) {
+        compute_choice(choice-1);
+    }
 }
 
 int Scopa::make_a_choice() {
@@ -98,8 +111,8 @@ void Scopa::display_valid_move(Player& current_player) {
 bool is_correct_move(Deck& deck, const Card& player_move) {
     // Une carte d'une même valeur que ceux sur la table.
     // Ou
-    // Une carte d'une même valeur que la somme de deux cartes sur la table.
-    return is_same_value(deck, player_move) != 1 || !is_a_sum(deck, player_move).empty();
+    // [PAS IMPLÉMENTÉ]Une carte d'une même valeur que la somme de deux cartes sur la table.
+    return is_same_value(deck, player_move) != NOCHOICE;
 }
 
 int is_same_value(Deck& deck, const Card& player_move) {
@@ -109,11 +122,11 @@ int is_same_value(Deck& deck, const Card& player_move) {
             return i;
         }
     }
-    return -1;
+    return NOCHOICE;
 }
 
 std::vector<int> is_a_sum(Deck& deck, const Card& player_move) {
-    std::vector<int> index;
+    std::vector<int> index = {};
     if(deck.get_nbcards() < 2) {
         return index;
     }
@@ -154,11 +167,26 @@ void Scopa::display_game_status() {
 }
 
 void Scopa::end_of_game() {
-
+    display_game_status();
+    int i = 0;
+    int index_max = 0;
+    int score_max = -999;
+    for(auto &player: board.get_players()) {
+        if(player->get_score() > score_max) {
+            index_max = i;
+            score_max = player->get_score();
+        }
+        if(player->get_deck()->isEmpty()) {
+            index_max = i;
+            break;
+        }
+        i++;
+    }
+    std::cout << *board.get_players()[index_max] << " a gagné la partie " << std::endl;
 }
 
 bool Scopa::is_the_end() {
-    return false;
+    return board.get_deck().isEmpty();
 }
 
 void Scopa::compute_choice(int choice) {
@@ -169,20 +197,12 @@ void Scopa::compute_choice(int choice) {
     // Coup normal
     if(is_correct_move(board.get_temp_deck(), *card)) {
         int same_value_index = is_same_value(board.get_temp_deck(), *card);
-        if( same_value_index != -1) {
-            std::unique_ptr<Card> deck_card = board.get_temp_deck().take_card_at(same_value_index);
-            current_player.increase_score_by(deck_card->get_value());
-            deck_card.reset();
-        } else if (board.get_temp_deck().get_nbcards() > 1) {
-            std::vector<int> sum_index = is_a_sum(board.get_temp_deck(), *card);
-            for(int id: sum_index) {
-                std::unique_ptr<Card> deck_card = board.get_temp_deck().take_card_at(id);
-                current_player.increase_score_by(deck_card->get_value());
-                deck_card.reset();
-            }
-        }
+        std::unique_ptr<Card> deck_card = board.get_temp_deck().take_card_at(same_value_index);
+        current_player.increase_score_by(deck_card->get_value());
+        deck_card.reset();
     }
     card.reset();
+    board.next_round();
 }
 
 

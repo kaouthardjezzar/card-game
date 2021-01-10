@@ -10,8 +10,6 @@
 #include "UnoCards.h"
 #include <iostream>
 
-#define SKIPLINE std::cout<<std::endl;
-
 class Uno: public GameTemplate  {
 private:
     Board board;
