@@ -219,7 +219,7 @@ void HuitAmericain::end_of_game() { // afficher le gagnant
             std::cout << std::endl;
             int score = 0;
             for (int j = 0; j < board.get_players()[i]->get_deck().get_nbcards(); j++) {
-                score += 3count_card(board.get_players()[i]->get_deck().watch_card_at(j));
+                score += count_card(board.get_players()[i]->get_deck().watch_card_at(j));
             }
             scores.push_back(score);
         }
