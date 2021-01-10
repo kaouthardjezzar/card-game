@@ -211,7 +211,7 @@ void HuitAmericain::end_of_game() { // afficher le gagnant
     }
     // si on a plus de 2 joueur et que un gagne ,
     // on calcule les points entre le reste des joueurs pour savoir le gagnant entre eux
-    if (board.get_players().size() > 2) {
+    if (board.get_players().size() > 1) {
         std::vector<int> scores;
         for (int i = 0; i < (int) board.get_players().size(); i++) {
             std::cout << "le joueur : " << board.get_players()[i]->get_name() << " a comme cartes " << std::endl;
