@@ -156,6 +156,7 @@ void Briscola::who_wins_this_turn(std::vector<bool> &winner) {
     // vérifier quelle carte est plus importante pour décider qui remporte les cartes
     for (int j= 0; j < (int)cards.size();j++) {
         bool ok = true;
+        if (cards[j].isSameCol(atout) and cards[j].get_value()>5) { winner [j] = ok; break;}
         for (int i = 0; i < (int)cards.size(); i++) {
             if ( i !=j ){
             if (cards[j] < cards [i] || cards[j] == cards [i] ) {ok = false;
