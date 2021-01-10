@@ -30,7 +30,7 @@ protected:
     }
 
 public:
-    virtual void lets_play();
+    virtual void lets_play() = 0;
 };
 
 

@@ -22,13 +22,14 @@ int main() {
     vector<string> games = {"Bataille", "Uno", "8 Americain", "Scopa", "Briscola"};
 
     for(int i=1; i <= (int)games.size(); ++i) {
-        cout << i << " " << games[i] << endl;
+        cout << i << " " << games[i-1] << endl;
     }
 
     int choice = -1;
 
-    while(choice < 1 && choice > (int)games.size()) {
+    while(choice < 1 || choice > (int)games.size()) {
         cout << "Votre choix : ";
+        cin.clear();
         cin >> choice;
     }
 
