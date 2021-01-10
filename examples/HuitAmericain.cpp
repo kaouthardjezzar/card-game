@@ -6,7 +6,7 @@
 #include "HuitAmericain.h"
 
 
-static string suit = "";
+static std::string suit = "";
 void HuitAmericain::initialization() {
     std::cout << "Launching HuitAmericain " << std::endl;
 
@@ -33,7 +33,7 @@ void HuitAmericain::initialization() {
 
 
     // Players
-    std::vector<string> players = {"John", "Jane", "mike"};
+    std::vector<std::string> players = {"John", "Jane", "mike"};
     board.create_players(players);
 
     // Split cards to players
@@ -93,13 +93,13 @@ void HuitAmericain::excute_round() {
             // si la carte piochée est jouable il la joue directement
             if (validCard(board.get_deck().watch_front_card()) || isSpecialCard(board.get_deck().watch_front_card())){
                 board.get_temp_deck().add_card(board.get_deck().take_front_card());
-                cout << "carte piochéé est jouée : " << board.get_temp_deck().watch_front_card() << endl ;
+                std::cout << "carte piochéé est jouée : " << board.get_temp_deck().watch_front_card() << std::endl ;
                 // si la dernière carté joué est spécial (traitement spécial)
                 if (isSpecialCard(board.get_temp_deck().watch_front_card())) specialProcess ();
                 board.next_round();
             }
             else {// sinon il garde la carte dans la main et passe son tour
-                board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                board.get_players()[board.get_turn()]->get_deck().add_card(board.get_deck().take_front_card());
                 board.next_round();
             }
         }
@@ -125,7 +125,7 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.compute_next_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.compute_next_turn()]->get_deck().add_card(board.get_deck().take_front_card());
                     }
                 break;
             }
@@ -139,7 +139,7 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.compute_next_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.compute_next_turn()]->get_deck().add_card(board.get_deck().take_front_card());
                 }
                 break;
             }
@@ -148,22 +148,22 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
 
 bool HuitAmericain::chooseCard() {
     // pour choisir une carte a jouer
-    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
+    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck().get_nbcards();i++)
     {// chercher d'abord s'il ya une carte special ( priviligiée )
-        if (isSpecialCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
-            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
+        if (isSpecialCard(board.get_players()[board.get_turn()]->get_deck().watch_card_at(i))){
+            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck().take_card_at(i));
             specialProcess ();
             board.next_round();
-            cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
+            std::cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << std::endl;
             return true;
         }
     }
-    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck()->get_nbcards();i++)
+    for (int i= 0; i< board.get_players()[board.get_turn()]->get_deck().get_nbcards();i++)
     { // si non chercher une carte de meme couleur ou de meme valeur
-        if (validCard(board.get_players()[board.get_turn()]->get_deck()->watch_card_at(i))){
-            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
+        if (validCard(board.get_players()[board.get_turn()]->get_deck().watch_card_at(i))){
+            board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck().take_card_at(i));
             board.next_round();
-            cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
+            std::cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << std::endl;
             return true;
         }
     }
@@ -177,15 +177,15 @@ bool HuitAmericain::is_the_end() {
             board.get_players().begin(),
             board.get_players().end(),
             [](const std::unique_ptr<Player>& player) {
-                return player->get_deck()->isEmpty();
+                return player->get_deck().isEmpty();
             });
 }
 
 void HuitAmericain::end_of_game() { // afficher le gagnant
     std::cout << "Fin du jeu " << std::endl;
     for (int i=0; i<(int)board.get_players().size();i++){
-        if (board.get_players()[i]->get_deck()->isEmpty()) {
-            std::cout << board.get_players()[i]->get_name() << " a gagné" << endl;
+        if (board.get_players()[i]->get_deck().isEmpty()) {
+            std::cout << board.get_players()[i]->get_name() << " a gagné" << std::endl;
         }
     }
 }
@@ -201,10 +201,10 @@ bool HuitAmericain::validCard(Card &card) {
 }
 
 void HuitAmericain::displayPlayerStat(int pos) {
-        std::cout << "tour numero : "<<board.get_round() << endl;
+        std::cout << "tour numero : "<<board.get_round() << std::endl;
         std::cout << "c'est le tour de joueur" << pos +1 << std::endl;
         std::cout << "le joueur" << board.get_players()[pos]->get_name() << " a comme cartes " << std::endl;
-        std::cout << board.get_players()[pos]->affdeck();
+        std::cout << board.get_players()[pos]->get_deck();
         std::cout << std::endl;
         std::cout << "la carte à recouvrir est : " << board.get_temp_deck().watch_front_card() << std::endl;
 }

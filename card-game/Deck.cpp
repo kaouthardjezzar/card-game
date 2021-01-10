@@ -55,7 +55,7 @@ void Deck::shuffle() { //mélanger un paquet
     }
 }
 
-unique_ptr<Card> Deck::take_front_card() {
+std::unique_ptr<Card> Deck::take_front_card() {
     if(cards.empty()) {
         return nullptr;
     }
@@ -63,10 +63,10 @@ unique_ptr<Card> Deck::take_front_card() {
     return take_card_at((int) cards.size() -1);
 }
 
-unique_ptr<Card> Deck::take_card_at(int pos) {
+std::unique_ptr<Card> Deck::take_card_at(int pos) {
     assert(pos >= 0 && pos < (int)cards.size());
     if(cards.at(pos)) {
-        unique_ptr<Card> card = std::move(cards.at(pos));
+        std::unique_ptr<Card> card = std::move(cards.at(pos));
         cards.erase(cards.begin() + pos);
         return std::move(card);
     }
@@ -93,7 +93,7 @@ bool Deck::isEmpty() const {
     return cards.empty();
 }
 
-void Deck::split_half(vector<std::unique_ptr<Deck>> &decks) {
+void Deck::split_half(std::vector<std::unique_ptr<Deck>> &decks) {
     decks.push_back(std::unique_ptr<Deck>(new Deck()));
     decks.push_back(std::unique_ptr<Deck>(new Deck()));
     split(decks, 2);
@@ -103,7 +103,7 @@ void Deck::add_card(std::string label, std::string suit, int value) {
     cards.push_back(std::unique_ptr<Card>(new Card(label, suit, value)));
 }
 
-void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::unique_ptr<Deck>> &decks) {
+void Deck::distribute(int nb_players, int nb_cards_per_player, std::vector<std::unique_ptr<Deck>> &decks) {
     assert((int)cards.size() >= (nb_players * nb_cards_per_player));
 
     for (int i = 0; i < nb_players; ++i) {
@@ -120,11 +120,11 @@ void Deck::clean_deck() {
 
 }
 
-ostream & operator << (ostream & out, Deck & aDeck) {
-    cout << "[" ;
+std::ostream & operator << (std::ostream & out, Deck & aDeck) {
+    std::cout << "[" ;
     for (int i=0;i<aDeck.get_nbcards();i++){
-        cout << aDeck.watch_card_at(i) << "," ;
+        std::cout << aDeck.watch_card_at(i) << "," ;
     }
-    cout << "]" << endl;
+    std::cout << "]" << std::endl;
     return out;
 }

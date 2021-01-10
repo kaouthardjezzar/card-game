@@ -10,7 +10,7 @@
 
 #define SKIPLINE std::cout<<std::endl;
 
-class GameTemplate { // Abstract
+class GameTemplate {
 
 protected:
     Board board;
@@ -20,7 +20,11 @@ protected:
     virtual bool is_the_end();
     virtual void next_turn();
     virtual void end_of_game();
-    // Utils
+
+    /*
+     * Demande le choix au joueur
+     * et vérifie si c'est le bon Type
+     */
     template<typename T>
     T ask_player(const std::string& title)
     {
@@ -29,12 +33,12 @@ protected:
         while (!( std::cin >> x))
         {
             std::cin.clear();
-            std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Veuillez entrer un nombre/mot correct: " << endl;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Veuillez entrer un nombre/mot correct: " << std::endl;
             std::cout << title;
         }
         std::cin.clear();
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         return (x);
     }
 
