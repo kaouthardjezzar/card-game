@@ -10,7 +10,6 @@
 
 class HuitAmericain : public GameTemplate {
 private:
-    Board board;
     std::vector<int> special_cards = {8 , 0, 1, 11,2};
 
     void first_turn();
@@ -27,18 +26,18 @@ private:
     void specialProcess();
 
 protected:
-    void initialization() ;
+    void initialization() override;
 
-    void next_turn() ;
+    void next_turn() override;
 
-    bool is_the_end() ;
+    bool is_the_end() override;
 
-    void end_of_game() ;
+    void end_of_game() override;
 
 public:
     HuitAmericain() = default;
     virtual ~HuitAmericain() = default;
-    void lets_play() override;
+    void lets_play(std::vector<std::string> players);
 };
 
 
