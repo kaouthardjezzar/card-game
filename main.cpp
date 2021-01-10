@@ -19,7 +19,7 @@ int main() {
     cout << "Bienvenue dans le jeu, " << endl;
     cout << "Nous vous invitons à choisir un des jeux ci dessous, " << endl;
 
-   /* vector<string> games = {"Bataille", "Uno", "8 Americain", "Scopa", "Briscola"};
+    vector<string> games = {"Bataille", "Uno", "8 Americain", "Scopa", "Briscola"};
 
     for(int i=1; i <= (int)games.size(); ++i) {
         cout << i << " " << games[i-1] << endl;
@@ -64,8 +64,6 @@ int main() {
             break;
     }
 
-    cout << "\n Au revoir et merci beaucoup " << endl; */
-   HuitAmericain game;
-   game.lets_play();
+    cout << "\n Au revoir et merci beaucoup " << endl;
     return 0;
 }
