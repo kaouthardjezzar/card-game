@@ -2,7 +2,7 @@
 // Created by Ny Andrianina Mamy on 12/12/2020.
 //
 
-#include "Deck.h"
+#include "DeckTest.h"
 #include <algorithm>
 #include <random>
 
@@ -61,7 +61,7 @@ unique_ptr<Card> Deck::take_front_card() {
 }
 
 unique_ptr<Card> Deck::take_card_at(int pos) {
-    assert(pos >= 0 && pos < cards.size());
+    assert(pos >= 0 && pos < (int)cards.size());
     if(cards.at(pos)) {
         unique_ptr<Card> card = std::move(cards.at(pos));
         cards.erase(cards.begin() + pos);
@@ -77,7 +77,7 @@ Card& Deck::watch_front_card() const {
 }
 
 Card& Deck::watch_card_at(int pos) const {
-    assert(pos >=0 && pos < cards.size());
+    assert(pos >=0 && pos < (int)cards.size());
     return *cards.at(pos);
 }
 
@@ -101,7 +101,7 @@ void Deck::add_card(std::string label, std::string suit, int value) {
 }
 
 void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::unique_ptr<Deck>> &decks) {
-    assert(cards.size() >= (nb_players * nb_cards_per_player));
+    assert((int)cards.size() >= (nb_players * nb_cards_per_player));
 
     for (int i = 0; i < nb_players; ++i) {
         std::unique_ptr<Deck> deck = std::unique_ptr<Deck>(new Deck());

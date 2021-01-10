@@ -47,7 +47,7 @@ void Board::add_player(std::unique_ptr<Player>& player) {
 }
 
 void Board::affect_decks_toplayers(std::vector<std::unique_ptr<Deck>>& decks) {
-    for(int i=0; i < get_players().size(); ++i) {
+    for(int i=0; i < (int) get_players().size(); ++i) {
         get_players()[i]->set_deck(decks[i]);
     }
 }
@@ -66,9 +66,9 @@ void Board::create_players(std::vector<string>& _players) {
 int Board::compute_next_turn() const {
     int next = turn+direction;
     if(next < 0) {
-        return players.size()-1;
+        return (int)players.size()-1;
     }
-    if (next==players.size()) {
+    if (next== (int)players.size()) {
         return 0;
     }
     return next;

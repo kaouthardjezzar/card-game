@@ -2,8 +2,8 @@
 // Created by Ny Andrianina Mamy on 12/12/2020.
 //
 
-#ifndef CARD_GAME_DECK_H
-#define CARD_GAME_DECK_H
+#ifndef CARD_GAME_DECKTEST_H
+#define CARD_GAME_DECKTEST_H
 
 #include <vector>
 #include <memory>
@@ -25,7 +25,7 @@ public:
 
     virtual ~Deck() {
         LOG_INIT_COUT();
-        logd(LOG_DEBUG) << "Deleting Deck containing" << " , Cards : " << cards.size() << "\n";
+        logd(LOG_DEBUG) << "Deleting Deck containing" << " , Cards : " << (int)cards.size() << "\n";
     }
 
     // Iterable Class
@@ -63,4 +63,4 @@ public:
 };
 
 
-#endif //CARD_GAME_DECK_H
+#endif //CARD_GAME_DECKTEST_H

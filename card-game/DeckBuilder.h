@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <vector>
-#include "Deck.h"
+#include "DeckTest.h"
 #include "Card.h"
 
 class DeckBuilder {

@@ -46,7 +46,7 @@ void HuitAmericain::initialization() {
 
 bool HuitAmericain::isSpecialCard(const Card card) {
     // retourne true si la carte est spéciale
-    for(int i = 0; i < special_cards.size(); i++){
+    for(int i = 0; i < (int)special_cards.size(); i++){
         if (special_cards[i] == card.get_value()) {
             return true;
         }
@@ -184,7 +184,7 @@ bool HuitAmericain::is_the_end() {
 
 void HuitAmericain::end_of_game() { // afficher le gagnant
     std::cout << "Fin du jeu " << std::endl;
-    for (int i=0; i<board.get_players().size();i++){
+    for (int i=0; i<(int)board.get_players().size();i++){
         if (board.get_players()[i]->get_deck()->isEmpty()) {
             std::cout << board.get_players()[i]->get_name() << " a gagné" << endl;
         }
