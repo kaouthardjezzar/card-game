@@ -9,7 +9,7 @@ OBJS = Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Un
 
 .PHONY: all clean test
 
-all: $(OBJS)
+all: main.o $(OBJS)
 	$(CC) $(CFLAGS) main.o $(OBJS) -o $(TARGET_OUTPUT)
 
 main.o: main.cpp
