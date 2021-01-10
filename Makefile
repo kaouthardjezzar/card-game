@@ -1,6 +1,6 @@
 
 card-game: main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o
-	g++ main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o HuitAmericain.o -o card-game
+	g++ main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o HuitAmericain.o Scopa.o Briscola.o -o card-game
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -32,6 +32,11 @@ Uno.o: examples/Uno.cpp examples/Uno.h
 HuitAmericain.o: examples/HuitAmericain.cpp examples/HuitAmericain.h
 	g++ -c examples/HuitAmericain.cpp
 
+Briscola.o: examples/Briscola.cpp examples/Briscola.h
+	g++ -c examples/Briscola.cpp
+
+Scopa.o: examples/Scopa.cpp examples/Scopa.h
+	g++ -c examples/Scopa.cpp
 
 clean: 
 	rm *.o card-game.exe
