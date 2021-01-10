@@ -85,12 +85,12 @@ Card& Deck::watch_card_at(int pos) const {
 }
 
 
-int Deck::get_nbcards() { //nombre de cartes restant dans le paquet
+int Deck::get_nbcards() const { //nombre de cartes restant dans le paquet
     return (int)cards.size();
 }
 
-bool Deck::isEmpty() {
-    return this->get_nbcards()==0;
+bool Deck::isEmpty() const {
+    return cards.empty();
 }
 
 void Deck::split_half(vector<std::unique_ptr<Deck>> &decks) {

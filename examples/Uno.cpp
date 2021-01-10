@@ -148,9 +148,6 @@ void Uno::display_valid_move(Player& current_player, const Card& card_on_board) 
 
 
 void Uno::next_turn() {
-    Player& current_player = board.get_current_player();
-    Card &card_on_board = board.get_temp_deck().watch_front_card();
-
     display_game_status();
 
     int choice = make_a_choice();

@@ -55,8 +55,8 @@ public:
 
     void split_half(std::vector<std::unique_ptr<Deck>>& decks);
 
-    int get_nbcards();
-    bool isEmpty();
+    int get_nbcards() const;
+    bool isEmpty() const;
 
     void distribute(int nb_players, int nb_cards_per_player, std::vector<std::unique_ptr<Deck>> &decks);
     friend ostream & operator << (ostream & out, Deck & aDeck);

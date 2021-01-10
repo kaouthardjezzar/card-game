@@ -71,6 +71,29 @@ void Scopa::next_turn() {
     }
 }
 
+void Scopa::end_of_game() {
+    display_game_status();
+    int i = 0;
+    int index_max = 0;
+    int score_max = -999;
+    for(auto &player: board.get_players()) {
+        if(player->get_score() > score_max) {
+            index_max = i;
+            score_max = player->get_score();
+        }
+        if(player->get_deck()->isEmpty()) {
+            index_max = i;
+            break;
+        }
+        i++;
+    }
+    std::cout << *board.get_players()[index_max] << " a gagné la partie " << std::endl;
+}
+
+bool Scopa::is_the_end() {
+    return board.get_deck().isEmpty();
+}
+
 int Scopa::make_a_choice() {
     Player& current_player = board.get_current_player();
 
@@ -125,28 +148,6 @@ int is_same_value(Deck& deck, const Card& player_move) {
     return NOCHOICE;
 }
 
-std::vector<int> is_a_sum(Deck& deck, const Card& player_move) {
-    std::vector<int> index = {};
-    if(deck.get_nbcards() < 2) {
-        return index;
-    }
-
-    int goal = player_move.get_value();
-    for(int i = 0; i < deck.get_nbcards(); i++){
-        for(int j = i; j < deck.get_nbcards(); j++){
-            if(i==j) continue;
-            int x1 = deck.watch_card_at(i).get_value();
-            int x2 = deck.watch_card_at(j).get_value();
-
-            if(x1 + x2 == goal) {
-                index.push_back(x1);
-                index.push_back(x2);
-            }
-        }
-    }
-    return index;
-}
-
 void Scopa::display_game_status() {
     Player& current_player = board.get_current_player();
     SKIPLINE
@@ -166,29 +167,6 @@ void Scopa::display_game_status() {
     std::cout << "Au tour de " << current_player << std::endl;
 }
 
-void Scopa::end_of_game() {
-    display_game_status();
-    int i = 0;
-    int index_max = 0;
-    int score_max = -999;
-    for(auto &player: board.get_players()) {
-        if(player->get_score() > score_max) {
-            index_max = i;
-            score_max = player->get_score();
-        }
-        if(player->get_deck()->isEmpty()) {
-            index_max = i;
-            break;
-        }
-        i++;
-    }
-    std::cout << *board.get_players()[index_max] << " a gagné la partie " << std::endl;
-}
-
-bool Scopa::is_the_end() {
-    return board.get_deck().isEmpty();
-}
-
 void Scopa::compute_choice(int choice) {
     Player& current_player = board.get_current_player();
     std::unique_ptr<Card> card = current_player.get_deck()->take_card_at(choice);
@@ -204,5 +182,3 @@ void Scopa::compute_choice(int choice) {
     card.reset();
     board.next_round();
 }
-
-

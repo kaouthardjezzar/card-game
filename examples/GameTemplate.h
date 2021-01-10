@@ -13,6 +13,13 @@
 class GameTemplate { // Abstract
 
 protected:
+    Board board;
+
+    virtual void initialization();
+    virtual void first_turn();
+    virtual bool is_the_end();
+    virtual void next_turn();
+    virtual void end_of_game();
     // Utils
     template<typename T>
     T ask_player(const std::string& title)
@@ -32,7 +39,7 @@ protected:
     }
 
 public:
-    virtual void lets_play() = 0;
+    virtual void lets_play();
 };
 
 

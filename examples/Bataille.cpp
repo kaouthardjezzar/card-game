@@ -31,10 +31,6 @@ void Bataille::initialization() {
     std::vector<std::unique_ptr<Deck>> decks;
     board.get_deck().split_half(decks);
     board.affect_decks_toplayers(decks);
-
-    for (int i = 0; i<board.get_players().size(); i++){
-        board.get_players()[i]->set_score(0);
-    }
 }
 
 void Bataille::next_turn() {
@@ -120,16 +116,6 @@ void Bataille::a_player_wins(Player &player){
     player.set_score(
             player.get_score()+ 2
             );
-
-    // Add temp_deck cards to player cards
-   /* for(const auto &card: board.get_temp_deck()) {
-
-        board.get_players()[0]
-            ->get_deck()
-            ->add_card(
-                board.get_temp_deck().take_front_card()
-                );
-    }*/
 }
 
 void Bataille::display_game_status(std::vector<bool> winner) {
@@ -148,20 +134,15 @@ void Bataille::display_game_status(std::vector<bool> winner) {
     }
 
     // Display who wins
-    for(int i=0 ; i < winner.size(); ++i){
+    for(int i=0 ; i < (int)winner.size(); ++i){
         if(winner[i]) {
             std::cout << board.get_players()[i]->get_name() << " a gagné ce tour " << std::endl;
         }
     }
 
-    // Saut de ligne
-    std::cout << "\n" << std::endl;
+   SKIPLINE
 }
 
-void Bataille::lets_play() {
-    initialization();
-    while(!is_the_end()) {
-        next_turn();
-    }
-    end_of_game();
+void Bataille::first_turn() {
+    GameTemplate::first_turn();
 }

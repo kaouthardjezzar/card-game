@@ -10,8 +10,6 @@
 
 class Bataille : public GameTemplate {
 private:
-    Board board;
-
     void display_game_status(std::vector<bool> winner);
 
     void who_wins_this_turn(std::vector<bool>& winner);
@@ -21,19 +19,19 @@ private:
     void a_player_wins(Player &player);
 
 protected:
-    void initialization() ;
+    void initialization() override;
 
-    void next_turn() ;
+    void first_turn() override;
 
-    bool is_the_end() ;
+    void next_turn() override;
 
-    void end_of_game() ;
+    bool is_the_end() override;
+
+    void end_of_game() override;
 
 public:
     Bataille() = default;
     virtual ~Bataille() = default;
-    void lets_play() override;
-
 };
 
 

@@ -33,10 +33,12 @@ bool Card::operator<(const Card& c) const {
 
 ostream & operator << (ostream & out, Card & aCard) {
     if (!aCard.label.empty()) {
-        out << aCard.label << " ";
+        out << "Label : " << aCard.label << " ";
     }
 
-    out << aCard.suit << " ";
+    out << " Suite : " << aCard.suit << " ";
+
+    out << " Valeur : " ;
     switch (aCard.value) {
         case 1:
             out << "Ace";

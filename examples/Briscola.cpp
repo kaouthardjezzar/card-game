@@ -72,14 +72,14 @@ bool Briscola::is_the_end() {
 void Briscola::end_of_game() {
     std::cout << "Fin du jeu  : " << std::endl;
 
-    for (int i = 0; i< board.get_players().size(); i++) {
+    for (int i = 0; i< (int)board.get_players().size(); i++) {
         std::cout << board.get_players()[i]->get_name() << " a ganée  : " << points[i] << "manches " <<std::endl;
     }
-    for (int j= 0; j < board.get_players().size();j++) {
+    for (int j= 0; j < (int)board.get_players().size();j++) {
     }
-        for (int j= 0; j < board.get_players().size();j++) {
+        for (int j= 0; j < (int)board.get_players().size();j++) {
         int cpt = 0;
-        for (int i = 0; i < board.get_players().size(); i++) {
+        for (int i = 0; i < (int)board.get_players().size(); i++) {
             if ( points [j] < points [i]) {
                 break;
             }
@@ -87,7 +87,7 @@ void Briscola::end_of_game() {
                 cpt ++;
             }
         }
-        if (cpt == board.get_players().size()){
+        if (cpt == (int)board.get_players().size()){
             std::cout << board.get_players()[j]->get_name() << " a gagné " << std::endl;
             break;}
     }
@@ -104,19 +104,19 @@ void Briscola::end_of_manche() {
         scores.push_back(player->get_score());
         std::cout << player->get_name() << " a eu le score : " << player->get_score() << std::endl;
     }
-    for (int j= 0; j < board.get_players().size();j++) {
+    for (int j= 0; j < (int)board.get_players().size();j++) {
         int cpt = 0;
-        for (int i = 0; i < board.get_players().size(); i++) {
+        for (int i = 0; i < (int)board.get_players().size(); i++) {
             if (scores[j] < scores [i]) break;
             else cpt ++;
         }
-        if (cpt == board.get_players().size()){
+        if (cpt == (int)board.get_players().size()){
         std::cout << board.get_players()[j]->get_name() << " a gagné la manche " << std::endl;
         std::cout << "\n" << endl;
         points [j] ++;
         break;}
     }
-    for (int k= 0; k< board.get_players().size();k++)
+    for (int k= 0; k< (int)board.get_players().size();k++)
     {
         board.get_players()[k]->set_score(0);
     }
@@ -128,7 +128,7 @@ void Briscola::end_of_manche() {
 
 
 void Briscola::display_game_status(std::vector<bool> winner) {
-    for(int i=0 ; i < winner.size(); ++i){
+    for(int i=0 ; i < (int)winner.size(); ++i){
         if(winner[i]) {
             std::cout << board.get_players()[i]->get_name() << " a gagné ce tour " << std::endl;
         }
@@ -142,16 +142,16 @@ void Briscola::who_wins_this_turn(vector<bool> &winner) {
 
 
     std::vector<Card> cards(winner.size());
-    for (int i = 0; i < winner.size(); i++) {
+    for (int i = 0; i < (int)winner.size(); i++) {
         cards[board.get_turn()] = chooseCard();
-        if (board.get_turn() +1 == board.get_players().size()) {
+        if (board.get_turn() +1 == (int)board.get_players().size()) {
             board.set_turn(0);
         }
         else {board.set_turn(board.get_turn() +1);}
     }
-    for (int j= 0; j < cards.size();j++) {
+    for (int j= 0; j < (int)cards.size();j++) {
         bool ok = true;
-        for (int i = 0; i < cards.size(); i++) {
+        for (int i = 0; i < (int)cards.size(); i++) {
             if ( i !=j ){
             if (cards[j] < cards [i] || cards[j] == cards [i] ) {ok = false;
             break;}}
@@ -165,7 +165,7 @@ void Briscola::compute_winner(std::vector<bool> winner) {
         return; // Don't do anything
     }
 
-    for (int i= 0 ; i < winner.size(); i++){
+    for (int i= 0 ; i < (int)winner.size(); i++){
         if (winner[i]){
             board.get_players()[i]->set_score(
                     board.get_players()[i]->get_score()+2

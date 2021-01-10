@@ -12,8 +12,6 @@
 
 class Uno: public GameTemplate  {
 private:
-    Board board;
-
     static bool is_special_card(const Card& card);
 
     static void compute_special_card(const Card& card, Board& board);
@@ -26,33 +24,23 @@ private:
 
     void compute_choice(int choice);
 
-    void initialization() ;
-
-    void next_turn() ;
-
-    void first_turn() ;
-
     void display_game_status();
 
-    bool is_the_end();
-
-    void end_of_game();
-
     void compute_winner();
+
+    void initialization() override ;
+
+    void next_turn() override ;
+
+    void first_turn() override ;
+
+    bool is_the_end() override;
+
+    void end_of_game() override;
 
 public:
     Uno() = default;
     virtual ~Uno() = default;
-
-    void lets_play() override {
-        initialization();
-        first_turn();
-        while(!is_the_end()) {
-            next_turn();
-        }
-        end_of_game();
-    }
-
 };
 
 
