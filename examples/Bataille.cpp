@@ -60,12 +60,7 @@ void Bataille::who_wins_this_turn(std::vector<bool>& winner) {
 
 
 bool Bataille::is_the_end() {
-    return std::any_of(
-            board.get_players().begin(),
-            board.get_players().end(),
-            [](const std::unique_ptr<Player>& player) {
-                return player->get_deck().isEmpty();
-            });
+    return board.a_player_has_empty_deck();
 }
 
 void Bataille::end_of_game() {

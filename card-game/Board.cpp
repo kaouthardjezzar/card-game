@@ -108,3 +108,9 @@ int Board::get_direction() const {
     return direction;
 }
 
+bool Board::a_player_has_empty_deck() {
+    return std::any_of(players.begin(), players.end(), [](const std::unique_ptr<Player>& player) {
+        return player->get_deck().isEmpty();
+    });
+}
+

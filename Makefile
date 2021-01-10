@@ -5,12 +5,12 @@ CFLAGS = -Wall -std=c++11
 
 TARGET_OUTPUT = main
 
-OBJS = main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o Scopa.o Briscola.o HuitAmericain.o
+OBJS = Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o Scopa.o Briscola.o HuitAmericain.o
 
 .PHONY: all clean test
 
 all: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET_OUTPUT)
+	$(CC) $(CFLAGS) main.o $(OBJS) -o $(TARGET_OUTPUT)
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
@@ -49,15 +49,15 @@ Scopa.o: examples/Scopa.cpp examples/Scopa.h examples/ScopaCards.h
 	$(CC) $(CFLAGS) -c examples/Scopa.cpp
 
 # TEST SECTION
-TEST_OBJS = Card.o Deck.o Gtest.o CardTest.o DeckTest.o
+TEST_OBJS = CardTest.o DeckTest.o BoardTest.o PlayerTest.o
 TEST_OUTPUT = test
 TEST_DIR = tests
 GTEST_MAIN := lib/Google_tests/
 GTEST_DIR := lib/Google_tests/lib/googletest
 LDFLAGS := lgtest.a lgtest_main.a -lpthread
 
-test: Gtest-all Gtest-main $(TEST_OBJS)
-	$(CC) $(CFLAGS) $(TEST_OBJS) $(LDFLAGS) -o $(TEST_OUTPUT)
+test: Gtest-all Gtest-main $(OBJS) $(TEST_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) $(LDFLAGS) -o $(TEST_OUTPUT)
 
 Gtest.o: $(GTEST_MAIN)/gtest.cpp
 	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(GTEST_MAIN)/gtest.cpp
@@ -67,6 +67,12 @@ CardTest.o: tests/CardTest.cpp
 
 DeckTest.o: tests/DeckTest.cpp
 	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(TEST_DIR)/DeckTest.cpp
+
+BoardTest.o: tests/BoardTest.cpp
+	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(TEST_DIR)/BoardTest.cpp
+
+PlayerTest.o: tests/PlayerTest.cpp
+	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(TEST_DIR)/PlayerTest.cpp
 
 Gtest-all:
 	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc

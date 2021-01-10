@@ -71,6 +71,16 @@ public:
      */
     void shuffle_deck();
 
+    /*
+     * Change le sens du jeu vers le sens contraire
+     */
+    void reverse_direction();
+
+    /*
+     * Vérifie si un joueur possède une main vide
+     */
+    bool a_player_has_empty_deck();
+
     void set_deck(std::unique_ptr<Deck> _deck);
 
     Deck& get_deck();
@@ -99,7 +109,6 @@ public:
 
     Player& get_next_player();
 
-    void reverse_direction();
     int compute_next_turn() const;
 
 };
