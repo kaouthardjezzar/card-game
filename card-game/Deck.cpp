@@ -120,7 +120,7 @@ void Deck::clean_deck() {
 
 }
 
-std::ostream & operator << (std::ostream & out, Deck & aDeck) {
+std::ostream & operator << (std::ostream & out, const Deck & aDeck) {
     std::cout << "[" ;
     for (int i=0;i<aDeck.get_nbcards();i++){
         std::cout << aDeck.watch_card_at(i) << "," ;
