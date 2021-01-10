@@ -243,7 +243,7 @@ void Briscola::lets_play () {
     std::cout << "\n" << endl;
 
     // Players
-    std::vector<string> players = {"John", "Jane", "mike", "kaou"};
+    std::vector<string> players = {"John", "Jane", "mike"};
     board.create_players(players);
     for (int i = 0; i < 3; i++) {  // jouer 3 manches
         std::cout << "Manche :  " << i << std::endl;

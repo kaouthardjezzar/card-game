@@ -29,12 +29,11 @@ void HuitAmericain::initialization() {
 
     // Shuffle deck
 
-    for (int j = 0;j < 2 ; j ++ ){
-        board.shuffle_deck();
-    }
+    board.shuffle_deck();
+
 
     // Players
-    std::vector<string> players = {"John", "Jane"};
+    std::vector<string> players = {"John", "Jane", "mike"};
     board.create_players(players);
 
     // Split cards to players
@@ -113,7 +112,7 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                 break;
             }
             case 11: {// cas du valet : passer le tour du joueur suivant
-                board.set_turn(board.get_turn()+board.get_direction());
+                board.set_turn(board.compute_next_turn());
                 break;
             }
             case 2: { // le joueur suivant doit piocher 2 cartes
@@ -126,12 +125,12 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.compute_next_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
                     }
                 break;
             }
             case 0 : { // le joueur suivant doit piocher 4 cartes
-                for (int i =0; i<4 ; i++){
+                for (int i = 0; i < 4; i++) {
                     if (board.get_deck().isEmpty()) {
                         std::unique_ptr<Card> card = board.get_temp_deck().take_front_card();
                         for (int i=0; i < board.get_temp_deck().get_nbcards();i++) {
@@ -140,7 +139,7 @@ void HuitAmericain::specialProcess() { // pour les cartes spéciales
                         }
                         board.get_temp_deck().add_card(std::move(card));
                     }
-                    board.get_players()[board.get_turn()+board.get_direction()]->get_deck()->add_card(board.get_deck().take_front_card());
+                    board.get_players()[board.compute_next_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
                 }
                 break;
             }
