@@ -1,5 +1,5 @@
 
-card-game: main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o
+card-game: main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o Scopa.o
 	g++ main.o Card.o Deck.o Player.o DeckBuilder.o Board.o GameTemplate.o Bataille.o Uno.o HuitAmericain.o Scopa.o Briscola.o -o card-game
 
 main.o: main.cpp
@@ -26,7 +26,7 @@ GameTemplate.o: examples/GameTemplate.cpp examples/GameTemplate.h
 Bataille.o: examples/Bataille.cpp examples/Bataille.h
 	g++ -c examples/Bataille.cpp
 
-Uno.o: examples/Uno.cpp examples/Uno.h
+Uno.o: examples/Uno.cpp examples/Uno.h examples/UnoCards.h
 	g++ -c examples/Uno.cpp
 
 HuitAmericain.o: examples/HuitAmericain.cpp examples/HuitAmericain.h
@@ -35,7 +35,7 @@ HuitAmericain.o: examples/HuitAmericain.cpp examples/HuitAmericain.h
 Briscola.o: examples/Briscola.cpp examples/Briscola.h
 	g++ -c examples/Briscola.cpp
 
-Scopa.o: examples/Scopa.cpp examples/Scopa.h
+Scopa.o: examples/Scopa.cpp examples/Scopa.h examples/ScopaCards.h
 	g++ -c examples/Scopa.cpp
 
 clean: 
