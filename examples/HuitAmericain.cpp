@@ -6,7 +6,6 @@
 #include "HuitAmericain.h"
 
 
-static std::string suit = "";
 void HuitAmericain::initialization() {
     std::cout << "Launching HuitAmericain " << std::endl;
 

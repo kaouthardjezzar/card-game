@@ -12,7 +12,7 @@ class Briscola : public GameTemplate {
 private:
     std::unique_ptr<Card> atout;
 
-    std::vector<int> points {0,0,0,0};
+    std::vector<int> points {0,0,0,0,0,0};
 
     void display_game_status(std::vector<bool> winner);
 
@@ -26,8 +26,6 @@ private:
 
     void end_of_manche();
 
-
-protected:
     void initialization() override;
 
     void first_turn() override;
@@ -38,11 +36,11 @@ protected:
 
     void end_of_game() override;
 
+    void lets_play() override;
 
 public:
     Briscola() = default;
     virtual ~Briscola() = default;
-    void lets_play() override;
     void lets_play(std::vector<std::string> players);
 
 };
