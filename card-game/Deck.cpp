@@ -42,18 +42,10 @@ std::vector<std::unique_ptr<Card>>::iterator Deck::end() {
 }
 
 
-void Deck::shuffle() { //mélanger un paquet
-    std::srand(std::time(nullptr));
-    int nbr = std::rand();
-    for (int i = 0; i < nbr; i++) {
-        std::shuffle(
-                std::begin(cards),
-                std::end(cards),
-                std::default_random_engine{
-                        std::random_device{}()
-                }
-        );
-    }
+void Deck::shuffle() {
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle( std::begin(cards),std::end(cards), g);
 }
 
 std::unique_ptr<Card> Deck::take_front_card() {
