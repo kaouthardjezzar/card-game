@@ -16,7 +16,7 @@ private:
     std::unique_ptr<Deck> deck;
     int score;
 public:
-    explicit Player(std::string  _name): name(std::move(_name)), deck{}, score(0) {
+    explicit Player(std::string  _name): name(std::move(_name)), deck{new Deck()}, score(0) {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating player : " << name << "\n";
     }
