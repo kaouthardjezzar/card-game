@@ -92,7 +92,7 @@ TEST(Deck, Shuffle) {
     deck.shuffle();
 
     bool isSorted = true;
-    int last = deck.watch_card_at(0).get_value(), next = 0;
+    int last = deck.watch_card_at(0).get_value();
     for(int i = 1; i < 10; i++) {
         if(deck.watch_card_at(i).get_value() <= last) {
             isSorted = false;

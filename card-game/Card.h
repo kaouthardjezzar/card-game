@@ -16,11 +16,11 @@ private:
     int value;
 
 public:
-    Card(std::string& _suit, int _value): suit(_suit), value(_value) {
+    Card(std::string _suit, int _value): suit(_suit), value(_value) {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating card : " << suit << " , " << value << "\n";
     }
-    Card(std::string& _label, std::string& _suit, int _value): suit(_suit), label(_label), value(_value) {
+    Card(std::string _label, std::string& _suit, int _value): suit(_suit), label(_label), value(_value) {
         LOG_INIT_COUT();
         logd(LOG_DEBUG) << "Creating card : " << label << " , " << suit << " , " << value << "\n";
     }
