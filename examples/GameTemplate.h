@@ -15,10 +15,31 @@ class GameTemplate {
 protected:
     Board board;
 
+    /*
+     * Crée le paquet
+     * Crée les joueurs
+     * Distribue les cartes aux joueurs
+     */
     virtual void initialization();
+
+    /*
+     * Généralement, le premier tour diffère des tours suivants
+     */
     virtual void first_turn();
+
+    /*
+     * Vérifie si le dernier tour a été effectué
+     */
     virtual bool is_the_end();
+
+    /*
+     * Tours en boucle
+     */
     virtual void next_turn();
+
+    /*
+     * Généralement affiche les résultats de fin de jeu
+     */
     virtual void end_of_game();
 
     /*
