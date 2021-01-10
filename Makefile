@@ -18,7 +18,7 @@ main.o: main.cpp
 Card.o: card-game/Card.cpp card-game/Card.h
 	$(CC) $(CFLAGS) -c card-game/Card.cpp
 
-Deck.o: card-game/Deck.cpp card-game/DeckTest.h
+Deck.o: card-game/Deck.cpp card-game/Deck.h
 	$(CC) $(CFLAGS) -c card-game/Deck.cpp
 		
 Player.o: card-game/Player.cpp card-game/Player.h
@@ -49,7 +49,7 @@ Scopa.o: examples/Scopa.cpp examples/Scopa.h examples/ScopaCards.h
 	$(CC) $(CFLAGS) -c examples/Scopa.cpp
 
 # TEST SECTION
-TEST_OBJS = Card.o Deck.o Gtest.o DeckTest.o
+TEST_OBJS = Card.o Deck.o Gtest.o CardTest.o DeckTest.o
 TEST_OUTPUT = test
 TEST_DIR = tests
 GTEST_MAIN := lib/Google_tests/
@@ -61,6 +61,9 @@ test: Gtest-all Gtest-main $(TEST_OBJS)
 
 Gtest.o: $(GTEST_MAIN)/gtest.cpp
 	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(GTEST_MAIN)/gtest.cpp
+
+CardTest.o: tests/CardTest.cpp
+	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(TEST_DIR)/CardTest.cpp
 
 DeckTest.o: tests/DeckTest.cpp
 	$(CC) $(CFLAGS) -I$(GTEST_DIR)/include -c $(TEST_DIR)/DeckTest.cpp

@@ -6,7 +6,7 @@
 // Created by Ny Andrianina Mamy on 21/12/2020.
 //
 #include "gtest/gtest.h"
-#include "../card-game/DeckTest.h"
+#include "../card-game/Deck.h"
 
 TEST(Deck, CreateBasicDeck) {
     Deck deck;
