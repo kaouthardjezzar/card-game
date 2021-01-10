@@ -43,8 +43,8 @@ std::vector<std::unique_ptr<Card>>::iterator Deck::end() {
 
 
 void Deck::shuffle() { //mélanger un paquet
-    srand(time(0));
-    int nbr = rand() % 100;
+    std::srand(std::time(nullptr));
+    int nbr = std::rand();
     for (int i = 0; i < nbr; i++) {
         std::shuffle(
                 std::begin(cards),
