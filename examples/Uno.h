@@ -12,7 +12,7 @@
 
 #define SKIPLINE std::cout<<std::endl;
 
-class Uno  {
+class Uno: public GameTemplate  {
 private:
     Board board;
 
@@ -34,24 +34,6 @@ private:
 
     void first_turn() ;
 
-    // Utils
-    template<typename T>
-    T ask_player(const std::string& title)
-    {
-        T x = 0;
-        std::cout << title;
-        while (!( std::cin >> x))
-        {
-            std::cin.clear();
-            std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Veuillez entrer un nombre/mot correct: " << endl;
-            std::cout << title;
-        }
-        std::cin.clear();
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        return (x);
-    }
-
     void display_game_status();
 
     bool is_the_end();
@@ -64,7 +46,7 @@ public:
     Uno() = default;
     virtual ~Uno() = default;
 
-    void lets_play() {
+    void lets_play() override {
         initialization();
         first_turn();
         while(!is_the_end()) {

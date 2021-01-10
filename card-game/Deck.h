@@ -2,8 +2,8 @@
 // Created by Ny Andrianina Mamy on 12/12/2020.
 //
 
-#ifndef CARD_GAME_DECKTEST_H
-#define CARD_GAME_DECKTEST_H
+#ifndef CARD_GAME_DECK_H
+#define CARD_GAME_DECK_H
 
 #include <vector>
 #include <memory>
@@ -63,4 +63,4 @@ public:
 };
 
 
-#endif //CARD_GAME_DECKTEST_H
+#endif //CARD_GAME_DECK_H

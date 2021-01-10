@@ -157,3 +157,11 @@ void Bataille::display_game_status(std::vector<bool> winner) {
     // Saut de ligne
     std::cout << "\n" << std::endl;
 }
+
+void Bataille::lets_play() {
+    initialization();
+    while(!is_the_end()) {
+        next_turn();
+    }
+    end_of_game();
+}

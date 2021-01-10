@@ -27,17 +27,18 @@ private:
     void specialProcess();
 
 protected:
-    void initialization() override;
+    void initialization() ;
 
-    void next_turn() override;
+    void next_turn() ;
 
-    bool is_the_end() override;
+    bool is_the_end() ;
 
-    void end_of_game() override;
+    void end_of_game() ;
 
 public:
     HuitAmericain() = default;
     virtual ~HuitAmericain() = default;
+    void lets_play() override;
 };
 
 

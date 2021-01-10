@@ -238,14 +238,14 @@ bool Briscola::validCard(Card &card) {
     return  yes;
 }
 
-void Briscola::lets_playy (){
+void Briscola::lets_play () {
     std::cout << "Launching Briscola " << std::endl;
     std::cout << "\n" << endl;
 
     // Players
     std::vector<string> players = {"John", "Jane", "mike", "kaou"};
     board.create_players(players);
-    for (int i = 0; i <3; i++) {  // jouer 3 manches
+    for (int i = 0; i < 3; i++) {  // jouer 3 manches
         std::cout << "Manche :  " << i << std::endl;
         initialization();
         while (!is_the_end()) {

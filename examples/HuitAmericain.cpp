@@ -210,4 +210,13 @@ void HuitAmericain::displayPlayerStat(int pos) {
         std::cout << "la carte à recouvrir est : " << board.get_temp_deck().watch_front_card() << std::endl;
 }
 
+void HuitAmericain::lets_play() {
+    // Get called by main function
+    // How to arrange function call
+    initialization();
+    while(!is_the_end()) {
+        next_turn();
+    }
+    end_of_game();
+}
 

@@ -11,22 +11,6 @@
 class GameTemplate { // Abstract
 
 protected:
-    // Players []
-    // Scores []
-    // Cards on Table []
-
-    virtual void initialization() = 0;
-    // Create cards
-        // Create deck
-        // Create players
-
-    virtual void next_turn() = 0; // Choices for Player(s)
-
-    virtual bool is_the_end() = 0;
-        // return false till game endvirtual
-
-    virtual void end_of_game() = 0;
-
     // Utils
     template<typename T>
     T ask_player(const std::string& title)
@@ -46,7 +30,7 @@ protected:
     }
 
 public:
-    void lets_play();
+    virtual void lets_play() = 0;
 };
 
 
