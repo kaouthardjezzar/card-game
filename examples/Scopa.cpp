@@ -5,6 +5,12 @@
 #include "Scopa.h"
 #include "ScopaCards.h"
 
+/*
+ * Configure les 40 cartes
+ * Mélange les cartes
+ * Crée 2 joueurs John et Doe
+ * Distribue 3 cartes chacun aux joueurs
+ */
 void Scopa::initialization() {
     std::cout << "Launching Scopa " << std::endl;
 
@@ -35,6 +41,12 @@ void Scopa::initialization() {
 
 }
 
+/*
+ * Distribue 4 cartes sur la table
+ * Affiche l'état du jeu
+ * Demande au joueur son choix
+ */
+
 void Scopa::first_turn() {
     // Add 4 cards to board temp deck
     Board::safe_draw_cards_from_deck(board.get_temp_deck(), board.get_deck(), 4);
@@ -44,6 +56,16 @@ void Scopa::first_turn() {
         compute_choice(choice - 1);
     }
 }
+
+/*
+ * Si tous les joeurs n'ont plus de cartes
+ * * Distribue 3 cartes aux joueurs
+ * Si il n'y a plus de carte sur la table
+ * * Ajoute 4 cartes sur la table
+ *
+ * Affiche l'état du jeu
+ * Demande au joueur son choix
+ */
 
 void Scopa::next_turn() {
     // If all players have no cards
@@ -71,6 +93,11 @@ void Scopa::next_turn() {
     }
 }
 
+/*
+ * Affiche l'état du jeu
+ * Affiche le vainqueur
+ */
+
 void Scopa::end_of_game() {
     display_game_status();
     int i = 0;
@@ -90,9 +117,13 @@ void Scopa::end_of_game() {
     std::cout << *board.get_players()[index_max] << " a gagné la partie " << std::endl;
 }
 
+/*
+ * Le jeu s'arrête si le paquet principal est vide
+ */
 bool Scopa::is_the_end() {
     return board.get_deck().isEmpty();
 }
+
 
 int Scopa::make_a_choice() {
     Player& current_player = board.get_current_player();
