@@ -5,7 +5,6 @@
 #include "Briscola.h"
 
 void Briscola::initialization() {
-    std::cout << "Launching Briscola " << std::endl;
 
     // Configuration des cartes ; on utilise pas 8, 9 et 10 pour avoir 40 cartes
     std::vector<std::string> suits{"spade", "club", "diamond", "heart"};
@@ -23,9 +22,7 @@ void Briscola::initialization() {
     // Shuffle deck
     board.shuffle_deck();
 
-    // Players
-    std::vector<string> players = {"John", "Jane"};
-    board.create_players(players);
+
 
     // Split cards to players
     // chaque joueurs a 3 cartes
@@ -37,7 +34,8 @@ void Briscola::initialization() {
 
 void Briscola::first_turn(){
     atout = board.get_deck().take_front_card();
-    cout << "la carte atout est : " << atout->get_suit()<< atout->get_value() << endl;
+    cout << "la carte atout est : " << atout->get_suit() << " " << atout->get_value() << endl;
+    std::cout << "\n" << endl;
     board.set_round(1);
 }
 
@@ -66,7 +64,7 @@ bool Briscola::is_the_end() {
     return std::any_of(
             board.get_players().begin(),
             board.get_players().end(),
-            [](const std::unique_ptr<Player>& player) {
+            [](const std::unique_ptr<Player> &player) {
                 return player->get_deck()->isEmpty();
             });
 }
@@ -77,12 +75,17 @@ void Briscola::end_of_game() {
     for (int i = 0; i< board.get_players().size(); i++) {
         std::cout << board.get_players()[i]->get_name() << " a ganée  : " << points[i] << "manches " <<std::endl;
     }
-
     for (int j= 0; j < board.get_players().size();j++) {
+    }
+        for (int j= 0; j < board.get_players().size();j++) {
         int cpt = 0;
-        for (int i = 0; board.get_players().size(); i++) {
-            if ( points [j] < points [i]) break;
-            else cpt ++;
+        for (int i = 0; i < board.get_players().size(); i++) {
+            if ( points [j] < points [i]) {
+                break;
+            }
+            else {
+                cpt ++;
+            }
         }
         if (cpt == board.get_players().size()){
             std::cout << board.get_players()[j]->get_name() << " a gagné " << std::endl;
@@ -103,17 +106,22 @@ void Briscola::end_of_manche() {
     }
     for (int j= 0; j < board.get_players().size();j++) {
         int cpt = 0;
-        for (int i = 0; board.get_players().size(); i++) {
+        for (int i = 0; i < board.get_players().size(); i++) {
             if (scores[j] < scores [i]) break;
             else cpt ++;
         }
         if (cpt == board.get_players().size()){
         std::cout << board.get_players()[j]->get_name() << " a gagné la manche " << std::endl;
+        std::cout << "\n" << endl;
         points [j] ++;
         break;}
     }
+    for (int k= 0; k< board.get_players().size();k++)
+    {
+        board.get_players()[k]->set_score(0);
+    }
     board.get_temp_deck().clean_deck();
-    cout << board.get_temp_deck() << endl;
+    board.get_deck().clean_deck();
     board.set_turn(0);
     board.set_round(0);
 }
@@ -144,8 +152,9 @@ void Briscola::who_wins_this_turn(vector<bool> &winner) {
     for (int j= 0; j < cards.size();j++) {
         bool ok = true;
         for (int i = 0; i < cards.size(); i++) {
-            if (cards[j] < cards [i]) {ok = false;
-            break;}
+            if ( i !=j ){
+            if (cards[j] < cards [i] || cards[j] == cards [i] ) {ok = false;
+            break;}}
         }
         winner [j] = ok;
     }
@@ -176,7 +185,8 @@ Card & Briscola::chooseCard() {
                 // on stocke la carte jouée dans temps deck
                 board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
                 // a chaque fois il joue , il pioche pour le next tour, puisque il doit toujours avoir 3 cartes dans la main
-                board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                if (!board.get_deck().isEmpty())
+                {board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());}
                 std::cout << board.get_players()[board.get_turn()]->get_name() << " : " ;
                 cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
                 return board.get_temp_deck().watch_front_card();
@@ -184,7 +194,8 @@ Card & Briscola::chooseCard() {
         }
         board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_front_card());
         // a chaque fois il joue , il pioche pour le next tour, puisque il doit toujours avoir 3 cartes dans la main
-        board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+        if (!board.get_deck().isEmpty())
+        {board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());}
         std::cout << board.get_players()[board.get_turn()]->get_name() << " : " ;
         cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
         return board.get_temp_deck().watch_front_card();
@@ -197,7 +208,8 @@ Card & Briscola::chooseCard() {
             ))){
                 board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_card_at(i));
                 // a chaque fois il joue , il pioche pour le next tour, puisque il doit toujours avoir 3 cartes dans la main
-                board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+                if (!board.get_deck().isEmpty())
+                {board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());}
                 std::cout << board.get_players()[board.get_turn()]->get_name() << " : " ;
                 cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
                 return board.get_temp_deck().watch_front_card();
@@ -206,7 +218,8 @@ Card & Briscola::chooseCard() {
         // si on trouve pas une carte valide, on joue nimporte quelle carte
         board.get_temp_deck().add_card(board.get_players()[board.get_turn()]->get_deck()->take_front_card());
         // a chaque fois il joue , il pioche pour le next tour, puisque il doit toujours avoir 3 cartes dans la main
-        board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());
+        if (!board.get_deck().isEmpty())
+        {board.get_players()[board.get_turn()]->get_deck()->add_card(board.get_deck().take_front_card());}
         std::cout << board.get_players()[board.get_turn()]->get_name() << " : " ;
         cout << "carte jouee : " << board.get_temp_deck().watch_front_card() << endl;
         return board.get_temp_deck().watch_front_card();
@@ -226,12 +239,19 @@ bool Briscola::validCard(Card &card) {
 }
 
 void Briscola::lets_playy (){
-        for (int i = 0; i <3; i++) {  // jouer 3 manches
-            initialization();
-            while (!is_the_end()) {
-                next_turn();
-            }
-            end_of_manche();
+    std::cout << "Launching Briscola " << std::endl;
+    std::cout << "\n" << endl;
+
+    // Players
+    std::vector<string> players = {"John", "Jane", "mike", "kaou"};
+    board.create_players(players);
+    for (int i = 0; i <3; i++) {  // jouer 3 manches
+        std::cout << "Manche :  " << i << std::endl;
+        initialization();
+        while (!is_the_end()) {
+            next_turn();
         }
-        end_of_game();
+        end_of_manche();
+    }
+    end_of_game();
 }

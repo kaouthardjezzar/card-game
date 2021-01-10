@@ -42,14 +42,17 @@ std::vector<std::unique_ptr<Card>>::iterator Deck::end() {
 }
 
 
-void Deck::shuffle(){ //mélanger un paquet
-    std::shuffle(
-            std::begin(cards),
-            std::end(cards),
-            std::default_random_engine{
-                    std::random_device{}()
-            }
-            );
+void Deck::shuffle() { //mélanger un paquet
+    int nbr = rand() % 50;
+    for (int i = 0; i < nbr; i++) {
+        std::shuffle(
+                std::begin(cards),
+                std::end(cards),
+                std::default_random_engine{
+                        std::random_device{}()
+                }
+        );
+    }
 }
 
 unique_ptr<Card> Deck::take_front_card() {
@@ -113,9 +116,8 @@ void Deck::distribute(int nb_players, int nb_cards_per_player, vector<std::uniqu
 }
 
 void Deck::clean_deck() {
-    for(int i=0 ; i < this->get_nbcards();i++){
-        unique_ptr<Card> card = this->take_front_card();
-    }
+    cards.erase (cards.begin(),cards.begin()+cards.size());
+
 }
 
 ostream & operator << (ostream & out, Deck & aDeck) {

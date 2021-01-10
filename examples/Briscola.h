@@ -14,7 +14,7 @@ private:
 
     unique_ptr<Card> atout;
 
-    std::vector<int> points ;
+    std::vector<int> points {0,0,0,0};
 
     void first_turn();
 
