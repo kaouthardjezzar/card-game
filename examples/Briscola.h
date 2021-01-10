@@ -44,7 +44,7 @@ protected:
 public:
     Briscola() = default;
     virtual ~Briscola() = default;
-    void lets_play();
+    void lets_playy();
 
 };
 

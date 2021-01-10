@@ -6,11 +6,12 @@
 #define CARD_GAME_SCOPA_H
 
 #include "../card-game/Board.h"
+#include "GameTemplate.h"
 #include <iostream>
 
 #define SKIPLINE std::cout<<std::endl;
 
-class Scopa {
+class Scopa: public GameTemplate {
 private:
     Board board;
 
@@ -32,28 +33,11 @@ private:
 
     void display_valid_move(Player& current_player);
 
-    // Utils
-    template<typename T>
-    T ask_player(const std::string& title)
-    {
-        T x = 0;
-        std::cout << title;
-        while (!( std::cin >> x))
-        {
-            std::cin.clear();
-            std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Veuillez entrer un nombre/mot correct: " << endl;
-            std::cout << title;
-        }
-        std::cin.clear();
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        return (x);
-    }
 public:
     Scopa() = default;
     virtual ~Scopa() = default;
 
-    void lets_play() {
+    void lets_play() override {
         initialization();
         first_turn();
         while(!is_the_end()) {

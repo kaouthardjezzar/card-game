@@ -21,17 +21,18 @@ private:
     void a_player_wins(Player &player);
 
 protected:
-    void initialization() override;
+    void initialization() ;
 
-    void next_turn() override;
+    void next_turn() ;
 
-    bool is_the_end() override;
+    bool is_the_end() ;
 
-    void end_of_game() override;
+    void end_of_game() ;
 
 public:
     Bataille() = default;
     virtual ~Bataille() = default;
+    void lets_play() override;
 
 };
 
