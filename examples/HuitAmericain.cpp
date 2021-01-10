@@ -32,10 +32,6 @@ void HuitAmericain::initialization() {
     board.shuffle_deck();
 
 
-    // Players
-    std::vector<std::string> players = {"John", "Jane", "mike"};
-    board.create_players(players);
-
     // Split cards to players
     std::vector<std::unique_ptr<Deck>> decks;
     board.get_deck().distribute(board.get_players().size(),7,decks);
@@ -202,20 +198,17 @@ bool HuitAmericain::validCard(Card &card) {
 
 void HuitAmericain::displayPlayerStat(int pos) {
         std::cout << "tour numero : "<<board.get_round() << std::endl;
-        std::cout << "c'est le tour de joueur" << pos +1 << std::endl;
-        std::cout << "le joueur" << board.get_players()[pos]->get_name() << " a comme cartes " << std::endl;
+        std::cout << "c'est le tour de joueur " << pos +1 << std::endl;
+        std::cout << "le joueur : " << board.get_players()[pos]->get_name() << " a comme cartes " << std::endl;
         std::cout << board.get_players()[pos]->get_deck();
         std::cout << std::endl;
         std::cout << "la carte à recouvrir est : " << board.get_temp_deck().watch_front_card() << std::endl;
 }
 
-void HuitAmericain::lets_play() {
-    // Get called by main function
-    // How to arrange function call
-    initialization();
-    while(!is_the_end()) {
-        next_turn();
-    }
-    end_of_game();
+
+void HuitAmericain::lets_play(std::vector<std::string> players) {
+    // Players
+    board.create_players(players);
+    GameTemplate::lets_play();
 }
 

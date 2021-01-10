@@ -242,9 +242,6 @@ void Briscola::lets_play () {
     std::cout << "Launching Briscola " << std::endl;
     std::cout << "\n" << std::endl;
 
-    // Players
-    std::vector<std::string> players = {"John", "Jane", "mike", "kaou"};
-    board.create_players(players);
     for (int i = 0; i < 3; i++) {  // jouer 3 manches
         std::cout << "Manche :  " << i << std::endl;
         initialization();
@@ -254,4 +251,10 @@ void Briscola::lets_play () {
         end_of_manche();
     }
     end_of_game();
+}
+
+void Briscola::lets_play(std::vector<std::string> players) {
+    // Players
+    board.create_players(players);
+    lets_play();
 }

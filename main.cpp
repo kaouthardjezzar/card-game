@@ -8,7 +8,6 @@
 
 #include "lib/logger.h"
 
-using namespace std;
 
 int main() {
     LOG_INIT_CERR();
@@ -16,21 +15,23 @@ int main() {
 
     logd(LOG_DEBUG) << "Game is starting ";
 
-    cout << "Bienvenue dans le jeu, " << endl;
-    cout << "Nous vous invitons à choisir un des jeux ci dessous, " << endl;
+    std::cout << "Bienvenue dans le jeu, " << std::endl;
+    std::cout << "Nous vous invitons à choisir un des jeux ci dessous, " << std::endl;
 
-    vector<string> games = {"Bataille", "Uno", "8 Americain", "Scopa", "Briscola"};
+    std::vector<std::string> games = {"Bataille", "Uno", "8 Americain", "Scopa", "Briscola"};
 
     for(int i=1; i <= (int)games.size(); ++i) {
-        cout << i << " " << games[i-1] << endl;
+        std::cout << i << " " << games[i-1] << std::endl;
     }
 
     int choice = -1;
+    int nbr = 0;
+    std::string name ="";
 
     while(choice < 1 || choice > (int)games.size()) {
-        cout << "Votre choix : ";
-        cin.clear();
-        cin >> choice;
+        std::cout << "Votre choix : ";
+        std::cin.clear();
+        std::cin >> choice;
     }
 
     switch (choice) {
@@ -45,8 +46,18 @@ int main() {
             break;
         }
         case 3: {
+            std::cout << "Entrez le nombre de joueurs : " << std::endl;
+            std::cin.clear();
+            std::cin >> nbr;
+            std::vector<std::string> players;
+            for(int i=0; i<nbr; i++){
+                std::cout << "Entrez le nom de joueur : " << i + 1 << std::endl;
+                std::cin.clear();
+                std::cin >> name;
+                players.push_back(name);
+            }
             HuitAmericain game;
-            game.lets_play();
+            game.lets_play(players);
             break;
         }
         case 4: {
@@ -55,15 +66,25 @@ int main() {
             break;
         }
         case 5: {
+            std::cout << "Entrez le nombre de joueurs : " << std::endl;
+            std::cin.clear();
+            std::cin >> nbr;
+            std::vector<std::string> players;
+            for(int i=0; i<nbr; i++){
+                std::cout << "Entrez le nom de joueur : " << i + 1 << std::endl;
+                std::cin.clear();
+                std::cin >> name;
+                players.push_back(name);
+            }
             Briscola game;
-            game.lets_play();
+            game.lets_play(players);
             break;
         }
         default:
-            cout << "Aucun jeu n'a été lancé" << endl;
+            std::cout << "Aucun jeu n'a été lancé" << std::endl;
             break;
     }
 
-    cout << "\n Au revoir et merci beaucoup " << endl;
+    std::cout << "\n Au revoir et merci beaucoup " << std::endl;
     return 0;
 }

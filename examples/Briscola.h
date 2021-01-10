@@ -43,6 +43,7 @@ public:
     Briscola() = default;
     virtual ~Briscola() = default;
     void lets_play() override;
+    void lets_play(std::vector<std::string> players);
 
 };
 
