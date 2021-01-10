@@ -12,20 +12,23 @@ class HuitAmericain : public GameTemplate {
 private:
     std::vector<int> special_cards = {8 , 0, 1, 11,2};
 
+    void initialization() override;
+
     void first_turn();
-    bool isSpecialCard(const Card card);
 
     void excute_round();
 
     bool chooseCard();
 
-    bool validCard (Card &card);
+    bool isSpecialCard(const Card card);
 
-    void displayPlayerStat(int pos);
+    bool validCard (Card &card);
 
     void specialProcess();
 
-    void initialization() override;
+    void displayPlayerStat(int pos);
+
+    int count_card(Card & card);
 
     void next_turn() override;
 
