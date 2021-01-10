@@ -46,7 +46,6 @@ private:
      */
     int direction;
 
-    int compute_next_turn() const;
 
 public:
 
@@ -101,6 +100,7 @@ public:
     Player& get_next_player();
 
     void reverse_direction();
+    int compute_next_turn() const;
 
 };
 
